@@ -5544,3 +5544,109 @@ body.theme-orange .ajustes-link.activo {
     background-color: rgba(220, 53, 69, 0.1);
     border-radius: 50%;
 }
+
+
+/* --- otra functon--- */
+.dropdown-notificaciones-container {
+    position: relative;
+}
+
+/* Badge rojo contador */
+.badge-notificaciones {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #DC3545;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 2px 5px;
+    border-radius: 50%;
+    min-width: 18px;
+    text-align: center;
+}
+
+/* El menú desplegable (oculto por defecto) */
+.dropdown-menu-notificaciones {
+    display: none; /* Oculto */
+    position: absolute;
+    top: 100%; /* Justo debajo de la campana */
+    right: 0;
+    width: 350px; /* Un ancho razonable */
+    background-color: var(--white-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    z-index: 1000; /* Asegura que flote sobre todo */
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+/* Clase para mostrarlo con JS */
+.dropdown-menu-notificaciones.activo {
+    display: block;
+    animation: fadeInDown 0.2s ease;
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Header del dropdown */
+.dropdown-header {
+    padding: 15px;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--background-color);
+}
+.dropdown-header h3 {
+    margin: 0;
+    font-size: 16px;
+    color: var(--text-color);
+}
+
+/* Lista */
+.lista-notificaciones {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 300px; /* Scroll si hay muchas */
+    overflow-y: auto;
+}
+
+.notificacion-item {
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Estilo adaptado de la tarjeta para el dropdown */
+.dash-est-tarjeta-solicitud.dropdown-style {
+    box-shadow: none; /* Quitar sombra para que se integre */
+    border-radius: 0;
+    padding: 12px 15px;
+}
+
+/* Botones más pequeños para el dropdown */
+.dash-est-accion-btn.small {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+    line-height: 24px;
+}
+
+/* Footer */
+.dropdown-footer {
+    padding: 10px;
+    text-align: center;
+    background-color: var(--background-color);
+}
+.dropdown-footer a {
+    font-size: 13px;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* Ajuste para modo oscuro en los SVGs de la campana */
+body.dark-mode .nav-link-notificaciones svg path {
+    fill: var(--text-color);
+}

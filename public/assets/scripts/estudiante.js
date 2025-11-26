@@ -383,6 +383,32 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
+  // --- NOTIFICACIONES (Dropdown) ---
+  const navNotificaciones = document.getElementById('nav-notificaciones');
+  const dropdownNotificaciones = document.getElementById('dropdown-notificaciones');
+
+  if (navNotificaciones && dropdownNotificaciones) {
+      // 1. Alternar visibilidad al hacer clic en la campana
+      navNotificaciones.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation(); // Evita que el clic se propague al document
+          dropdownNotificaciones.classList.toggle('activo');
+      });
+
+      // 2. Cerrar el dropdown si se hace clic fuera de él
+      document.addEventListener('click', (e) => {
+          // Si el clic NO fue dentro del dropdown Y NO fue en la campana
+          if (!dropdownNotificaciones.contains(e.target) && !navNotificaciones.contains(e.target)) {
+              dropdownNotificaciones.classList.remove('activo');
+          }
+      });
+      
+      // 3. Evitar que clics dentro del dropdown lo cierren
+      dropdownNotificaciones.addEventListener('click', (e) => {
+           e.stopPropagation();
+      });
+  }
+
 
   // --- INICIO POR DEFECTO ---
   // Mostrar Dashboard al cargar
