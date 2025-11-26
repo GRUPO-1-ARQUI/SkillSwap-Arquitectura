@@ -378,7 +378,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (chatNombre) chatNombre.textContent = "Victor Alberca Saavedra";
           if (chatFoto) chatFoto.src = "../assets/images/ima-foto-victor.png";
 
-          // B. Redirigir a la sección de chat
+          // Redirigir a la sección de chat
           mostrarSeccionEstudiante('panel-chat');
       });
   }
@@ -409,6 +409,87 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
+  // --- Lógica de Videollamada (Desde el Chat) ---
+  
+  const btnVideoCall = document.getElementById('btn-iniciar-videollamada');
+  
+  if (btnVideoCall) {
+      btnVideoCall.addEventListener('click', (e) => {
+          e.preventDefault();
+          // Navegar a la sección de videollamada
+          mostrarSeccionEstudiante('panel-videollamada');
+          
+          // (Opcional) Podrías simular que la llamada "inicia" cargando datos
+          console.log("Iniciando videollamada...");
+      });
+  }
+
+// --- VIDEOLLAMADA (Colgar -> Ir a Calificar) ---
+  const btnColgar = document.getElementById('btn-colgar-llamada');
+  
+  if (btnColgar) {
+      btnColgar.addEventListener('click', (e) => {
+          e.preventDefault();
+          
+          if(confirm("¿Deseas finalizar la llamada?")) {
+              // CAMBIO: Ahora redirige a la sección de calificación
+              mostrarSeccionEstudiante('panel-calificar');
+          }
+      });
+  }
+
+  // --- VIDEOLLAMADA (Pizarra y Chat) ---
+  
+  // Pizarra
+  const btnPizarra = document.getElementById('btn-toggle-pizarra');
+  const pizarraOverlay = document.getElementById('pizarra-overlay');
+  
+  if (btnPizarra && pizarraOverlay) {
+      btnPizarra.addEventListener('click', (e) => {
+          e.preventDefault();
+          // Mostrar/Ocultar Pizarra
+          pizarraOverlay.classList.toggle('activa');
+          // Marcar botón como activo
+          btnPizarra.classList.toggle('activo');
+      });
+  }
+
+  // Chat Lateral
+  const btnChatVideo = document.getElementById('btn-toggle-chat-llamada');
+  const panelChatVideo = document.getElementById('panel-chat-llamada');
+  const btnCerrarChatVideo = document.getElementById('btn-cerrar-chat-llamada');
+
+  if (btnChatVideo && panelChatVideo) {
+      btnChatVideo.addEventListener('click', (e) => {
+          e.preventDefault();
+          panelChatVideo.classList.toggle('activo');
+          btnChatVideo.classList.toggle('activo');
+      });
+  }
+
+  // Botón cerrar (la X dentro del chat)
+  if (btnCerrarChatVideo && panelChatVideo) {
+      btnCerrarChatVideo.addEventListener('click', (e) => {
+          e.preventDefault();
+          panelChatVideo.classList.remove('activo');
+          if(btnChatVideo) btnChatVideo.classList.remove('activo');
+      });
+  }
+
+  // --- Lógica de la Calificación ---
+  const btnEnviarCalif = document.getElementById('btn-enviar-calificacion');
+  const btnOmitirCalif = document.getElementById('btn-omitir-calificacion');
+
+  function cerrarCalificacion() {
+      alert("¡Gracias por tu feedback!"); // Mensaje opcional
+      mostrarSeccionEstudiante('panel-dashboard-estudiante');
+  }
+
+  if (btnEnviarCalif) btnEnviarCalif.addEventListener('click', cerrarCalificacion);
+  if (btnOmitirCalif) btnOmitirCalif.addEventListener('click', (e) => {
+      e.preventDefault();
+      mostrarSeccionEstudiante('panel-dashboard-estudiante');
+  });
 
   // --- INICIO POR DEFECTO ---
   // Mostrar Dashboard al cargar
