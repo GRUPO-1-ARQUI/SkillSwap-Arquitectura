@@ -323,6 +323,64 @@ document.addEventListener('DOMContentLoaded', () => {
               }
           });
       }
+  }  //por si acaso pondre un comentario porque eso es el que cambie
+
+      // ---LÓGICA DE TARJETAS DE TUTORES ---
+
+  // Interactividad del Corazón(favoritos)
+  const corazones = document.querySelectorAll('.icono-corazon');
+  
+  corazones.forEach(corazon => {
+      corazon.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation(); // IMPORTANTE: Evita que el clic active la tarjeta entera
+          
+          // Alternar la clase 'favorito' para cambiar el color
+          corazon.classList.toggle('favorito');
+      });
+  });
+
+  // Clic en la tarjeta de Victor 
+  const cardVictor = document.getElementById('card-tutor-victor');
+  
+  if (cardVictor) {
+      cardVictor.addEventListener('click', (e) => {
+          e.preventDefault();
+          // Usamos tu función para navegar al panel del perfil detallado
+          mostrarSeccionEstudiante('panel-perfil-tutor');
+      });
+  }
+  //aca quité una llave de cierre porque creo que no iba ahi vamos a ver si funciona 
+
+
+  // ---LÓGICA DEL PERFIL DE TUTOR ---
+
+  // Corazón (Favorito) en el perfil grande
+  const btnFavPerfil = document.getElementById('btn-fav-perfil-tutor');
+  if (btnFavPerfil) {
+      btnFavPerfil.addEventListener('click', (e) => {
+          e.preventDefault();
+          // Alternar la clase 'favorito' para cambiar el color a rojo
+          btnFavPerfil.classList.toggle('favorito');
+      });
+  }
+
+  //Botón Solicitar Tutoría -> Ir al Chat con Victor
+  const btnSolicitar = document.getElementById('btn-solicitar-tutoria');
+  const chatNombre = document.getElementById('chat-nombre-usuario');
+  const chatFoto = document.getElementById('chat-foto-usuario');
+
+  if (btnSolicitar) {
+      btnSolicitar.addEventListener('click', (e) => {
+          e.preventDefault();
+          
+          // A. Cambiar los datos del chat para que parezca Victor
+          if (chatNombre) chatNombre.textContent = "Victor Alberca Saavedra";
+          if (chatFoto) chatFoto.src = "../assets/images/ima-foto-victor.png";
+
+          // B. Redirigir a la sección de chat
+          mostrarSeccionEstudiante('panel-chat');
+      });
   }
 
 
