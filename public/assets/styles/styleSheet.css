@@ -839,6 +839,19 @@ justify-content: center;
     flex-direction: column; 
     background-color: #f2f0f5; 
 }
+.chat-boton-enviar{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+    font-weight: bold;
+    color: var(--primary-color, #005a9c); /* Usa tu color principal */
+    font-size: 14px; /* Ajusta según necesites */
+}
+
+.chat-boton-enviar:hover {
+    transform: scale(1.1);
+}
 
 /* Sub-cabecera (barra oscura) */
 .chat-sub-header {
