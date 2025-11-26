@@ -855,13 +855,14 @@ justify-content: center;
 
 /* Sub-cabecera (barra oscura) */
 .chat-sub-header {
-    background-color: #1f1f1f; 
-    color: white;
-    padding: 10px 20px;
+    background-color: var(--white-color); 
+    border-bottom: 1px solid var(--border-color);
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-between;
     align-items: center;
-    flex-shrink: 0; 
+    padding: 15px 20px;
+    flex-shrink: 0;
+    
 }
 
 .chat-header-perfil {
@@ -885,12 +886,39 @@ justify-content: center;
 
 .chat-header-iconos {
     display: flex;
-    gap: 20px;
+    gap: 15px;
+    align-items: center;
 }
 
 .chat-icono {
     font-size: 24px;
     cursor: pointer;
+}
+
+.btn-header-chat {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--primary-color, #005a9c); /* Usa el color del tema */
+    padding: 5px;
+    border-radius: 50%;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    display: flex; /* Para centrar el SVG */
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-header-chat:hover {
+    background-color: rgba(0, 0, 0, 0.05); /* Fondo gris suave al pasar el mouse */
+    transform: scale(1.1);
+}
+
+/* Ajuste para modo oscuro */
+body.dark-mode .btn-header-chat {
+    color: var(--text-color);
+}
+body.dark-mode .btn-header-chat:hover {
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Área principal de mensajes */
@@ -1012,310 +1040,20 @@ justify-content: center;
 }
 
 /* Contenedor principal de la videollamada */
-.seccion-videollamada-principal {
-    display: flex;
-    /* Altura total de la ventana menos la barra de navegación (75px) */
-    height: calc(100vh - 75px); 
-    width: 100%;
-}
 
-.video-area-principal {
-    flex-grow: 1; /* Ocupa todo el espacio restante */
-    background-color: #e0e0e0; /* Color del fondo gris principal */
-    position: relative; /* Para posicionar tabs y controles */
-    height: 100%;
-    border-radius: 8px; /* Bordes redondeados en el área gris */
-    margin: 15px; /* Un pequeño margen como en la imagen */
-}
+
+
 
 /* Pestañas de Pizarra y Chat */
-.video-opciones-tabs {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    display: flex;
-    gap: 8px;
-    flex-shrink: 0;
-}
 
-.opcion-tab {
-    font-family: "Inter", sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    color: #333;
-    background-color: #ccc; /* Color de pestaña inactiva */
-    border: none;
-    padding: 10px 15px;
-    border-radius: 8px; /* Bordes redondeados */
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.opcion-tab.activo {
-    background-color: #b0b0b0; /* Pestaña activa (gris más oscuro) */
-    color: #000;
-}
-
-.icono-tab {
-    font-size: 18px;
-}
-
-
-/* Barra lateral de videos */
-.video-sidebar {
-    width: 320px; 
-    flex-shrink: 0; 
-    background-color: #ffffff; 
-    border-left: 1px solid #c7c6cd; /* Borde de tu styleSheet.css */
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    height: 100%;
-    overflow-y: auto;
-}
-
-.video-participante {
-    position: relative;
-    width: 100%;
-    border-radius: 12px;
-    overflow: hidden; 
-    height: 300px;
-    background-color: #ffc107;
-}
-
-.video-placeholder-sidebar {
-    width: 100%;
-    height: auto; 
-    aspect-ratio: 16 / 9; /* Proporción de video */
-    background-color: #333; /* Placeholder */
-    object-fit: cover; /* Para la <img> */
-}
-
-.nombre-participante-video {
-    position: absolute;
-    bottom: 8px;
-    left: 12px;
-    background-color: rgba(0, 0, 0, 0.5); 
-    color: white;
-    padding: 5px 10px;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 500;
-}
-
-/* Controles flotantes de la videollamada */
-.controles-flotantes-video {
-    position: absolute;
-    bottom: 25px; 
-    left: 50%; 
-    transform: translateX(-50%);
-    
-    background-color: #ffffff;
-    border-radius: 20px; 
-    padding: 12px 20px;
-    display: flex;
-    gap: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    border: 1px solid #e0e0e0;
-}
-
-.control-btn-video {
-    background-color: #f0f0f0;
-    border: none;
-    border-radius: 12px; 
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px; 
-    cursor: pointer;
-    color: #333;
-    transition: background-color 0.2s;
-}
-
-.control-btn-video:hover {
-    background-color: #dcdcdc;
-}
-
-/* Estilo para el micrófono silenciado*/
-.control-btn-video.mic-off {
-    color: #DC3545; 
-}
-
-/* Estilo para el botón de colgar */
-.control-btn-video.colgar {
-    background-color: #DC3545;
-    color: white;
-}
-
-.control-btn-video.colgar:hover {
-    background-color: #c82333; 
-}
 
 /*ACA VA A IR LA PIAZAARA DEL CHAT*/
 
-.seccion-videollamada-pizarra {
-    display: flex;
-    height: calc(100vh - 75px); 
-    width: 100%;
-}
 
-.video-area-principal-pizarra {
-    flex-grow: 1; 
-    background-color: #e0e0e0; /* Color del fondo gris contenedor */
-    display: flex;
-    flex-direction: column; /* Organiza tabs y contenido verticalmente */
-    height: 100%;
-    margin: 15px;
-    border-radius: 8px;
-    position: relative; /* Para posicionar los controles */
-}
-
-.video-opciones-tabs-pizarra {
-    display: flex;
-    padding: 8px 8px 0 8px; 
-    gap: 8px;
-    flex-shrink: 0;
-}
-
-.opcion-tab-pizarra {
-    font-family: "Inter", sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    color: #333;
-    background-color: #ccc; /* Color de pestaña inactiva */
-    border: none;
-    padding: 10px 15px;
-    border-radius: 8px 8px 0 0; /* Redondeado solo arriba */
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.opcion-tab-pizarra.activo {
-    background-color: #ffffff; /* Pestaña activa es blanca */
-    color: #000;
-}
-
-.icono-tab-pizarra {
-    font-size: 18px;
-}
-
-.video-contenido-principal-pizarra {
-    flex-grow: 1; /* Ocupa el resto del espacio */
-    padding: 0 8px 8px 8px; /* Espaciado inferior y laterales */
-    height: 100%;
-    overflow: hidden;
-}
-
-.pizarra-virtual {
-    background-color: #ffffff; /* La pizarra es blanca */
-    width: 100%;
-    height: 100%;
-    border-radius: 0 0 8px 8px; /* Redondeado solo abajo */
-    border: 1px solid #ccc;
-    box-sizing: border-box; 
-}
-
-/* Barra lateral de videos */
-.video-sidebar-pizarra {
-    width: 400px; 
-    flex-shrink: 0;
-    background-color: #ffffff; 
-    border-left: 1px solid #c7c6cd; 
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    height: 100%;
-    overflow-y: auto;
-}
-
-.video-participante-pizarra {
-    position: relative;
-    width: 100%;
-    height: 500px;
-    border-radius: 12px;
-    overflow: hidden; 
-    background-color: #ffc107;
-}
-
-.video-placeholder-sidebar-pizarra {
-    width: 100%;
-    height: auto; 
-    aspect-ratio: 16 / 9; /* Proporción 16:9 */
-    background-color: #333; /* Placeholder */
-    object-fit: cover; /* Para la <img> */
-}
-
-.nombre-participante-video-pizarra {
-    position: absolute;
-    bottom: 8px;
-    left: 12px;
-    background-color: rgba(0, 0, 0, 0.5); 
-    color: white;
-    padding: 5px 10px;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 500;
-}
-
-/* Controles flotantes */
-.controles-flotantes-video-pizarra {
-    position: absolute;
-    bottom: 25px; 
-    left: 50%; 
-    transform: translateX(-50%);
-    
-    background-color: #ffffff;
-    border-radius: 20px; 
-    padding: 12px 20px;
-    display: flex;
-    gap: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    border: 1px solid #e0e0e0;
-}
-
-.control-btn-video-pizarra {
-    background-color: #f0f0f0;
-    border: none;
-    border-radius: 12px; 
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px; 
-    cursor: pointer;
-    color: #333;
-    transition: background-color 0.2s;
-}
-
-.control-btn-video-pizarra:hover {
-    background-color: #dcdcdc;
-}
-
-.control-btn-video-pizarra.mic-off {
-    color: #DC3545; 
-}
-
-.control-btn-video-pizarra.colgar {
-    background-color: #DC3545;
-    color: white;
-}
-
-.control-btn-video-pizarra.colgar:hover {
-    background-color: #c82333; 
-}
 
 /* Aca va la seccion de calificacion */
 
-.seccion-calificacion {
+/*.seccion-calificacion {
     width: 100%;
     max-width: 900px; 
     padding: 30px 20px;
@@ -1369,13 +1107,129 @@ justify-content: center;
     overflow: hidden; 
 }
 
-/* ACA VA LA IMAGEN ACOMODADA */
+ ACA VA LA IMAGEN ACOMODADA 
 .imagen-perfil-calificar img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
+*/
+/* --- (NUEVO) Estilos Sección Calificación --- */
 
+.seccion-calificar-estudiante {
+    display: flex; /* Oculto por defecto (controlado por JS), pero cuando active flex */
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ocupa toda la pantalla */
+    background-color: rgba(0, 0, 0, 0.8); /* Fondo oscuro transparente */
+}
+
+/* Tarjeta Central */
+.calificacion-container {
+    background-color: var(--white-color);
+    width: 100%;
+    max-width: 500px;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    animation: popIn 0.3s ease;
+}
+
+@keyframes popIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.calificacion-header h2 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.calificacion-avatar img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--background-color);
+    margin: 20px 0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Sistema de Estrellas (CSS Only) */
+.calificacion-estrellas {
+    display: flex;
+    justify-content: center;
+    flex-direction: row-reverse; /* Invertimos para que el hover funcione de izq a der */
+    margin-bottom: 20px;
+}
+
+.calificacion-estrellas input {
+    display: none; /* Ocultamos los radio buttons */
+}
+
+.calificacion-estrellas label {
+    font-size: 40px;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.calificacion-estrellas label:hover,
+.calificacion-estrellas label:hover ~ label,
+.calificacion-estrellas input:checked ~ label {
+    color: #ffc107; /* Color amarillo estrella */
+}
+
+/* Comentario */
+.calificacion-comentario textarea {
+    width: 100%;
+    height: 100px;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    background-color: var(--background-color);
+    resize: none;
+    font-family: inherit;
+    margin-bottom: 20px;
+    box-sizing: border-box; /* Evita que se salga del contenedor */
+}
+
+/* Botones */
+.calificacion-acciones {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.btn-enviar-calificacion {
+    background-color: var(--primary-color, #005a9c);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.btn-enviar-calificacion:hover {
+    transform: scale(1.05);
+}
+
+.btn-omitir-calificacion {
+    background-color: transparent;
+    color: #777;
+    border: 1px solid #ddd;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-omitir-calificacion:hover {
+    background-color: #f5f5f5;
+    color: #333;
+}
 
 .nombre-verificado {
     display: flex;
@@ -5404,7 +5258,7 @@ body.dark-mode .descripcion p.editable-field-active {
 }
 
 
-/* --- (NUEVO) Estilos Temas de Color --- */
+/* --- Estilos Temas de Color --- */
 
 /* Contenedor de los botones circulares */
 .temas-colores-grid {
@@ -5649,4 +5503,289 @@ body.theme-orange .ajustes-link.activo {
 /* Ajuste para modo oscuro en los SVGs de la campana */
 body.dark-mode .nav-link-notificaciones svg path {
     fill: var(--text-color);
+}
+
+
+
+
+
+
+
+
+
+/* --- (NUEVO) Estilos Videollamada (CORREGIDOS) --- */
+
+/* 1. Contenedor Principal de la Sección */
+/* Asegura que la sección ocupe el espacio pero sin afectar el layout interno incorrectamente */
+.seccion-videollamada-principal {
+    width: 100%;
+    height: 100vh; /* Ocupa toda la altura */
+    background-color: #000; /* Fondo negro de base */
+    display: none; /* Se oculta por defecto (controlado por JS) */
+    flex-direction: column;
+}
+
+.seccion-videollamada-principal.activa {
+    display: flex !important; /* Se muestra como flex cuando está activa */
+}
+
+/* 2. Wrapper del contenido (Video + Sidebar) */
+.videollamada-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Crece para llenar el espacio */
+    height: 100%;
+    overflow: hidden;
+}
+
+/* 3. Layout Central (Video Grande a la Izq / Sidebar a la Der) */
+.videollamada-layout {
+    display: flex;
+    flex: 1; /* Ocupa todo el espacio vertical disponible menos la barra de controles */
+    overflow: hidden; /* Evita scroll innecesario */
+}
+
+/* --- Video Principal --- */
+.video-screen-principal {
+    flex: 1; /* Toma todo el espacio restante (el sidebar tiene ancho fijo o flex menor) */
+    background-color: #121212;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-video-full {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* 'contain' para ver toda la imagen sin recortes, o 'cover' para llenar */
+}
+
+.etiqueta-nombre {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 10;
+}
+
+/* --- Barra Lateral (Participantes) --- */
+.sidebar-participantes {
+    width: 280px; /* Ancho fijo para la barra lateral */
+    background-color: #1e1e1e;
+    border-left: 1px solid #333;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+    flex-shrink: 0; /* Evita que se encoja */
+}
+
+.tarjeta-video-mini {
+    width: 100%;
+    height: 160px; /* Altura fija para las miniaturas */
+    background-color: #000;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    border: 2px solid transparent;
+}
+
+.tarjeta-video-mini:hover {
+    border-color: #005a9c;
+}
+
+.img-video-mini {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.etiqueta-nombre-mini {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    background-color: rgba(0,0,0,0.6);
+    color: white;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.info-llamada-mini {
+    margin-top: auto;
+    color: #888;
+    text-align: center;
+    font-size: 12px;
+    padding-top: 10px;
+}
+
+/* --- Barra de Controles (Inferior) --- */
+.controles-videollamada-bar {
+    height: 80px;
+    background-color: #1e1e1e;
+    border-top: 1px solid #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-shrink: 0;
+}
+
+.btn-control-llamada {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background-color: #3c4043;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.btn-control-llamada:hover {
+    background-color: #505357;
+    transform: scale(1.05);
+}
+
+.btn-control-llamada.colgar {
+    background-color: #ea4335;
+}
+.btn-control-llamada.colgar:hover {
+    background-color: #d93025;
+}
+
+.btn-control-llamada.compartir {
+    background-color: #005a9c;
+}
+
+
+
+/* --- (NUEVO) Estilos Pizarra y Chat en Videollamada --- */
+
+/* Estilos para la Pizarra (Overlay) */
+.pizarra-contenedor {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    display: none; /* Oculto por defecto */
+    justify-content: center;
+    align-items: center;
+    z-index: 20; /* Encima del video */
+}
+
+.pizarra-contenedor.activa {
+    display: flex; /* Mostrar cuando tenga la clase activa */
+}
+
+.pizarra-lienzo {
+    width: 90%;
+    height: 90%;
+    background-color: white;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.pizarra-placeholder {
+    color: #333;
+    font-size: 18px;
+    font-weight: 500;
+    opacity: 0.6;
+}
+
+/* Estilos para el Chat Lateral */
+.chat-lateral-llamada {
+    width: 300px;
+    background-color: #1e1e1e; /* Mismo tono que sidebar */
+    border-left: 1px solid #333;
+    display: none; /* Oculto por defecto */
+    flex-direction: column;
+}
+
+.chat-lateral-llamada.activo {
+    display: flex;
+}
+
+.header-chat-llamada {
+    padding: 15px;
+    border-bottom: 1px solid #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.header-chat-llamada button {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.cuerpo-chat-llamada {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    color: #ddd;
+    font-size: 14px;
+}
+
+.mensaje-chat-llamada {
+    margin-bottom: 10px;
+    padding: 8px 10px;
+    background-color: #333;
+    border-radius: 8px;
+}
+
+.mensaje-chat-llamada.propio {
+    background-color: #005a9c; /* Azul corporativo */
+    margin-left: 20px;
+    text-align: right;
+}
+
+.footer-chat-llamada {
+    padding: 15px;
+    border-top: 1px solid #333;
+    display: flex;
+    gap: 10px;
+}
+
+.footer-chat-llamada input {
+    flex: 1;
+    padding: 8px;
+    border-radius: 20px;
+    border: none;
+    background-color: #333;
+    color: white;
+}
+
+.footer-chat-llamada button {
+    background-color: #005a9c;
+    border: none;
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Estado activo para los botones de control */
+.btn-control-llamada.activo {
+    background-color: #005a9c; /* Azul cuando está activo */
 }
