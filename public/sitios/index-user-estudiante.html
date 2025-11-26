@@ -229,14 +229,28 @@
     </section>
 
     
-        <section class="seccion-chat-container panel-seccion" id="panel-chat">
+    <section class="seccion-chat-container panel-seccion" id="panel-chat">
 
-          <div class="chat-sub-header">
-    <div class="chat-header-perfil">
-        <img src="../assets/images/ima-foto-victor.png" class="chat-perfil-foto" id="chat-foto-usuario" alt="Foto perfil chat">
-        <span class="chat-perfil-nombre" id="chat-nombre-usuario">Chat General</span>
+            <div class="chat-sub-header">
+                <div class="chat-header-perfil">
+                    <img src="../assets/images/ima-foto-victor.png" class="chat-perfil-foto" id="chat-foto-usuario" alt="Foto perfil chat">
+                    <span class="chat-perfil-nombre" id="chat-nombre-usuario">Chat General</span>
+                </div>
+                <div class="chat-header-iconos">
+                <button id="btn-iniciar-videollamada" class="btn-header-chat" title="Iniciar Videollamada">
+            <svg width="40" height="30" viewBox="0 0 40 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M37.7444 5.46884C37.3408 5.42222 36.9324 5.49464 36.5694 5.67717L27.084 10.4168V18.7501L36.5694 23.4897C36.8866 23.6482 37.2391 23.7231 37.5933 23.7073C37.9476 23.6916 38.292 23.5856 38.5939 23.3995C38.8958 23.2134 39.1452 22.9533 39.3184 22.6439C39.4917 22.3345 39.5831 21.986 39.584 21.6313V7.5355C39.5834 7.02558 39.3958 6.53358 39.0568 6.1527C38.7178 5.77181 38.2508 5.5285 37.7444 5.46884Z" fill="black"/>
+<path d="M6.25 0C2.82292 0 0 2.82292 0 6.25V22.9167C0 26.3437 2.82292 29.1667 6.25 29.1667H22.9167C26.3437 29.1667 29.1667 26.3437 29.1667 22.9167V6.25C29.1667 2.82292 26.3437 0 22.9167 0H6.25Z" fill="black"/>
+</svg>
+
+
+
+
+        </button>
+        
+        <button class="btn-header-chat" title="Más opciones">⋮</button>
     </div>
-    </div>
+            </div>
 
           <div class="chat-container">
 
@@ -281,198 +295,194 @@
     </section>
 
    
-     <section class="seccion-videollamada-principal panel-seccion" id="panel-videollamada">
-
-    <div class="video-area-principal">
+    <section class="seccion-videollamada-principal panel-seccion" id="panel-videollamada">
+    
+    <div class="videollamada-wrapper">
         
-        <div class="video-opciones-tabs">
-            <button class="opcion-tab activo">
-                <span class="icono-tab">
-                    <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M25.0396 28.5731L23.8771 27.5658M25.0396 28.5731L28.9979 27.1939M25.0396 28.5731L23.5344 28.8752L23.8771 27.5658M23.8771 27.5658C24.2896 26.9971 25.7312 23.9689 25.7312 23.9689M28.9979 27.1939L25.7312 23.9689M28.9979 27.1939L45.3125 11.5752C44.7385 10.3512 43.6083 9.17103 42.2292 8.59082L25.7312 23.9689M7.03958 26.2752C9.65104 23.0575 11.3583 23.9106 15.3917 27.5398C19.424 31.1689 21.1313 32.0221 23.7437 28.8054M42.0719 14.6804V39.9867C42.0719 40.7742 41.4385 41.4096 40.65 41.4096H6.11042C5.32188 41.4096 4.6875 40.7742 4.6875 39.9867V14.7231C4.6875 13.9356 5.32292 13.3002 6.11042 13.3002H37.1771" stroke="black" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
+<div class="videollamada-layout">
+            
+            <div class="video-screen-principal">
+                <span class="etiqueta-nombre">Victor Alberca (Tutor) 🎙️</span>
 
-                </span>
-                Pizarra
+                
+                <div id="pizarra-overlay" class="pizarra-contenedor">
+                    <div class="pizarra-lienzo">
+                        <p class="pizarra-placeholder">✨ Pizarra Interactiva (Modo Dibujo Próximamente) ✨</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-participantes">
+                <div class="tarjeta-video-mini">
+                    <span class="etiqueta-nombre-mini">Tú</span>
+                    <img src="../assets/images/ima-chica1.png" alt="Mi Video" class="img-video-mini">
+                </div>
+                <div class="tarjeta-video-mini">
+                    <span class="etiqueta-nombre-mini">Adrian Guevara</span>
+                    <img src="../assets/images/ima-foto-adrian-guevara.png" alt="Video Participante" class="img-video-mini">
+                </div>
+                <div class="info-llamada-mini">
+                    <p>En llamada: 00:15:23</p>
+                </div>
+            </div>
+
+            <div class="chat-lateral-llamada" id="panel-chat-llamada">
+                <div class="header-chat-llamada">
+                    <h3>Chat de la sala</h3>
+                    <button id="btn-cerrar-chat-llamada">✕</button>
+                </div>
+                <div class="cuerpo-chat-llamada">
+                    <div class="mensaje-chat-llamada">
+                        <strong>Adrian:</strong> Hola a todos!
+                    </div>
+                    <div class="mensaje-chat-llamada propio">
+                        <strong>Tú:</strong> ¿Se escucha bien?
+                    </div>
+                </div>
+                <div class="footer-chat-llamada">
+                    <input type="text" placeholder="Escribir mensaje...">
+                    <button>➤</button>
+                </div>
+            </div>
+
+        </div>
+
+<div class="controles-videollamada-bar">
+            <button class="btn-control-llamada" title="Silenciar">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
             </button>
-            <button class="opcion-tab">
-                <span class="icono-tab">
-                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M13.2815 16.4764H26.7148M13.2815 23.523H22.8615M19.9981 35.4164C23.3471 35.4156 26.6048 34.3244 29.2785 32.3077C31.9521 30.291 33.8964 27.4585 34.8173 24.2387C35.7381 21.0188 35.5854 17.5866 34.3823 14.4612C33.1791 11.3358 30.991 8.68716 28.1488 6.91586C25.3066 5.14457 21.9649 4.34695 18.629 4.64364C15.2932 4.94032 12.1448 6.31518 9.65976 8.56027C7.17476 10.8054 5.48841 13.7986 4.85574 17.0873C4.22307 20.3759 4.67849 23.7812 6.15313 26.788C6.33313 27.1547 6.39313 27.568 6.30146 27.9647L4.94146 33.858C4.90312 34.0234 4.90752 34.1958 4.95424 34.3591C5.00096 34.5223 5.08847 34.6709 5.20852 34.791C5.32857 34.911 5.4772 34.9985 5.64042 35.0452C5.80364 35.092 5.97607 35.0964 6.14146 35.058L12.0331 33.6964C12.4309 33.6093 12.8466 33.6622 13.2098 33.8464C15.3221 34.8837 17.6449 35.4209 19.9981 35.4164Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-                </span>
-                Chat
+
+            <button class="btn-control-llamada" title="Cámara">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"></path><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+            </button>
+
+            <button class="btn-control-llamada" id="btn-toggle-pizarra" title="Abrir Pizarra">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 3h20v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V3z"></path>
+                    <path d="M8.5 21h7"></path>
+                    <line x1="12" y1="21" x2="12" y2="3"></line>
+                </svg>
+            </button>
+
+            <button class="btn-control-llamada" id="btn-toggle-chat-llamada" title="Abrir Chat">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+            </button>
+
+            <button class="btn-control-llamada compartir" title="Compartir">
+               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+            </button>
+
+            <button class="btn-control-llamada colgar" id="btn-colgar-llamada" title="Colgar">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.42 19.42 0 0 1-3.33-2.67m-2.67-3.34a19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91"></path><line x1="23" y1="1" x2="1" y2="23"></line></svg>
             </button>
         </div>
 
-        <div class="controles-flotantes-video">
-            <button class="control-btn-video" aria-label="Activar/Desactivar cámara">
-                <svg width="50" height="37" viewBox="0 0 50 37" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M46.8009 6.78171C46.3005 6.72391 45.794 6.8137 45.3439 7.04004L33.582 12.9171V23.2505L45.3439 29.1275C45.7373 29.3241 46.1743 29.417 46.6136 29.3974C47.0529 29.3779 47.48 29.2465 47.8543 29.0157C48.2287 28.785 48.5379 28.4625 48.7527 28.0788C48.9676 27.6951 49.0809 27.2629 49.082 26.8232V9.34437C49.0813 8.71208 48.8487 8.102 48.4283 7.6297C48.0079 7.1574 47.4289 6.85569 46.8009 6.78171Z" fill="black"/>
-<path d="M7.75 0C3.50042 0 0 3.50042 0 7.75V28.4167C0 32.6662 3.50042 36.1667 7.75 36.1667H28.4167C32.6662 36.1667 36.1667 32.6662 36.1667 28.4167V7.75C36.1667 3.50042 32.6662 0 28.4167 0H7.75Z" fill="black"/>
-</svg>
-
-            </button>
-            <button class="control-btn-video mic-off" aria-label="Micrófono silenciado">
-                <svg width="31" height="35" viewBox="0 0 31 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M21.4978 18.2881C21.961 17.3591 22.2064 16.3366 22.2153 15.2986V6.75689C22.1964 5.06939 21.5538 3.44857 20.4111 2.20665C19.2685 0.964721 17.7067 0.189548 16.0266 0.0304487C14.3465 -0.12865 12.667 0.33958 11.3116 1.34494C9.95611 2.35031 9.02063 3.82168 8.68532 5.47564M27.3403 15.2986C27.3403 14.8455 27.1603 14.411 26.84 14.0906C26.5196 13.7702 26.0851 13.5902 25.632 13.5902C25.1789 13.5902 24.7444 13.7702 24.424 14.0906C24.1036 14.411 23.9237 14.8455 23.9237 15.2986C23.9187 16.7911 23.5115 18.2546 22.7449 19.5352L25.2562 22.1319C26.6309 20.1197 27.3581 17.7355 27.3403 15.2986ZM15.382 22.1319H15.6553L8.54866 15.0081V15.2986C8.54866 17.1109 9.2686 18.849 10.5501 20.1305C11.8316 21.412 13.5697 22.1319 15.382 22.1319ZM30.2616 29.4606L2.92824 2.12731C2.76896 1.96802 2.57986 1.84167 2.37175 1.75547C2.16364 1.66927 1.94058 1.6249 1.71532 1.6249C1.49006 1.6249 1.26701 1.66927 1.0589 1.75547C0.850785 1.84167 0.661689 1.96802 0.502407 2.12731C0.180721 2.44899 0 2.88529 0 3.34022C0 3.79515 0.180721 4.23145 0.502407 4.55314L14.1691 18.2198L27.8357 31.8865C27.9946 32.0466 28.1835 32.1737 28.3917 32.2604C28.5999 32.3471 28.8231 32.3918 29.0487 32.3918C29.2742 32.3918 29.4975 32.3471 29.7056 32.2604C29.9138 32.1737 30.1028 32.0466 30.2616 31.8865C30.4217 31.7277 30.5488 31.5387 30.6355 31.3305C30.7222 31.1224 30.7669 30.8991 30.7669 30.6736C30.7669 30.448 30.7222 30.2247 30.6355 30.0166C30.5488 29.8084 30.4217 29.6194 30.2616 29.4606Z" fill="#1E1E1E"/>
-<path d="M20.5091 30.6732H17.0924V27.1198C18.0592 26.9853 19.0058 26.7328 19.9112 26.3682L17.1779 23.6348C16.5898 23.7719 15.9879 23.8407 15.3841 23.8398C13.1187 23.8398 10.9461 22.9399 9.34424 21.338C7.74237 19.7362 6.84245 17.5636 6.84245 15.2982C6.84245 14.8451 6.66246 14.4106 6.34209 14.0902C6.02171 13.7698 5.58719 13.5898 5.13411 13.5898C4.68104 13.5898 4.24652 13.7698 3.92614 14.0902C3.60577 14.4106 3.42578 14.8451 3.42578 15.2982C3.42915 18.1713 4.46685 20.9472 6.34905 23.118C8.23124 25.2888 10.8321 26.7094 13.6758 27.1198V30.6732H10.2591C9.80604 30.6732 9.37152 30.8532 9.05114 31.1735C8.73077 31.4939 8.55078 31.9284 8.55078 32.3815C8.55078 32.8346 8.73077 33.2691 9.05114 33.5895C9.37152 33.9099 9.80604 34.0898 10.2591 34.0898H20.5091C20.9622 34.0898 21.3967 33.9099 21.7171 33.5895C22.0375 33.2691 22.2174 32.8346 22.2174 32.3815C22.2174 31.9284 22.0375 31.4939 21.7171 31.1735C21.3967 30.8532 20.9622 30.6732 20.5091 30.6732Z" fill="#1E1E1E"/>
-</svg>
-
-
-            </button>
-            <button class="control-btn-video colgar" aria-label="Colgar">
-                <svg width="38" height="19" viewBox="0 0 38 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M6.76312 18.5569L9.27563 17.8444C11.5425 17.2013 13.125 14.9681 13.125 12.4088C13.125 12.4088 13.125 9.3075 18.75 9.3075C24.375 9.3075 24.375 12.4088 24.375 12.4088C24.375 14.9681 25.9575 17.2013 28.2244 17.8462L30.7369 18.5588C34.1587 19.5263 37.5 16.7063 37.5 12.8438C37.5 10.5244 36.9806 8.19938 35.4694 6.56813C32.925 3.825 27.7631 0 18.75 0C9.73687 0 4.575 3.82313 2.03062 6.56813C0.519375 8.19938 0 10.5244 0 12.8438C0 16.7063 3.34125 19.5281 6.76312 18.5569Z" fill="#FF0000"/>
-</svg>
-
-            </button>
-        </div>
-
-    </div> 
-    <aside class="video-sidebar">
-        <div class="video-participante">
-            <img src="../assets/images/ima-chica1.png" alt="Video de Alexandra Meza Soza" class="video-placeholder-sidebar">
-            <span class="nombre-participante-video">Alexandra Meza Soza</span>
-        </div>
-        <div class="video-participante">
-            <img src="../assets/images/ima-chico1.png" alt="Video de Carlos Quispe Medina" class="video-placeholder-sidebar">
-            <span class="nombre-participante-video">Carlos Quispe Medina</span>
-        </div>
-    </aside>
-</section>
+    </div>
+    </section>
 
    
     <section class="seccion-calificar-estudiante panel-seccion" id="panel-calificar">
-<main class="seccion-calificacion">
-        <h1 class="titulo-calificacion">CALIFICA A TU TUTOR/APRENDIZ</h1>
-
-        <div class="tarjeta-calificacion">
-            <div class="perfil-calificar">
-                <a href="#" class="imagen-perfil-calificar">
-                    <img src="../assets/images/ima-chico2.png" alt="Foto de perfil de Luis García" class="foto-perfil-calificar">
-                </a>
-                <div class="nombre-verificado">
-                    <span class="nombre-calificar">Luis García</span>
-                    <a href="#" class="icono-verificado" aria-label="Verificado">
-                        <svg width="43" height="41" viewBox="0 0 43 41" fill="none" xmlns="http://www.w3.org/2000/svg">
-<ellipse cx="21.4318" cy="20.5" rx="21.4318" ry="20.5" fill="#005A9C"/>
-<path d="M17.7049 25.1127L11.2287 18.6366L9.02344 20.8263L17.7049 29.5078L36.3412 10.8714L34.1515 8.68164L17.7049 25.1127Z" fill="#F3F3F3"/>
-</svg>
-
-                    </a>
-                </div>
-            </div>
-
-            <div class="estrellas-calificacion">
-                <a href="#" class="estrella-icono" aria-label="1 estrella">
-                    <svg width="59" height="56" viewBox="0 0 59 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M29.4116 45.774L11.8637 55L15.2158 35.459L1 21.6214L20.6178 18.7782L29.3917 1L38.1657 18.7782L57.7834 21.6214L43.5677 35.459L46.9198 55L29.4116 45.774Z" fill="#F9FF49" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-
-                </a>
-                <a href="#" class="estrella-icono" aria-label="2 estrellas">
-                    <svg width="59" height="56" viewBox="0 0 59 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M29.4116 45.774L11.8637 55L15.2158 35.459L1 21.6214L20.6178 18.7782L29.3917 1L38.1657 18.7782L57.7834 21.6214L43.5677 35.459L46.9198 55L29.4116 45.774Z" fill="#F9FF49" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </a>
-                <a href="#" class="estrella-icono" aria-label="3 estrellas">
-                    <svg width="59" height="56" viewBox="0 0 59 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M29.4116 45.774L11.8637 55L15.2158 35.459L1 21.6214L20.6178 18.7782L29.3917 1L38.1657 18.7782L57.7834 21.6214L43.5677 35.459L46.9198 55L29.4116 45.774Z" fill="#F9FF49" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </a>
-                <a href="#" class="estrella-icono" aria-label="4 estrellas">
-                    <svg width="59" height="56" viewBox="0 0 59 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M29.4116 45.774L11.8637 55L15.2158 35.459L1 21.6214L20.6178 18.7782L29.3917 1L38.1657 18.7782L57.7834 21.6214L43.5677 35.459L46.9198 55L29.4116 45.774Z" fill="#F9FF49" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </a>
-                <a href="#" class="estrella-icono" aria-label="5 estrellas">
-                    <svg width="59" height="56" viewBox="0 0 59 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M29.4116 45.774L11.8637 55L15.2158 35.459L1 21.6214L20.6178 18.7782L29.3917 1L38.1657 18.7782L57.7834 21.6214L43.5677 35.459L46.9198 55L29.4116 45.774Z" fill="#F9FF49" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </a>
-            </div>
-
-            <div class="comentarios-calificacion">
-                <textarea class="campo-comentario" placeholder="Añade un comentario"></textarea>
-                <textarea class="campo-comentario" placeholder="Áreas a mejorar"></textarea>
-            </div>
-
-            <button class="boton-enviar-calificacion">
-                ENVIAR <a href="#" class="icono-enviar" aria-label="Enviar">Aquí va el icono</a>
-            </button>
+    <div class="calificacion-container">
+        
+        <div class="calificacion-header">
+            <h2>¡Sesión Finalizada!</h2>
+            <p>¿Qué tal estuvo tu experiencia con <strong id="nombre-tutor-calificar">Victor Alberca</strong>?</p>
         </div>
-    </main>
-    </section>
+
+        <div class="calificacion-avatar">
+            <img src="../assets/images/ima-foto-victor.png" alt="Foto Tutor">
+        </div>
+
+        <div class="calificacion-estrellas">
+            <input type="radio" name="rating" id="star5" value="5"><label for="star5">★</label>
+            <input type="radio" name="rating" id="star4" value="4"><label for="star4">★</label>
+            <input type="radio" name="rating" id="star3" value="3"><label for="star3">★</label>
+            <input type="radio" name="rating" id="star2" value="2"><label for="star2">★</label>
+            <input type="radio" name="rating" id="star1" value="1"><label for="star1">★</label>
+        </div>
+
+        <div class="calificacion-comentario">
+            <textarea placeholder="Escribe una breve reseña (opcional)..."></textarea>
+        </div>
+
+        <div class="calificacion-acciones">
+            <button class="btn-enviar-calificacion" id="btn-enviar-calificacion">Enviar Calificación</button>
+            <button class="btn-omitir-calificacion" id="btn-omitir-calificacion">Omitir</button>
+        </div>
+
+    </div>
+</section>
 
     
 
-<section class="seccion-videollamada-pizarra panel-seccion" id="panel-pizarra">
-        
-    <div class="video-area-principal-pizarra">
-        
-        <div class="video-opciones-tabs-pizarra">
-            <button class="opcion-tab-pizarra activo">
-                <span class="icono-tab-pizarra">
+    <section class="seccion-videollamada-pizarra panel-seccion" id="panel-pizarra">
+            
+        <div class="video-area-principal-pizarra">
+            
+            <div class="video-opciones-tabs-pizarra">
+                <button class="opcion-tab-pizarra activo">
+                    <span class="icono-tab-pizarra">
+                        
+    <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M25.0396 28.5731L23.8771 27.5658M25.0396 28.5731L28.9979 27.1939M25.0396 28.5731L23.5344 28.8752L23.8771 27.5658M23.8771 27.5658C24.2896 26.9971 25.7312 23.9689 25.7312 23.9689M28.9979 27.1939L25.7312 23.9689M28.9979 27.1939L45.3125 11.5752C44.7385 10.3512 43.6083 9.17103 42.2292 8.59082L25.7312 23.9689M7.03958 26.2752C9.65104 23.0575 11.3583 23.9106 15.3917 27.5398C19.424 31.1689 21.1313 32.0221 23.7437 28.8054M42.0719 14.6804V39.9867C42.0719 40.7742 41.4385 41.4096 40.65 41.4096H6.11042C5.32188 41.4096 4.6875 40.7742 4.6875 39.9867V14.7231C4.6875 13.9356 5.32292 13.3002 6.11042 13.3002H37.1771" stroke="black" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+                    </span>
+                    Pizarra
+                </button>
+                <button class="opcion-tab-pizarra">
+                    <span class="icono-tab-pizarra">
                     
- <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M25.0396 28.5731L23.8771 27.5658M25.0396 28.5731L28.9979 27.1939M25.0396 28.5731L23.5344 28.8752L23.8771 27.5658M23.8771 27.5658C24.2896 26.9971 25.7312 23.9689 25.7312 23.9689M28.9979 27.1939L25.7312 23.9689M28.9979 27.1939L45.3125 11.5752C44.7385 10.3512 43.6083 9.17103 42.2292 8.59082L25.7312 23.9689M7.03958 26.2752C9.65104 23.0575 11.3583 23.9106 15.3917 27.5398C19.424 31.1689 21.1313 32.0221 23.7437 28.8054M42.0719 14.6804V39.9867C42.0719 40.7742 41.4385 41.4096 40.65 41.4096H6.11042C5.32188 41.4096 4.6875 40.7742 4.6875 39.9867V14.7231C4.6875 13.9356 5.32292 13.3002 6.11042 13.3002H37.1771" stroke="black" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-                </span>
-                Pizarra
-            </button>
-            <button class="opcion-tab-pizarra">
-                <span class="icono-tab-pizarra">
-                 
-                     <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M13.2815 16.4764H26.7148M13.2815 23.523H22.8615M19.9981 35.4164C23.3471 35.4156 26.6048 34.3244 29.2785 32.3077C31.9521 30.291 33.8964 27.4585 34.8173 24.2387C35.7381 21.0188 35.5854 17.5866 34.3823 14.4612C33.1791 11.3358 30.991 8.68716 28.1488 6.91586C25.3066 5.14457 21.9649 4.34695 18.629 4.64364C15.2932 4.94032 12.1448 6.31518 9.65976 8.56027C7.17476 10.8054 5.48841 13.7986 4.85574 17.0873C4.22307 20.3759 4.67849 23.7812 6.15313 26.788C6.33313 27.1547 6.39313 27.568 6.30146 27.9647L4.94146 33.858C4.90312 34.0234 4.90752 34.1958 4.95424 34.3591C5.00096 34.5223 5.08847 34.6709 5.20852 34.791C5.32857 34.911 5.4772 34.9985 5.64042 35.0452C5.80364 35.092 5.97607 35.0964 6.14146 35.058L12.0331 33.6964C12.4309 33.6093 12.8466 33.6622 13.2098 33.8464C15.3221 34.8837 17.6449 35.4209 19.9981 35.4164Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M13.2815 16.4764H26.7148M13.2815 23.523H22.8615M19.9981 35.4164C23.3471 35.4156 26.6048 34.3244 29.2785 32.3077C31.9521 30.291 33.8964 27.4585 34.8173 24.2387C35.7381 21.0188 35.5854 17.5866 34.3823 14.4612C33.1791 11.3358 30.991 8.68716 28.1488 6.91586C25.3066 5.14457 21.9649 4.34695 18.629 4.64364C15.2932 4.94032 12.1448 6.31518 9.65976 8.56027C7.17476 10.8054 5.48841 13.7986 4.85574 17.0873C4.22307 20.3759 4.67849 23.7812 6.15313 26.788C6.33313 27.1547 6.39313 27.568 6.30146 27.9647L4.94146 33.858C4.90312 34.0234 4.90752 34.1958 4.95424 34.3591C5.00096 34.5223 5.08847 34.6709 5.20852 34.791C5.32857 34.911 5.4772 34.9985 5.64042 35.0452C5.80364 35.092 5.97607 35.0964 6.14146 35.058L12.0331 33.6964C12.4309 33.6093 12.8466 33.6622 13.2098 33.8464C15.3221 34.8837 17.6449 35.4209 19.9981 35.4164Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
 
-                </span>
-                Chat
-            </button>
-        </div>
+                    </span>
+                    Chat
+                </button>
+            </div>
 
-        <div class="video-contenido-principal-pizarra">
-            <div class="pizarra-virtual">
-                </div>
-        </div>
+            <div class="video-contenido-principal-pizarra">
+                <div class="pizarra-virtual">
+                    </div>
+            </div>
 
-        <div class="controles-flotantes-video-pizarra">
-            <button class="control-btn-video-pizarra" aria-label="Activar/Desactivar cámara">
-                <svg width="50" height="37" viewBox="0 0 50 37" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M46.8009 6.78171C46.3005 6.72391 45.794 6.8137 45.3439 7.04004L33.582 12.9171V23.2505L45.3439 29.1275C45.7373 29.3241 46.1743 29.417 46.6136 29.3974C47.0529 29.3779 47.48 29.2465 47.8543 29.0157C48.2287 28.785 48.5379 28.4625 48.7527 28.0788C48.9676 27.6951 49.0809 27.2629 49.082 26.8232V9.34437C49.0813 8.71208 48.8487 8.102 48.4283 7.6297C48.0079 7.1574 47.4289 6.85569 46.8009 6.78171Z" fill="black"/>
-<path d="M7.75 0C3.50042 0 0 3.50042 0 7.75V28.4167C0 32.6662 3.50042 36.1667 7.75 36.1667H28.4167C32.6662 36.1667 36.1667 32.6662 36.1667 28.4167V7.75C36.1667 3.50042 32.6662 0 28.4167 0H7.75Z" fill="black"/>
-</svg>
-    </button>
-            <button class="control-btn-video-pizarra mic-off" aria-label="Micrófono silenciado">
-                <svg width="31" height="35" viewBox="0 0 31 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M21.4978 18.2881C21.961 17.3591 22.2064 16.3366 22.2153 15.2986V6.75689C22.1964 5.06939 21.5538 3.44857 20.4111 2.20665C19.2685 0.964721 17.7067 0.189548 16.0266 0.0304487C14.3465 -0.12865 12.667 0.33958 11.3116 1.34494C9.95611 2.35031 9.02063 3.82168 8.68532 5.47564M27.3403 15.2986C27.3403 14.8455 27.1603 14.411 26.84 14.0906C26.5196 13.7702 26.0851 13.5902 25.632 13.5902C25.1789 13.5902 24.7444 13.7702 24.424 14.0906C24.1036 14.411 23.9237 14.8455 23.9237 15.2986C23.9187 16.7911 23.5115 18.2546 22.7449 19.5352L25.2562 22.1319C26.6309 20.1197 27.3581 17.7355 27.3403 15.2986ZM15.382 22.1319H15.6553L8.54866 15.0081V15.2986C8.54866 17.1109 9.2686 18.849 10.5501 20.1305C11.8316 21.412 13.5697 22.1319 15.382 22.1319ZM30.2616 29.4606L2.92824 2.12731C2.76896 1.96802 2.57986 1.84167 2.37175 1.75547C2.16364 1.66927 1.94058 1.6249 1.71532 1.6249C1.49006 1.6249 1.26701 1.66927 1.0589 1.75547C0.850785 1.84167 0.661689 1.96802 0.502407 2.12731C0.180721 2.44899 0 2.88529 0 3.34022C0 3.79515 0.180721 4.23145 0.502407 4.55314L14.1691 18.2198L27.8357 31.8865C27.9946 32.0466 28.1835 32.1737 28.3917 32.2604C28.5999 32.3471 28.8231 32.3918 29.0487 32.3918C29.2742 32.3918 29.4975 32.3471 29.7056 32.2604C29.9138 32.1737 30.1028 32.0466 30.2616 31.8865C30.4217 31.7277 30.5488 31.5387 30.6355 31.3305C30.7222 31.1224 30.7669 30.8991 30.7669 30.6736C30.7669 30.448 30.7222 30.2247 30.6355 30.0166C30.5488 29.8084 30.4217 29.6194 30.2616 29.4606Z" fill="#1E1E1E"/>
-<path d="M20.5091 30.6732H17.0924V27.1198C18.0592 26.9853 19.0058 26.7328 19.9112 26.3682L17.1779 23.6348C16.5898 23.7719 15.9879 23.8407 15.3841 23.8398C13.1187 23.8398 10.9461 22.9399 9.34424 21.338C7.74237 19.7362 6.84245 17.5636 6.84245 15.2982C6.84245 14.8451 6.66246 14.4106 6.34209 14.0902C6.02171 13.7698 5.58719 13.5898 5.13411 13.5898C4.68104 13.5898 4.24652 13.7698 3.92614 14.0902C3.60577 14.4106 3.42578 14.8451 3.42578 15.2982C3.42915 18.1713 4.46685 20.9472 6.34905 23.118C8.23124 25.2888 10.8321 26.7094 13.6758 27.1198V30.6732H10.2591C9.80604 30.6732 9.37152 30.8532 9.05114 31.1735C8.73077 31.4939 8.55078 31.9284 8.55078 32.3815C8.55078 32.8346 8.73077 33.2691 9.05114 33.5895C9.37152 33.9099 9.80604 34.0898 10.2591 34.0898H20.5091C20.9622 34.0898 21.3967 33.9099 21.7171 33.5895C22.0375 33.2691 22.2174 32.8346 22.2174 32.3815C22.2174 31.9284 22.0375 31.4939 21.7171 31.1735C21.3967 30.8532 20.9622 30.6732 20.5091 30.6732Z" fill="#1E1E1E"/>
-</svg>
-            </button>
-            <button class="control-btn-video-pizarra colgar" aria-label="Colgar">
+            <div class="controles-flotantes-video-pizarra">
+                <button class="control-btn-video-pizarra" aria-label="Activar/Desactivar cámara">
+                    <svg width="50" height="37" viewBox="0 0 50 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M46.8009 6.78171C46.3005 6.72391 45.794 6.8137 45.3439 7.04004L33.582 12.9171V23.2505L45.3439 29.1275C45.7373 29.3241 46.1743 29.417 46.6136 29.3974C47.0529 29.3779 47.48 29.2465 47.8543 29.0157C48.2287 28.785 48.5379 28.4625 48.7527 28.0788C48.9676 27.6951 49.0809 27.2629 49.082 26.8232V9.34437C49.0813 8.71208 48.8487 8.102 48.4283 7.6297C48.0079 7.1574 47.4289 6.85569 46.8009 6.78171Z" fill="black"/>
+    <path d="M7.75 0C3.50042 0 0 3.50042 0 7.75V28.4167C0 32.6662 3.50042 36.1667 7.75 36.1667H28.4167C32.6662 36.1667 36.1667 32.6662 36.1667 28.4167V7.75C36.1667 3.50042 32.6662 0 28.4167 0H7.75Z" fill="black"/>
+    </svg>
+        </button>
+                <button class="control-btn-video-pizarra mic-off" aria-label="Micrófono silenciado">
+                    <svg width="31" height="35" viewBox="0 0 31 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.4978 18.2881C21.961 17.3591 22.2064 16.3366 22.2153 15.2986V6.75689C22.1964 5.06939 21.5538 3.44857 20.4111 2.20665C19.2685 0.964721 17.7067 0.189548 16.0266 0.0304487C14.3465 -0.12865 12.667 0.33958 11.3116 1.34494C9.95611 2.35031 9.02063 3.82168 8.68532 5.47564M27.3403 15.2986C27.3403 14.8455 27.1603 14.411 26.84 14.0906C26.5196 13.7702 26.0851 13.5902 25.632 13.5902C25.1789 13.5902 24.7444 13.7702 24.424 14.0906C24.1036 14.411 23.9237 14.8455 23.9237 15.2986C23.9187 16.7911 23.5115 18.2546 22.7449 19.5352L25.2562 22.1319C26.6309 20.1197 27.3581 17.7355 27.3403 15.2986ZM15.382 22.1319H15.6553L8.54866 15.0081V15.2986C8.54866 17.1109 9.2686 18.849 10.5501 20.1305C11.8316 21.412 13.5697 22.1319 15.382 22.1319ZM30.2616 29.4606L2.92824 2.12731C2.76896 1.96802 2.57986 1.84167 2.37175 1.75547C2.16364 1.66927 1.94058 1.6249 1.71532 1.6249C1.49006 1.6249 1.26701 1.66927 1.0589 1.75547C0.850785 1.84167 0.661689 1.96802 0.502407 2.12731C0.180721 2.44899 0 2.88529 0 3.34022C0 3.79515 0.180721 4.23145 0.502407 4.55314L14.1691 18.2198L27.8357 31.8865C27.9946 32.0466 28.1835 32.1737 28.3917 32.2604C28.5999 32.3471 28.8231 32.3918 29.0487 32.3918C29.2742 32.3918 29.4975 32.3471 29.7056 32.2604C29.9138 32.1737 30.1028 32.0466 30.2616 31.8865C30.4217 31.7277 30.5488 31.5387 30.6355 31.3305C30.7222 31.1224 30.7669 30.8991 30.7669 30.6736C30.7669 30.448 30.7222 30.2247 30.6355 30.0166C30.5488 29.8084 30.4217 29.6194 30.2616 29.4606Z" fill="#1E1E1E"/>
+    <path d="M20.5091 30.6732H17.0924V27.1198C18.0592 26.9853 19.0058 26.7328 19.9112 26.3682L17.1779 23.6348C16.5898 23.7719 15.9879 23.8407 15.3841 23.8398C13.1187 23.8398 10.9461 22.9399 9.34424 21.338C7.74237 19.7362 6.84245 17.5636 6.84245 15.2982C6.84245 14.8451 6.66246 14.4106 6.34209 14.0902C6.02171 13.7698 5.58719 13.5898 5.13411 13.5898C4.68104 13.5898 4.24652 13.7698 3.92614 14.0902C3.60577 14.4106 3.42578 14.8451 3.42578 15.2982C3.42915 18.1713 4.46685 20.9472 6.34905 23.118C8.23124 25.2888 10.8321 26.7094 13.6758 27.1198V30.6732H10.2591C9.80604 30.6732 9.37152 30.8532 9.05114 31.1735C8.73077 31.4939 8.55078 31.9284 8.55078 32.3815C8.55078 32.8346 8.73077 33.2691 9.05114 33.5895C9.37152 33.9099 9.80604 34.0898 10.2591 34.0898H20.5091C20.9622 34.0898 21.3967 33.9099 21.7171 33.5895C22.0375 33.2691 22.2174 32.8346 22.2174 32.3815C22.2174 31.9284 22.0375 31.4939 21.7171 31.1735C21.3967 30.8532 20.9622 30.6732 20.5091 30.6732Z" fill="#1E1E1E"/>
+    </svg>
+                </button>
+                <button class="control-btn-video-pizarra colgar" aria-label="Colgar">
 
-                
- <svg width="38" height="19" viewBox="0 0 38 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M6.76312 18.5569L9.27563 17.8444C11.5425 17.2013 13.125 14.9681 13.125 12.4088C13.125 12.4088 13.125 9.3075 18.75 9.3075C24.375 9.3075 24.375 12.4088 24.375 12.4088C24.375 14.9681 25.9575 17.2013 28.2244 17.8462L30.7369 18.5588C34.1587 19.5263 37.5 16.7063 37.5 12.8438C37.5 10.5244 36.9806 8.19938 35.4694 6.56813C32.925 3.825 27.7631 0 18.75 0C9.73687 0 4.575 3.82313 2.03062 6.56813C0.519375 8.19938 0 10.5244 0 12.8438C0 16.7063 3.34125 19.5281 6.76312 18.5569Z" fill="#FF0000"/>
-</svg>
-            </button>
+                    
+    <svg width="38" height="19" viewBox="0 0 38 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6.76312 18.5569L9.27563 17.8444C11.5425 17.2013 13.125 14.9681 13.125 12.4088C13.125 12.4088 13.125 9.3075 18.75 9.3075C24.375 9.3075 24.375 12.4088 24.375 12.4088C24.375 14.9681 25.9575 17.2013 28.2244 17.8462L30.7369 18.5588C34.1587 19.5263 37.5 16.7063 37.5 12.8438C37.5 10.5244 36.9806 8.19938 35.4694 6.56813C32.925 3.825 27.7631 0 18.75 0C9.73687 0 4.575 3.82313 2.03062 6.56813C0.519375 8.19938 0 10.5244 0 12.8438C0 16.7063 3.34125 19.5281 6.76312 18.5569Z" fill="#FF0000"/>
+    </svg>
+                </button>
 
-        </div>
+            </div>
 
-    </div> <aside class="video-sidebar-pizarra">
-        <div class="video-participante-pizarra">
-            <img src="../assets/images/ima-chica1.png" alt="Video de Alexandra Meza Soza" class="video-placeholder-sidebar-pizarra">
-            <span class="nombre-participante-video-pizarra">Alexandra Meza Soza</span>
-        </div>
-        <div class="video-participante-pizarra">
-            <img src="../assets/images/ima-chico1.png" alt="Video de Carlos Quispe Medina" class="video-placeholder-sidebar-pizarra">
-            <span class="nombre-participante-video-pizarra">Carlos Quispe Medina</span>
-        </div>
-    </aside>
+        </div> <aside class="video-sidebar-pizarra">
+            <div class="video-participante-pizarra">
+                <img src="../assets/images/ima-chica1.png" alt="Video de Alexandra Meza Soza" class="video-placeholder-sidebar-pizarra">
+                <span class="nombre-participante-video-pizarra">Alexandra Meza Soza</span>
+            </div>
+            <div class="video-participante-pizarra">
+                <img src="../assets/images/ima-chico1.png" alt="Video de Carlos Quispe Medina" class="video-placeholder-sidebar-pizarra">
+                <span class="nombre-participante-video-pizarra">Carlos Quispe Medina</span>
+            </div>
+        </aside>
 
-</section>
+    </section>
 
 
 
@@ -506,11 +516,11 @@
         <a href="#" class="tag-busqueda">Creatividad Y Liderazgo</a>
     </div>
 
-</section>
+    </section>
 
 
 
-<section class="seccion-sesiones panel-seccion" id="panel-sesiones-pasadas-ejemplo">
+    <section class="seccion-sesiones panel-seccion" id="panel-sesiones-pasadas-ejemplo">
 
     <h2 class="titulo-sesiones">¿Que hacemos hoy?</h2>
 
