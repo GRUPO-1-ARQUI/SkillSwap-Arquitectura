@@ -1380,7 +1380,77 @@
         <button class="dash-est-boton-detalle">Ver detalles</button>
       </div>
 
-      <button class="dash-est-boton-calendario">Abrir Calendario</button>
+      <div class="calendario-dropdown-wrapper">
+        <button class="dash-est-boton-calendario" id="btn-abrir-calendario">
+            Abrir Calendario
+        </button>
+
+        <div class="calendario-semanal-flotante" id="calendario-flotante">
+            <div class="calendario-header">
+                <h3>Mi Disponibilidad Semanal</h3>
+                <button class="btn-cerrar-calendario" id="btn-cerrar-calendario">✕</button>
+            </div>
+            
+            <div class="calendario-grid">
+                <div class="dia-item ocupado">
+                    <div class="dia-nombre">Lun</div>
+                    <div class="dia-estado">Ocupado</div>
+                    <div class="dia-horas">9:00 - 18:00</div>
+                </div>
+
+                <div class="dia-item libre">
+                    <div class="dia-nombre">Mar</div>
+                    <div class="dia-estado">Libre</div>
+                    <div class="dia-horas">
+                        <select class="select-hora-mini">
+                            <option>Elegir hora...</option>
+                            <option>10:00 am</option>
+                            <option>04:00 pm</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="dia-item libre">
+                    <div class="dia-nombre">Mié</div>
+                    <div class="dia-estado">Libre</div>
+                    <div class="dia-horas">
+                        <select class="select-hora-mini">
+                            <option>Elegir hora...</option>
+                            <option>10:00 am</option>
+                            <option>04:00 pm</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="dia-item ocupado">
+                    <div class="dia-nombre">Jue</div>
+                    <div class="dia-estado">Ocupado</div>
+                    <div class="dia-horas">Todo el día</div>
+                </div>
+
+                <div class="dia-item libre">
+                    <div class="dia-nombre">Vie</div>
+                    <div class="dia-estado">Libre</div>
+                    <div class="dia-horas">
+                        <select class="select-hora-mini">
+                            <option>Elegir hora...</option>
+                            <option>03:00 pm</option>
+                            <option>05:00 pm</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="dia-item fin-semana">
+                    <div class="dia-nombre">Sáb/Dom</div>
+                    <div class="dia-estado">Descanso</div>
+                </div>
+            </div>
+            
+            <div class="calendario-footer">
+                <button class="btn-guardar-calendario">Guardar Cambios</button>
+            </div>
+        </div>
+      </div>
     </div>
 
     <div class="dash-est-columna-derecha">
