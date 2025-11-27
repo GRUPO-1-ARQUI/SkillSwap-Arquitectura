@@ -97,5 +97,25 @@
         <p>2025 SkillSwap. Todos los derechos reservados.</p>
       </div>
     </footer>
+
+    <script>
+    // Script simple para simular registro
+    document.addEventListener('DOMContentLoaded', () => {
+        const btnRegistro = document.querySelector('.btn-registrase'); // O la clase que tenga tu botón de registro
+        
+        if(btnRegistro) {
+            btnRegistro.addEventListener('click', (e) => {
+                e.preventDefault(); // Evita que el formulario se envíe realmente
+                
+                // Aquí podrías validar que los campos no estén vacíos si quisieras
+                
+                alert("¡Registro exitoso! Ahora puedes iniciar sesión con tu usuario.");
+                
+                // Redirigir al Login (subimos dos niveles: de sitios -> public -> raiz)
+                window.location.href = "../../index.html";
+            });
+        }
+    });
+</script>
   </body>
 </html>
