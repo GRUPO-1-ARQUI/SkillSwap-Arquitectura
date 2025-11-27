@@ -5920,3 +5920,165 @@ body.dark-mode .nav-link-notificaciones svg path {
     font-size: 13px;
     cursor: pointer;
 }
+
+
+
+
+/* --- (NUEVO) Estilos Detalle Verificación Coordinador --- */
+
+/* Panel Lleno (ocupa el mismo espacio que el vacío) */
+.panel-detalle-completo-coord {
+    flex: 1; /* Ocupa el espacio restante a la derecha */
+    background-color: var(--white-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 600px; /* Ajusta según necesites o usa min-height */
+    box-sizing: border-box;
+    /* Animación suave al aparecer */
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Cabecera */
+.detalle-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+    margin-bottom: 10px;
+}
+
+.detalle-header h2 {
+    margin: 0;
+    font-size: 20px;
+    color: var(--primary-color, #005a9c);
+}
+
+.btn-cerrar-detalle {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.btn-cerrar-detalle:hover { color: #333; }
+
+/* Tarjeta de Perfil Interna */
+.detalle-perfil-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background-color: #f8f9fa; /* Fondo gris suave */
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #eee;
+}
+
+.detalle-foto-grande {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.detalle-datos-principales h3 {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.detalle-datos-principales p {
+    margin: 4px 0;
+    font-size: 14px;
+    color: #666;
+}
+
+/* Archivos Adjuntos */
+.detalle-seccion-info h4 {
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.archivo-adjunto-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border: 1px solid var(--border-color);
+    padding: 12px 15px;
+    border-radius: 8px;
+    background-color: var(--white-color);
+    transition: background-color 0.2s;
+}
+.archivo-adjunto-item:hover { background-color: #f9f9f9; }
+
+.icono-pdf { font-size: 24px; }
+
+.info-archivo { flex: 1; }
+.nombre-archivo { font-weight: 600; font-size: 14px; margin: 0; }
+.peso-archivo { font-size: 12px; color: #888; margin: 0; }
+
+.btn-descargar-archivo {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--primary-color);
+}
+
+/* Badge Estado */
+.badge-estado {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+}
+.badge-estado.pendiente {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+/* Botones Footer */
+.detalle-acciones-footer {
+    margin-top: auto; /* Empuja al final */
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+.btn-accion-detalle {
+    padding: 10px 25px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+    transition: transform 0.2s;
+}
+.btn-accion-detalle:hover { transform: scale(1.05); }
+
+.btn-accion-detalle.rechazar {
+    background-color: white;
+    border: 1px solid #dc3545;
+    color: #dc3545;
+}
+.btn-accion-detalle.aceptar {
+    background-color: #28a745;
+    color: white;
+}
