@@ -21,13 +21,13 @@ function validarLogin(event) {
         if (usuario === "admin" || usuario === "pcjim") {
             alert("¡Bienvenido Coordinador!");
             // Redirección a la carpeta de sitios -> coordinador
-            window.location.href = "/public/sitios/index-user-coordinador.html";
+            window.location.href = "./index-user-coordinador.html";
         } 
         // B. Si no es coordinador, asumimos que es Estudiante
         else {
             alert("¡Bienvenido Estudiante!");
             // Redirección a la carpeta de sitios -> estudiante
-            window.location.href = "/public/sitios/index-user-estudiante.html";
+            window.location.href = "./index-user-estudiante.html";
         }
 
     } else {
