@@ -525,6 +525,80 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
+  // ==========================================
+  // LÓGICA DE CHAT INTERACTIVO (SIMULACIÓN)
+  // ==========================================
+
+  const chatInputMain = document.getElementById('chat-input-principal');
+  const chatBtnEnviar = document.getElementById('chat-btn-enviar');
+  const chatAreaMensajes = document.querySelector('#panel-chat .area-mensajes');
+
+  // Función para agregar un mensaje al chat
+  function agregarMensaje(texto, tipo) {
+      // Crear el div de la burbuja
+      const nuevaBurbuja = document.createElement('div');
+      nuevaBurbuja.classList.add('burbuja-mensaje', tipo); // tipo puede ser 'enviado' o 'recibido'
+      
+      // Insertar el texto
+      nuevaBurbuja.innerHTML = `<span>${texto}</span>`;
+      
+      // Agregar al área de mensajes
+      chatAreaMensajes.appendChild(nuevaBurbuja);
+      
+      // Hacer scroll automático hacia abajo para ver el último mensaje
+      chatAreaMensajes.scrollTop = chatAreaMensajes.scrollHeight;
+  }
+
+  // Función para simular respuesta del tutor
+  function simularRespuestaTutor() {
+      // Mostramos un mensaje de "escribiendo..." (opcional, simplificado aquí)
+      setTimeout(() => {
+          const respuestasRandom = [
+              "¡Entendido! Me parece buena idea.",
+              "Claro, déjame revisar mis horarios.",
+              "¿Podrías enviarme el avance por correo?",
+              "Perfecto, nos vemos en la sesión.",
+              "¡Gracias por avisar!",
+              "Ok, coordinamos."
+          ];
+          const respuesta = respuestasRandom[Math.floor(Math.random() * respuestasRandom.length)];
+          agregarMensaje(respuesta, 'recibido');
+      }, 1500); // Responde después de 1.5 segundos
+  }
+
+  // Función principal de envío
+  function enviarMensajeChat() {
+      const texto = chatInputMain.value.trim();
+      
+      if (texto !== "") {
+          // 1. Agregar mensaje del usuario (derecha)
+          agregarMensaje(texto, 'enviado');
+          
+          // 2. Limpiar el input
+          chatInputMain.value = "";
+          
+          // 3. Simular respuesta del tutor (izquierda)
+          simularRespuestaTutor();
+      }
+  }
+
+  // Eventos
+  if (chatBtnEnviar && chatInputMain) {
+      // Al hacer clic en el botón enviar
+      chatBtnEnviar.addEventListener('click', (e) => {
+          e.preventDefault();
+          enviarMensajeChat();
+      });
+
+      // Al presionar "Enter" en el teclado
+      chatInputMain.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+              e.preventDefault();
+              enviarMensajeChat();
+          }
+      });
+  }
+
   // --- INICIO POR DEFECTO ---
   // Mostrar Dashboard al cargar
   mostrarSeccionEstudiante('panel-dashboard-estudiante');
