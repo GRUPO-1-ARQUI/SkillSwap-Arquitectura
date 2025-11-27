@@ -304,7 +304,7 @@
           
           if (confirmar) {
               // Redirigir al Login (está en la misma carpeta 'sitios')
-              window.location.href = "index-login.html";
+              window.location.href = "./index-login.html";
           }
       });
   }
