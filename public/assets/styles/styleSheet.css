@@ -6082,3 +6082,50 @@ body.dark-mode .nav-link-notificaciones svg path {
     background-color: #28a745;
     color: white;
 }
+
+
+/* Estilos para el menú de filtros del Coordinador */
+.menu-filtros-busqueda {
+    display: none; /* Oculto por defecto */
+    position: absolute;
+    top: 115%; /* Justo debajo del botón */
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    width: 180px;
+    z-index: 100;
+    overflow: hidden;
+}
+
+.menu-filtros-busqueda.activo {
+    display: block; /* Se muestra con JS */
+    animation: fadeIn 0.2s ease;
+}
+
+.opcion-filtro {
+    padding: 12px 15px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s;
+}
+
+.opcion-filtro:last-child {
+    border-bottom: none;
+}
+
+.opcion-filtro:hover {
+    background-color: #f7f9fc;
+    color: #005a9c;
+}
+
+/* Marca visual para la opción seleccionada */
+.opcion-filtro.seleccionado {
+    background-color: #eef5ff;
+    color: #005a9c;
+    font-weight: 700;
+    border-left: 4px solid #005a9c;
+}
