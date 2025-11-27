@@ -928,7 +928,7 @@ body.dark-mode .btn-header-chat:hover {
     padding: 20px;
     
     display: flex;
-    flex-direction: column-reverse; 
+    flex-direction: column;
     gap: 12px;
 }
 
