@@ -158,6 +158,158 @@
           }, 1000);
       });
   }
+  // ==========================================
+  // LÓGICA DE BÚSQUEDA Y FILTROS (COORDINADOR)
+  // ==========================================
+
+  const inputBusquedaEst = document.getElementById('input-busqueda-estudiantes');
+  const contenedorResultados = document.getElementById('contenedor-resultados-busqueda');
+  const textoSubtitulo = document.getElementById('texto-resultados');
+  
+  // Elementos del Filtro
+  const btnFiltro = document.getElementById('btn-toggle-filtro');
+  const menuFiltros = document.getElementById('menu-filtros');
+  const opcionesFiltro = document.querySelectorAll('.opcion-filtro');
+
+  // Estado inicial del filtro
+  let filtroActual = 'nombre'; // 'nombre' o 'codigo'
+
+  // Datos del estudiante (Base de datos local simulada)
+  const estudianteVictor = {
+      nombre: "Victor Alberca Saavedra",
+      universidad: "Pontificia Universidad Católica del Perú (PUCP)",
+      carrera: "Ingeniería de Software",
+      codigo: "u201924127",
+      foto: "../assets/images/ima-foto-victor.png",
+      estado: "Pendiente de Verificación"
+  };
+
+  // --- A. Manejo del Menú Desplegable ---
+  if (btnFiltro && menuFiltros) {
+      // 1. Abrir/Cerrar menú al hacer clic en el botón
+      btnFiltro.addEventListener('click', (e) => {
+          e.stopPropagation(); // Evitar que el clic se propague al document
+          menuFiltros.classList.toggle('activo');
+      });
+
+      // 2. Cerrar menú al hacer clic fuera
+      document.addEventListener('click', (e) => {
+          if (!menuFiltros.contains(e.target) && !btnFiltro.contains(e.target)) {
+              menuFiltros.classList.remove('activo');
+          }
+      });
+
+      // 3. Seleccionar una opción
+      opcionesFiltro.forEach(opcion => {
+          opcion.addEventListener('click', (e) => {
+              // Actualizar variable de estado
+              filtroActual = e.target.dataset.tipo;
+
+              // Actualizar estilos visuales (negrita/color)
+              opcionesFiltro.forEach(op => op.classList.remove('seleccionado'));
+              e.target.classList.add('seleccionado');
+
+              // Actualizar el placeholder del input para guiar al usuario
+              if (filtroActual === 'nombre') {
+                  inputBusquedaEst.placeholder = "Buscar alumno por nombre...";
+              } else {
+                  inputBusquedaEst.placeholder = "Buscar alumno por código (ej: u20...)";
+              }
+
+              // Cerrar menú y enfocar el input
+              menuFiltros.classList.remove('activo');
+              inputBusquedaEst.focus();
+          });
+      });
+  }
+
+  // --- B. Lógica de Búsqueda Actualizada ---
+  if (inputBusquedaEst && contenedorResultados) {
+      
+      inputBusquedaEst.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+              e.preventDefault();
+              realizarBusqueda();
+          }
+      });
+
+      function realizarBusqueda() {
+          const texto = inputBusquedaEst.value.toLowerCase().trim();
+          contenedorResultados.innerHTML = ''; // Limpiar resultados previos
+          let encontrado = false;
+
+          // Lógica condicional según el filtro seleccionado
+          if (filtroActual === 'nombre') {
+              // Buscar por Nombre
+              if (texto.includes("victor") || texto.includes("alberca")) {
+                  encontrado = true;
+              }
+          } else if (filtroActual === 'codigo') {
+              // Buscar por Código
+              if (texto.includes("u201924127") || texto.includes("201924127")) {
+                  encontrado = true;
+              }
+          }
+
+          // Renderizar resultado
+          if (encontrado) {
+              if(textoSubtitulo) textoSubtitulo.textContent = `Resultado encontrado por ${filtroActual}:`;
+              
+              const tarjetaHTML = `
+                  <div class="tarjeta-correo-item" style="cursor: default; background-color: #f0f8ff; border: 1px solid #005a9c; animation: fadeIn 0.3s;">
+                      <img src="${estudianteVictor.foto}" alt="Foto Perfil" class="correo-imagen" style="width: 60px; height: 60px;">
+                      <div class="correo-detalles" style="margin-left: 15px;">
+                          <p class="correo-nombre" style="font-size: 18px;">${estudianteVictor.nombre} <span style="color: #005a9c;">✓</span></p>
+                          <p class="correo-universidad">${estudianteVictor.universidad}</p>
+                          <p style="font-size: 14px; color: #555;">Código: <strong>${estudianteVictor.codigo}</strong></p>
+                          <div style="margin-top: 5px;">
+                              <span style="background-color: #ffc107; padding: 2px 8px; border-radius: 10px; font-size: 12px; font-weight: bold;">${estudianteVictor.estado}</span>
+                          </div>
+                      </div>
+                      <div style="margin-left: auto;">
+                          <button class="boton-accion-coord aceptar" onclick="alert('Perfil de Victor Verificado Exitosamente!')">Verificar</button>
+                      </div>
+                  </div>
+              `;
+              contenedorResultados.innerHTML = tarjetaHTML;
+
+          } else if (texto === "") {
+              if(textoSubtitulo) textoSubtitulo.textContent = "Lista de resultados:";
+              contenedorResultados.innerHTML = '<p style="color: #666; text-align: center;">Escribe algo para buscar.</p>';
+          } else {
+              // No encontrado
+              if(textoSubtitulo) textoSubtitulo.textContent = `Resultados para: "${inputBusquedaEst.value}"`;
+              contenedorResultados.innerHTML = `
+                  <div style="text-align: center; padding: 20px; color: #666;">
+                      <p>No se encontraron estudiantes con ese <strong>${filtroActual}</strong>.</p>
+                      <p style="font-size: 13px; margin-top: 5px;">Prueba cambiando el filtro o verificando el texto.</p>
+                  </div>
+              `;
+          }
+      }
+  }
+
+  // ==========================================
+  // LÓGICA DE CERRAR SESIÓN
+  // ==========================================
+  
+  const btnCerrarSesion = document.getElementById('btn-cerrar-sesion');
+
+  if (btnCerrarSesion) {
+      btnCerrarSesion.addEventListener('click', (e) => {
+          e.preventDefault(); // Evita el salto inmediato
+          
+          // Preguntar al usuario (Buena práctica)
+          const confirmar = confirm("¿Estás seguro de que deseas cerrar sesión?");
+          
+          if (confirmar) {
+              // Redirigir al Login (está en la misma carpeta 'sitios')
+              window.location.href = "index-login.html";
+          }
+      });
+  }
+    
+  
 
     // Opcional: Nos aseguramos de que el dashboard sea lo primero que se vea al cargar la página.
     // (Esto es una doble seguridad, ya que también pusimos la clase 'activa' en el HTML)
