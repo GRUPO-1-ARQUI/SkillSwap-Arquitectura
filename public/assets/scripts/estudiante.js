@@ -599,6 +599,26 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
+   // ==========================================
+  // LÓGICA DE CERRAR SESIÓN
+  // ==========================================
+  
+  const btnCerrarSesion = document.getElementById('btn-cerrar-sesion');
+
+  if (btnCerrarSesion) {
+      btnCerrarSesion.addEventListener('click', (e) => {
+          e.preventDefault(); // Evita el salto inmediato
+          
+          // Preguntar al usuario (Buena práctica)
+          const confirmar = confirm("¿Estás seguro de que deseas cerrar sesión?");
+          
+          if (confirmar) {
+              // Redirigir al Login (está en la misma carpeta 'sitios')
+              window.location.href = "./index-login.html";
+          }
+      });
+  }
+
   // --- INICIO POR DEFECTO ---
   // Mostrar Dashboard al cargar
   mostrarSeccionEstudiante('panel-dashboard-estudiante');
