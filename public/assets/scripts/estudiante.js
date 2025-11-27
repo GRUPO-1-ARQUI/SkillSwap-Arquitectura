@@ -491,6 +491,40 @@ document.addEventListener('DOMContentLoaded', () => {
       mostrarSeccionEstudiante('panel-dashboard-estudiante');
   });
 
+  // --- I. CALENDARIO SEMANAL (Dashboard) ---
+  const btnAbrirCalendario = document.getElementById('btn-abrir-calendario');
+  const calendarioFlotante = document.getElementById('calendario-flotante');
+  const btnCerrarCalendario = document.getElementById('btn-cerrar-calendario');
+
+  if (btnAbrirCalendario && calendarioFlotante) {
+      // Toggle abrir/cerrar
+      btnAbrirCalendario.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation(); // Evita que se cierre inmediatamente si hay listener en document
+          calendarioFlotante.classList.toggle('activo');
+      });
+
+      // Botón X para cerrar
+      if (btnCerrarCalendario) {
+          btnCerrarCalendario.addEventListener('click', (e) => {
+              e.preventDefault();
+              calendarioFlotante.classList.remove('activo');
+          });
+      }
+
+      // Cerrar si clic fuera
+      document.addEventListener('click', (e) => {
+          if (!calendarioFlotante.contains(e.target) && !btnAbrirCalendario.contains(e.target)) {
+              calendarioFlotante.classList.remove('activo');
+          }
+      });
+      
+      // Evitar cierre al hacer clic dentro del calendario
+      calendarioFlotante.addEventListener('click', (e) => {
+          e.stopPropagation();
+      });
+  }
+
   // --- INICIO POR DEFECTO ---
   // Mostrar Dashboard al cargar
   mostrarSeccionEstudiante('panel-dashboard-estudiante');

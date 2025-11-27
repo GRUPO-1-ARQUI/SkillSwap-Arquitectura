@@ -5789,3 +5789,134 @@ body.dark-mode .nav-link-notificaciones svg path {
 .btn-control-llamada.activo {
     background-color: #005a9c; /* Azul cuando está activo */
 }
+
+/* --- (NUEVO) Estilos Calendario Flotante --- */
+
+.calendario-dropdown-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.calendario-semanal-flotante {
+    display: none; /* Oculto por defecto */
+    position: absolute;
+    top: 105%; /* Justo debajo del botón */
+    left: 0;
+    width: 100%; /* Ocupa el ancho de la columna izquierda */
+    min-width: 300px;
+    background-color: var(--white-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    z-index: 100; /* Por encima de todo */
+    overflow: hidden;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.calendario-semanal-flotante.activo {
+    display: block;
+}
+
+.calendario-header {
+    background-color: var(--background-color);
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.calendario-header h3 {
+    margin: 0;
+    font-size: 16px;
+    color: var(--primary-color);
+}
+
+.btn-cerrar-calendario {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: #666;
+}
+
+.calendario-grid {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.dia-item {
+    display: grid;
+    grid-template-columns: 50px 80px 1fr; /* 3 columnas: Nombre, Estado, Horas */
+    align-items: center;
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 14px;
+    border: 1px solid #eee;
+}
+
+.dia-nombre {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Estilos por estado */
+.dia-item.ocupado {
+    background-color: #ffecec; /* Rojo muy suave */
+    border-color: #ffcccc;
+}
+.dia-item.ocupado .dia-estado {
+    color: #d93025; /* Rojo fuerte */
+    font-weight: 600;
+    font-size: 12px;
+}
+.dia-item.ocupado .dia-horas {
+    color: #d93025;
+    font-size: 12px;
+}
+
+.dia-item.libre {
+    background-color: #f0f9ff; /* Azul muy suave */
+    border-color: #cceeff;
+}
+.dia-item.libre .dia-estado {
+    color: #005a9c;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.dia-item.fin-semana {
+    background-color: #f5f5f5;
+    color: #888;
+}
+
+.select-hora-mini {
+    width: 100%;
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.calendario-footer {
+    padding: 10px;
+    background-color: var(--background-color);
+    text-align: right;
+}
+
+.btn-guardar-calendario {
+    background-color: var(--primary-color, #005a9c);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+}
