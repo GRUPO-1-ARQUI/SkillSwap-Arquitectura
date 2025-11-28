@@ -1321,16 +1321,6 @@ body.dark-mode .btn-header-chat:hover {
     text-decoration: none;
 }
 
-.seccion-busqueda-principal {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centra todo el contenido */
-    width: 100%;
-    padding: 60px 20px; /* Espaciado superior e inferior */
-    box-sizing: border-box;
-    gap: 35px; 
-}
-
 .titulo-busqueda {
     font-family: "Inter", sans-serif; 
     font-size: 32px;
@@ -1354,10 +1344,10 @@ body.dark-mode .btn-header-chat:hover {
 
 .icono-lupa-busqueda {
     position: absolute;
-    left: 22px;
+    left: 5px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 24px;
+    font-size: 10px;
     color: #555;
     pointer-events: none; 
 }
