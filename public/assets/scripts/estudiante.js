@@ -1445,7 +1445,111 @@ if (encontrados.length > 0) {
       });
   }
 
+// ==============================================================
+  // INTERACCIONES SECCIÓN SESIONES (SOLICITADAS)
+  // ==============================================================
 
+  const panelSesiones = document.getElementById('panel-sesiones');
+
+  if (panelSesiones) {
+
+      // --- Interacción 1: Botón "Aprender un nuevo tema" ---
+      // Redirige a la sección de búsqueda principal
+      const btnAprenderTema = panelSesiones.querySelector('.boton-aprender-tema');
+      if (btnAprenderTema) {
+          btnAprenderTema.addEventListener('click', (e) => {
+              e.preventDefault();
+              mostrarSeccionEstudiante('panel-buscar'); // ID de la sección de búsqueda
+          });
+      }
+
+      // --- Interacción 2: Botón "Ver detalles" (Solo la primera tarjeta) ---
+      // Despliega un menú con información adicional
+      const primeraTarjeta = panelSesiones.querySelector('.grid-sesiones .tarjeta-sesion:first-child');
+      
+      if (primeraTarjeta) {
+          const btnDetalle = primeraTarjeta.querySelector('.boton-ver-detalles');
+          
+          // Crear el div de detalles dinámicamente (para no ensuciar tu HTML)
+          const divDetalles = document.createElement('div');
+          divDetalles.className = 'detalles-extra';
+          divDetalles.innerHTML = `
+              <strong>Información de la sesión:</strong>
+              <ul>
+                  <li>📍 Link: Zoom (Pendiente)</li>
+                  <li>📚 Material: Guía de Ejercicios.pdf</li>
+                  <li>⭐ Nivel: Intermedio</li>
+              </ul>
+              <button style="font-size:11px; padding:3px 8px; cursor:pointer;">Contactar Tutor</button>
+          `;
+          
+          // Insertar el div justo después del cuerpo de la tarjeta, antes del botón
+          const cuerpoTarjeta = primeraTarjeta.querySelector('.tarjeta-sesion-body');
+          cuerpoTarjeta.parentNode.insertBefore(divDetalles, btnDetalle);
+
+          btnDetalle.addEventListener('click', (e) => {
+              e.preventDefault();
+              // Alternar visibilidad
+              divDetalles.classList.toggle('activo');
+              
+              // Cambiar texto del botón
+              if (divDetalles.classList.contains('activo')) {
+                  btnDetalle.textContent = "Ocultar detalles";
+                  btnDetalle.style.backgroundColor = "#555"; // Cambio visual opcional
+              } else {
+                  btnDetalle.textContent = "Ver detalles";
+                  btnDetalle.style.backgroundColor = ""; // Volver al color original
+              }
+          });
+      }
+
+      // --- Interacción 3: Botón "Ver todas" (Historial) ---
+      // Simula cargar 3 sesiones pasadas (Agrega una tarjeta extra para completar 3)
+      const btnVerTodasHistorial = panelSesiones.querySelector('.columna-historial-sesiones .boton-ver-todas');
+      const contenedorHistorial = panelSesiones.querySelector('.columna-historial-sesiones');
+
+      if (btnVerTodasHistorial) {
+          btnVerTodasHistorial.addEventListener('click', (e) => {
+              e.preventDefault();
+              
+              // Evitar que se agreguen infinitamente si le das click varias veces
+              if (btnVerTodasHistorial.textContent === "Ocultar") {
+                  // Si ya mostramos, recargamos la sección (o eliminamos el extra)
+                  // Para hacerlo simple, recargamos la vista:
+                  const extra = document.getElementById('tarjeta-extra-historial');
+                  if(extra) extra.remove();
+                  btnVerTodasHistorial.textContent = "Ver todas";
+                  return;
+              }
+
+              // Crear una nueva tarjeta de historial (Simulada)
+              const nuevaTarjeta = document.createElement('div');
+              nuevaTarjeta.className = 'tarjeta-sesion';
+              nuevaTarjeta.id = 'tarjeta-extra-historial'; // ID para poder borrarla luego
+              nuevaTarjeta.style.animation = "fadeIn 0.5s ease"; // Animación suave
+              
+              nuevaTarjeta.innerHTML = `
+                  <div class="tarjeta-sesion-header">
+                      <h3>Física I</h3>
+                      <span class="tag-sesion realizado">Realizado</span>
+                  </div>
+                  <div class="tarjeta-sesion-body">
+                      <p><strong>Tutor:</strong> Luis García</p>
+                      <p><strong>Estudiante:</strong> Alexandra Meza (Tu)</p>
+                      <p><strong>Fecha:</strong> 25/10/2025</p>
+                      <p><strong>Hora:</strong> 10:00 am</p>
+                  </div>
+                  <button class="boton-ver-detalles" onclick="alert('Detalles de Física I')">Ver detalles</button>
+              `;
+
+              // Insertar antes del botón "Ver todas"
+              contenedorHistorial.insertBefore(nuevaTarjeta, btnVerTodasHistorial);
+              
+              // Cambiar texto del botón
+              btnVerTodasHistorial.textContent = "Ocultar";
+          });
+      }
+  }
 
   // --- INICIO POR DEFECTO ---
   // Mostrar Dashboard al cargar
