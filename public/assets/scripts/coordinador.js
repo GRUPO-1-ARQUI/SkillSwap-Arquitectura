@@ -309,6 +309,49 @@
       });
   }
     
+  // ==========================================
+  // LÓGICA DE NOTIFICACIONES (COORDINADOR)
+  // ==========================================
+  
+  const navNotifCoord = document.getElementById('nav-notificaciones-coord');
+  const dropdownNotifCoord = document.getElementById('dropdown-notificaciones-coord');
+  const btnInvestigar = document.getElementById('btn-investigar-alerta');
+
+  if (navNotifCoord && dropdownNotifCoord) {
+      // 1. Abrir/Cerrar al hacer clic en la campana
+      navNotifCoord.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropdownNotifCoord.classList.toggle('activo');
+      });
+
+      // 2. Cerrar al hacer clic fuera
+      document.addEventListener('click', (e) => {
+          if (!dropdownNotifCoord.contains(e.target) && !navNotifCoord.contains(e.target)) {
+              dropdownNotifCoord.classList.remove('activo');
+          }
+      });
+
+      // 3. Evitar cierre al hacer clic dentro
+      dropdownNotifCoord.addEventListener('click', (e) => {
+          e.stopPropagation();
+      });
+  }
+
+  // 4. Acción del botón "Investigar Ahora" dentro de la notificación
+  if (btnInvestigar) {
+      btnInvestigar.addEventListener('click', (e) => {
+          e.preventDefault();
+          // Cierra el dropdown
+          dropdownNotifCoord.classList.remove('activo');
+          
+          // Navega a la sección de Reportes
+          mostrarSeccion('panel-reportes');
+          
+          // Opcional: Feedback visual o filtro automático (simulado)
+          alert("Navegando al detalle de reportes de Juan Perez...");
+      });
+  }
   
 
     // Opcional: Nos aseguramos de que el dashboard sea lo primero que se vea al cargar la página.
