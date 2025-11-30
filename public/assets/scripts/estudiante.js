@@ -453,21 +453,37 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   //Botón Solicitar Tutoría -> Ir al Chat con Victor
-  const btnSolicitar = document.getElementById('btn-solicitar-tutoria');
-  const chatNombre = document.getElementById('chat-nombre-usuario');
-  const chatFoto = document.getElementById('chat-foto-usuario');
+  const btnSolicitarA = document.getElementById('btn-solicitar-tutoria');
+  const btnSolicitarT = document.getElementById('btn-aceptar-tutoria');
+  const chatNombreA = document.getElementById('chat-nombre-usuario-a');
+  const chatFotoA = document.getElementById('chat-foto-usuario-a');
+  const chatNombreT = document.getElementById('chat-nombre-usuario-t');
+  const chatFotoT = document.getElementById('chat-foto-usuario-t');
 
-  if (btnSolicitar) {
-      btnSolicitar.addEventListener('click', (e) => {
+  if (btnSolicitarA) {
+      btnSolicitarA.addEventListener('click', (e) => {
           e.preventDefault();
           
           // A. Cambiar los datos del chat para que parezca Victor
-          if (chatNombre) chatNombre.textContent = "Victor Alberca Saavedra";
-          if (chatFoto) chatFoto.src = "../assets/images/ima-foto-victor.png";
+          if (chatNombreA) chatNombreA.textContent = "Victor Alberca Saavedra";
+          if (chatFotoA) chatFotoA.src = "../assets/images/ima-foto-victor.png";
 
           // Redirigir a la sección de chat
-          mostrarSeccionEstudiante('panel-chat');
+          mostrarSeccionEstudiante('panel-chat-aprendiz');
       });
+  }
+
+  if (btnSolicitarT) {
+    btnSolicitarT.addEventListener('click',(e)=>{
+      e.preventDefault();
+
+      // A. Cambiar los datos del chat para que parezca Jose
+          if (chatNombreT) chatNombreT.textContent = "Jose Alvarado Jimenez";
+          if (chatFotoT) chatFotoT.src = "../assets/images/ima-foto-adrian-guevara.png";
+
+          // Redirigir a la sección de chat
+          mostrarSeccionEstudiante('panel-chat-tutor');
+    });
   }
 
   // --- NOTIFICACIONES (Dropdown) ---
@@ -498,13 +514,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Lógica de Videollamada (Desde el Chat) ---
   
-  const btnVideoCall = document.getElementById('btn-iniciar-videollamada');
+  const btnVideoCallA = document.getElementById('btn-iniciar-videollamada-a');
   
-  if (btnVideoCall) {
-      btnVideoCall.addEventListener('click', (e) => {
+  if (btnVideoCallA) {
+      btnVideoCallA.addEventListener('click', (e) => {
           e.preventDefault();
           // Navegar a la sección de videollamada
-          mostrarSeccionEstudiante('panel-videollamada');
+          mostrarSeccionEstudiante('panel-videollamada-a');
+          
+          // (Opcional) Podrías simular que la llamada "inicia" cargando datos
+          console.log("Iniciando videollamada...");
+      });
+  }
+
+  const btnVideoCallT = document.getElementById('btn-iniciar-videollamada-t');
+  
+  if (btnVideoCallT) {
+      btnVideoCallT.addEventListener('click', (e) => {
+          e.preventDefault();
+          // Navegar a la sección de videollamada
+          mostrarSeccionEstudiante('panel-videollamada-t');
           
           // (Opcional) Podrías simular que la llamada "inicia" cargando datos
           console.log("Iniciando videollamada...");
@@ -512,15 +541,28 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 // --- VIDEOLLAMADA (Colgar -> Ir a Calificar) ---
-  const btnColgar = document.getElementById('btn-colgar-llamada');
+  const btnColgarA = document.getElementById('btn-colgar-llamada-a');
   
-  if (btnColgar) {
-      btnColgar.addEventListener('click', (e) => {
+  if (btnColgarA) {
+      btnColgarA.addEventListener('click', (e) => {
           e.preventDefault();
           
           if(confirm("¿Deseas finalizar la llamada?")) {
               // CAMBIO: Ahora redirige a la sección de calificación
-              mostrarSeccionEstudiante('panel-calificar');
+              mostrarSeccionEstudiante('panel-calificar-a');
+          }
+      });
+  }
+
+  const btnColgarT = document.getElementById('btn-colgar-llamada-t');
+  
+  if (btnColgarT) {
+      btnColgarT.addEventListener('click', (e) => {
+          e.preventDefault();
+          
+          if(confirm("¿Deseas finalizar la llamada?")) {
+              // CAMBIO: Ahora redirige a la sección de calificación
+              mostrarSeccionEstudiante('panel-calificar-t');
           }
       });
   }
@@ -564,16 +606,30 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- Lógica de la Calificación ---
-  const btnEnviarCalif = document.getElementById('btn-enviar-calificacion');
-  const btnOmitirCalif = document.getElementById('btn-omitir-calificacion');
+  const btnEnviarCalifA = document.getElementById('btn-enviar-calificacion-a');
+  const btnOmitirCalifA = document.getElementById('btn-omitir-calificacion-a');
 
-  function cerrarCalificacion() {
+  function cerrarCalificacionA() {
       alert("¡Gracias por tu feedback!"); // Mensaje opcional
       mostrarSeccionEstudiante('panel-dashboard-estudiante');
   }
 
-  if (btnEnviarCalif) btnEnviarCalif.addEventListener('click', cerrarCalificacion);
-  if (btnOmitirCalif) btnOmitirCalif.addEventListener('click', (e) => {
+  if (btnEnviarCalifA) btnEnviarCalifA.addEventListener('click', cerrarCalificacionA);
+  if (btnOmitirCalifA) btnOmitirCalifA.addEventListener('click', (e) => {
+      e.preventDefault();
+      mostrarSeccionEstudiante('panel-dashboard-estudiante');
+  });
+
+  const btnEnviarCalifT = document.getElementById('btn-enviar-calificacion-t');
+  const btnOmitirCalifT = document.getElementById('btn-omitir-calificacion-t');
+
+  function cerrarCalificacionT() {
+      alert("¡Gracias por tu feedback!"); // Mensaje opcional
+      mostrarSeccionEstudiante('panel-dashboard-estudiante');
+  }
+
+  if (btnEnviarCalifT) btnEnviarCalifT.addEventListener('click', cerrarCalificacionT);
+  if (btnOmitirCalifT) btnOmitirCalifT.addEventListener('click', (e) => {
       e.preventDefault();
       mostrarSeccionEstudiante('panel-dashboard-estudiante');
   });
@@ -705,6 +761,131 @@ document.addEventListener('DOMContentLoaded', () => {
           }
       });
   }
+
+  // ==============================================================
+  // GESTIÓN DE HABILIDADES (TAGS)
+  // ==============================================================
+
+  // 1. Estado inicial (simulando base de datos o LocalStorage)
+  let misHabilidades = JSON.parse(localStorage.getItem('userHabilidades')) || ["Paciente", "Amable", "Activo"];
+
+  // Referencias al DOM
+  const listaPerfil = document.getElementById('lista-habilidades-perfil');
+  const contenedorEdicion = document.getElementById('contenedor-habilidades-edicion');
+  const selectHabilidades = document.getElementById('habilidades-select');
+  const btnConfirmarAdd = document.getElementById('btn-confirmar-agregar-habilidad');
+  const btnVolverHabilidades = document.getElementById('btn-volver-de-habilidades');
+
+  // 2. Función para renderizar (dibujar) las habilidades en ambas pantallas
+  function renderizarHabilidades() {
+      // A. Renderizar en el PERFIL (la vista principal)
+      if (listaPerfil) {
+          // Limpiamos la lista pero guardamos el botón de "+"
+          const btnAgregar = listaPerfil.querySelector('.agregar');
+          listaPerfil.innerHTML = ''; 
+          
+          misHabilidades.forEach((habilidad, index) => {
+              const li = document.createElement('li');
+              li.textContent = habilidad;
+              // Opcional: Agregar una 'x' pequeña para borrar directo desde el perfil
+              // li.innerHTML += ` <span style="cursor:pointer; color:red; margin-left:5px;" onclick="eliminarHabilidad(${index})">×</span>`;
+              listaPerfil.appendChild(li);
+          });
+
+          // Volvemos a poner el botón de agregar al final
+          if (btnAgregar) listaPerfil.appendChild(btnAgregar);
+          
+          // Re-asignar el evento click al botón + porque al limpiar innerHTML se pierde
+          const nuevoBtnAdd = listaPerfil.querySelector('.agregar');
+          if(nuevoBtnAdd) {
+              nuevoBtnAdd.addEventListener('click', () => mostrarSeccionEstudiante('panel-add-habilidades'));
+          }
+      }
+
+      // B. Renderizar en el PANEL DE AGREGAR (para ver y eliminar)
+      if (contenedorEdicion) {
+          contenedorEdicion.innerHTML = '';
+          misHabilidades.forEach((habilidad, index) => {
+              const span = document.createElement('span');
+              span.className = 'habilidad-tag'; // Usamos tu estilo existente
+              span.style.marginRight = '10px';
+              span.style.marginBottom = '10px';
+              span.style.display = 'inline-block';
+              
+              // Agregamos la X para eliminar
+              span.innerHTML = `${habilidad} <b class="btn-eliminar-tag" data-index="${index}" style="cursor:pointer; margin-left:8px; color: #ffcccc;">✕</b>`;
+              
+              contenedorEdicion.appendChild(span);
+          });
+
+          // Agregar listeners a las X rojas
+          document.querySelectorAll('.btn-eliminar-tag').forEach(btn => {
+              btn.addEventListener('click', (e) => {
+                  const index = e.target.dataset.index;
+                  eliminarHabilidad(index);
+              });
+          });
+      }
+  }
+
+  // 3. Función para agregar habilidades desde el Select
+  function agregarHabilidadesSeleccionadas() {
+      if(!selectHabilidades) return;
+
+      const opcionesSeleccionadas = Array.from(selectHabilidades.selectedOptions).map(option => option.value);
+      
+      if (opcionesSeleccionadas.length === 0) {
+          alert("Por favor selecciona al menos una habilidad de la lista.");
+          return;
+      }
+
+      let agregadasCount = 0;
+      opcionesSeleccionadas.forEach(hab => {
+          // Evitar duplicados
+          if (!misHabilidades.includes(hab)) {
+              misHabilidades.push(hab);
+              agregadasCount++;
+          }
+      });
+
+      if (agregadasCount > 0) {
+          guardarYActualizar();
+          alert(`Se agregaron ${agregadasCount} habilidades.`);
+          selectHabilidades.value = ""; // Limpiar selección
+      } else {
+          alert("Esas habilidades ya las tienes agregadas.");
+      }
+  }
+
+  // 4. Función para eliminar habilidad
+  function eliminarHabilidad(index) {
+      misHabilidades.splice(index, 1);
+      guardarYActualizar();
+  }
+
+  // 5. Guardar en LocalStorage y refrescar vista
+  function guardarYActualizar() {
+      localStorage.setItem('userHabilidades', JSON.stringify(misHabilidades));
+      renderizarHabilidades();
+  }
+
+  // 6. Listeners de Botones
+  if (btnConfirmarAdd) {
+      btnConfirmarAdd.addEventListener('click', (e) => {
+          e.preventDefault();
+          agregarHabilidadesSeleccionadas();
+      });
+  }
+
+  if (btnVolverHabilidades) {
+      btnVolverHabilidades.addEventListener('click', (e) => {
+          e.preventDefault();
+          mostrarSeccionEstudiante('panel-perfil');
+      });
+  }
+
+  // Inicializar al cargar
+  renderizarHabilidades();
 
   // --- INICIO POR DEFECTO ---
   // Mostrar Dashboard al cargar
