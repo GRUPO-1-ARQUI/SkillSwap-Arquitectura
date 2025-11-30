@@ -453,21 +453,37 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   //Botón Solicitar Tutoría -> Ir al Chat con Victor
-  const btnSolicitar = document.getElementById('btn-solicitar-tutoria');
-  const chatNombre = document.getElementById('chat-nombre-usuario');
-  const chatFoto = document.getElementById('chat-foto-usuario');
+  const btnSolicitarA = document.getElementById('btn-solicitar-tutoria');
+  const btnSolicitarT = document.getElementById('btn-aceptar-tutoria');
+  const chatNombreA = document.getElementById('chat-nombre-usuario-a');
+  const chatFotoA = document.getElementById('chat-foto-usuario-a');
+  const chatNombreT = document.getElementById('chat-nombre-usuario-t');
+  const chatFotoT = document.getElementById('chat-foto-usuario-t');
 
-  if (btnSolicitar) {
-      btnSolicitar.addEventListener('click', (e) => {
+  if (btnSolicitarA) {
+      btnSolicitarA.addEventListener('click', (e) => {
           e.preventDefault();
           
           // A. Cambiar los datos del chat para que parezca Victor
-          if (chatNombre) chatNombre.textContent = "Victor Alberca Saavedra";
-          if (chatFoto) chatFoto.src = "../assets/images/ima-foto-victor.png";
+          if (chatNombreA) chatNombreA.textContent = "Victor Alberca Saavedra";
+          if (chatFotoA) chatFotoA.src = "../assets/images/ima-foto-victor.png";
 
           // Redirigir a la sección de chat
-          mostrarSeccionEstudiante('panel-chat');
+          mostrarSeccionEstudiante('panel-chat-aprendiz');
       });
+  }
+
+  if (btnSolicitarT) {
+    btnSolicitarT.addEventListener('click',(e)=>{
+      e.preventDefault();
+
+      // A. Cambiar los datos del chat para que parezca Jose
+          if (chatNombreT) chatNombreT.textContent = "Jose Alvarado Jimenez";
+          if (chatFotoT) chatFotoT.src = "../assets/images/ima-foto-adrian-guevara.png";
+
+          // Redirigir a la sección de chat
+          mostrarSeccionEstudiante('panel-chat-tutor');
+    });
   }
 
   // --- NOTIFICACIONES (Dropdown) ---
@@ -498,13 +514,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Lógica de Videollamada (Desde el Chat) ---
   
-  const btnVideoCall = document.getElementById('btn-iniciar-videollamada');
+  const btnVideoCallA = document.getElementById('btn-iniciar-videollamada-a');
   
-  if (btnVideoCall) {
-      btnVideoCall.addEventListener('click', (e) => {
+  if (btnVideoCallA) {
+      btnVideoCallA.addEventListener('click', (e) => {
           e.preventDefault();
           // Navegar a la sección de videollamada
-          mostrarSeccionEstudiante('panel-videollamada');
+          mostrarSeccionEstudiante('panel-videollamada-a');
+          
+          // (Opcional) Podrías simular que la llamada "inicia" cargando datos
+          console.log("Iniciando videollamada...");
+      });
+  }
+
+  const btnVideoCallT = document.getElementById('btn-iniciar-videollamada-t');
+  
+  if (btnVideoCallT) {
+      btnVideoCallT.addEventListener('click', (e) => {
+          e.preventDefault();
+          // Navegar a la sección de videollamada
+          mostrarSeccionEstudiante('panel-videollamada-t');
           
           // (Opcional) Podrías simular que la llamada "inicia" cargando datos
           console.log("Iniciando videollamada...");
@@ -512,15 +541,28 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 // --- VIDEOLLAMADA (Colgar -> Ir a Calificar) ---
-  const btnColgar = document.getElementById('btn-colgar-llamada');
+  const btnColgarA = document.getElementById('btn-colgar-llamada-a');
   
-  if (btnColgar) {
-      btnColgar.addEventListener('click', (e) => {
+  if (btnColgarA) {
+      btnColgarA.addEventListener('click', (e) => {
           e.preventDefault();
           
           if(confirm("¿Deseas finalizar la llamada?")) {
               // CAMBIO: Ahora redirige a la sección de calificación
-              mostrarSeccionEstudiante('panel-calificar');
+              mostrarSeccionEstudiante('panel-calificar-a');
+          }
+      });
+  }
+
+  const btnColgarT = document.getElementById('btn-colgar-llamada-t');
+  
+  if (btnColgarT) {
+      btnColgarT.addEventListener('click', (e) => {
+          e.preventDefault();
+          
+          if(confirm("¿Deseas finalizar la llamada?")) {
+              // CAMBIO: Ahora redirige a la sección de calificación
+              mostrarSeccionEstudiante('panel-calificar-t');
           }
       });
   }
@@ -564,16 +606,30 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- Lógica de la Calificación ---
-  const btnEnviarCalif = document.getElementById('btn-enviar-calificacion');
-  const btnOmitirCalif = document.getElementById('btn-omitir-calificacion');
+  const btnEnviarCalifA = document.getElementById('btn-enviar-calificacion-a');
+  const btnOmitirCalifA = document.getElementById('btn-omitir-calificacion-a');
 
-  function cerrarCalificacion() {
+  function cerrarCalificacionA() {
       alert("¡Gracias por tu feedback!"); // Mensaje opcional
       mostrarSeccionEstudiante('panel-dashboard-estudiante');
   }
 
-  if (btnEnviarCalif) btnEnviarCalif.addEventListener('click', cerrarCalificacion);
-  if (btnOmitirCalif) btnOmitirCalif.addEventListener('click', (e) => {
+  if (btnEnviarCalifA) btnEnviarCalifA.addEventListener('click', cerrarCalificacionA);
+  if (btnOmitirCalifA) btnOmitirCalifA.addEventListener('click', (e) => {
+      e.preventDefault();
+      mostrarSeccionEstudiante('panel-dashboard-estudiante');
+  });
+
+  const btnEnviarCalifT = document.getElementById('btn-enviar-calificacion-t');
+  const btnOmitirCalifT = document.getElementById('btn-omitir-calificacion-t');
+
+  function cerrarCalificacionT() {
+      alert("¡Gracias por tu feedback!"); // Mensaje opcional
+      mostrarSeccionEstudiante('panel-dashboard-estudiante');
+  }
+
+  if (btnEnviarCalifT) btnEnviarCalifT.addEventListener('click', cerrarCalificacionT);
+  if (btnOmitirCalifT) btnOmitirCalifT.addEventListener('click', (e) => {
       e.preventDefault();
       mostrarSeccionEstudiante('panel-dashboard-estudiante');
   });

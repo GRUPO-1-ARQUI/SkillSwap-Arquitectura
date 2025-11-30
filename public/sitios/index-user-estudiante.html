@@ -55,7 +55,7 @@
                       <p>Hola! Podemos programar una sesion para el martes? :)</p>
                   </div>
                   <div class="dash-est-solicitud-acciones">
-                      <button class="dash-est-accion-btn aceptar small" aria-label="Aceptar">✓</button>
+                      <button class="dash-est-accion-btn aceptar small" aria-label="Aceptar" id="btn-aceptar-tutoria">✓</button>
                       <button class="dash-est-accion-btn rechazar small" aria-label="Rechazar">✕</button>
                   </div>
               </div>
@@ -237,15 +237,15 @@
     </section>
 
     
-    <section class="seccion-chat-container panel-seccion" id="panel-chat">
+    <section class="seccion-chat-container panel-seccion" id="panel-chat-aprendiz">
 
             <div class="chat-sub-header">
                 <div class="chat-header-perfil">
-                    <img src="../assets/images/ima-foto-victor.png" class="chat-perfil-foto" id="chat-foto-usuario" alt="Foto perfil chat">
-                    <span class="chat-perfil-nombre" id="chat-nombre-usuario">Chat General</span>
+                    <img src="../assets/images/ima-foto-victor.png" class="chat-perfil-foto" id="chat-foto-usuario-a" alt="Foto perfil chat">
+                    <span class="chat-perfil-nombre" id="chat-nombre-usuario-a">Chat General</span>
                 </div>
                 <div class="chat-header-iconos">
-                <button id="btn-iniciar-videollamada" class="btn-header-chat" title="Iniciar Videollamada">
+                <button id="btn-iniciar-videollamada-a" class="btn-header-chat" title="Iniciar Videollamada">
             <svg width="40" height="30" viewBox="0 0 40 30" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M37.7444 5.46884C37.3408 5.42222 36.9324 5.49464 36.5694 5.67717L27.084 10.4168V18.7501L36.5694 23.4897C36.8866 23.6482 37.2391 23.7231 37.5933 23.7073C37.9476 23.6916 38.292 23.5856 38.5939 23.3995C38.8958 23.2134 39.1452 22.9533 39.3184 22.6439C39.4917 22.3345 39.5831 21.986 39.584 21.6313V7.5355C39.5834 7.02558 39.3958 6.53358 39.0568 6.1527C38.7178 5.77181 38.2508 5.5285 37.7444 5.46884Z" fill="black"/>
 <path d="M6.25 0C2.82292 0 0 2.82292 0 6.25V22.9167C0 26.3437 2.82292 29.1667 6.25 29.1667H22.9167C26.3437 29.1667 29.1667 26.3437 29.1667 22.9167V6.25C29.1667 2.82292 26.3437 0 22.9167 0H6.25Z" fill="black"/>
@@ -285,8 +285,56 @@
 
     </section>
 
+    <section class="seccion-chat-container panel-seccion" id="panel-chat-tutor">
+
+        <div class="chat-sub-header">
+                <div class="chat-header-perfil">
+                    <img src="../assets/images/ima-foto-victor.png" class="chat-perfil-foto" id="chat-foto-usuario-t" alt="Foto perfil chat">
+                    <span class="chat-perfil-nombre" id="chat-nombre-usuario-t">Chat General</span>
+                </div>
+                <div class="chat-header-iconos">
+                <button id="btn-iniciar-videollamada-t" class="btn-header-chat" title="Iniciar Videollamada">
+            <svg width="40" height="30" viewBox="0 0 40 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M37.7444 5.46884C37.3408 5.42222 36.9324 5.49464 36.5694 5.67717L27.084 10.4168V18.7501L36.5694 23.4897C36.8866 23.6482 37.2391 23.7231 37.5933 23.7073C37.9476 23.6916 38.292 23.5856 38.5939 23.3995C38.8958 23.2134 39.1452 22.9533 39.3184 22.6439C39.4917 22.3345 39.5831 21.986 39.584 21.6313V7.5355C39.5834 7.02558 39.3958 6.53358 39.0568 6.1527C38.7178 5.77181 38.2508 5.5285 37.7444 5.46884Z" fill="black"/>
+<path d="M6.25 0C2.82292 0 0 2.82292 0 6.25V22.9167C0 26.3437 2.82292 29.1667 6.25 29.1667H22.9167C26.3437 29.1667 29.1667 26.3437 29.1667 22.9167V6.25C29.1667 2.82292 26.3437 0 22.9167 0H6.25Z" fill="black"/>
+</svg>
+
+
+
+
+        </button>
+        
+        <button class="btn-header-chat" title="Más opciones">⋮</button>
+    </div>
+            </div>
+
+          <div class="chat-container">
+
+        <main class="area-mensajes">
+
+           <div class="burbuja-mensaje recibido">
+        <span>¡Hola! Quisiera solicitar una tutoría, estás disponible?</span>
+    </div>
+
+        </main>
+
+        <footer class="chat-input-area">
+            <button class="chat-boton-adjuntar" aria-label="Adjuntar archivo">+</button>
+            <input type="text" class="chat-input-texto" id="chat-input-principal" placeholder="Escribe un mensaje">
+            
+            <button class="chat-boton-enviar" id="chat-btn-enviar" aria-label="Enviar mensaje">
+                <svg width="30" height="25" viewBox="0 0 30 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M28.4583 12.4167L0.75 24.0833L5.94604 12.4167L0.75 0.75L28.4583 12.4167ZM28.4583 12.4167H5.85417" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </footer>
+
+    </div>
+
+    </section>
+
    
-    <section class="seccion-videollamada-principal panel-seccion" id="panel-videollamada">
+    <section class="seccion-videollamada-principal panel-seccion" id="panel-videollamada-a">
     
     <div class="videollamada-wrapper">
         
@@ -365,7 +413,94 @@
                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
             </button>
 
-            <button class="btn-control-llamada colgar" id="btn-colgar-llamada" title="Colgar">
+            <button class="btn-control-llamada colgar" id="btn-colgar-llamada-a" title="Colgar">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.42 19.42 0 0 1-3.33-2.67m-2.67-3.34a19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91"></path><line x1="23" y1="1" x2="1" y2="23"></line></svg>
+            </button>
+        </div>
+
+    </div>
+    </section>
+
+    <section class="seccion-videollamada-principal panel-seccion" id="panel-videollamada-t">
+    
+    <div class="videollamada-wrapper">
+        
+<div class="videollamada-layout">
+            
+            <div class="video-screen-principal">
+                <span class="etiqueta-nombre">Pantalla de Alexandra Meza (Tú)(Tutor) 🎙️</span>
+
+                
+                <div id="pizarra-overlay" class="pizarra-contenedor">
+                    <div class="pizarra-lienzo">
+                        <p class="pizarra-placeholder">✨ Pizarra Interactiva (Modo Dibujo Próximamente) ✨</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-participantes">
+                <div class="tarjeta-video-mini">
+                    <span class="etiqueta-nombre-mini">Tú</span>
+                    <img src="../assets/images/ima-chica1.png" alt="Mi Video" class="img-video-mini">
+                </div>
+                <div class="tarjeta-video-mini">
+                    <span class="etiqueta-nombre-mini">Adrian Guevara</span>
+                    <img src="../assets/images/ima-foto-adrian-guevara.png" alt="Video Participante" class="img-video-mini">
+                </div>
+                <div class="info-llamada-mini">
+                    <p>En llamada: 00:15:23</p>
+                </div>
+            </div>
+
+            <div class="chat-lateral-llamada" id="panel-chat-llamada">
+                <div class="header-chat-llamada">
+                    <h3>Chat de la sala</h3>
+                    <button id="btn-cerrar-chat-llamada">✕</button>
+                </div>
+                <div class="cuerpo-chat-llamada">
+                    <div class="mensaje-chat-llamada">
+                        <strong>Adrian:</strong> Hola a todos!
+                    </div>
+                    <div class="mensaje-chat-llamada propio">
+                        <strong>Tú:</strong> ¿Se escucha bien?
+                    </div>
+                </div>
+                <div class="footer-chat-llamada">
+                    <input type="text" placeholder="Escribir mensaje...">
+                    <button>➤</button>
+                </div>
+            </div>
+
+        </div>
+
+<div class="controles-videollamada-bar">
+            <button class="btn-control-llamada" title="Silenciar">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+            </button>
+
+            <button class="btn-control-llamada" title="Cámara">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"></path><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+            </button>
+
+            <button class="btn-control-llamada" id="btn-toggle-pizarra" title="Abrir Pizarra">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 3h20v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V3z"></path>
+                    <path d="M8.5 21h7"></path>
+                    <line x1="12" y1="21" x2="12" y2="3"></line>
+                </svg>
+            </button>
+
+            <button class="btn-control-llamada" id="btn-toggle-chat-llamada" title="Abrir Chat">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+            </button>
+
+            <button class="btn-control-llamada compartir" title="Compartir">
+               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+            </button>
+
+            <button class="btn-control-llamada colgar" id="btn-colgar-llamada-t" title="Colgar">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.42 19.42 0 0 1-3.33-2.67m-2.67-3.34a19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91"></path><line x1="23" y1="1" x2="1" y2="23"></line></svg>
             </button>
         </div>
@@ -374,7 +509,7 @@
     </section>
 
    
-    <section class="seccion-calificar-estudiante panel-seccion" id="panel-calificar">
+    <section class="seccion-calificar-estudiante panel-seccion" id="panel-calificar-a">
     <div class="calificacion-container">
         
         <div class="calificacion-header">
@@ -399,14 +534,44 @@
         </div>
 
         <div class="calificacion-acciones">
-            <button class="btn-enviar-calificacion" id="btn-enviar-calificacion">Enviar Calificación</button>
-            <button class="btn-omitir-calificacion" id="btn-omitir-calificacion">Omitir</button>
+            <button class="btn-enviar-calificacion" id="btn-enviar-calificacion-a">Enviar Calificación</button>
+            <button class="btn-omitir-calificacion" id="btn-omitir-calificacion-a">Omitir</button>
         </div>
 
     </div>
 </section>
 
-    
+    <section class="seccion-calificar-estudiante panel-seccion" id="panel-calificar-t">
+    <div class="calificacion-container">
+        
+        <div class="calificacion-header">
+            <h2>¡Sesión Finalizada!</h2>
+            <p>¿Qué tal estuvo tu experiencia con <strong id="nombre-tutor-calificar">Jose Alvarado Jimenez</strong>?</p>
+        </div>
+
+        <div class="calificacion-avatar">
+            <img src="../assets/images/ima-foto-adrian-guevara.png" alt="Foto Tutor">
+        </div>
+
+        <div class="calificacion-estrellas">
+            <input type="radio" name="rating-t" id="star5-t" value="5"><label for="star5-t">★</label>
+            <input type="radio" name="rating-t" id="star4-t" value="4"><label for="star4-t">★</label>
+            <input type="radio" name="rating-t" id="star3-t" value="3"><label for="star3-t">★</label>
+            <input type="radio" name="rating-t" id="star2-t" value="2"><label for="star2-t">★</label>
+            <input type="radio" name="rating-t" id="star1-t" value="1"><label for="star1-t">★</label>
+        </div>
+
+        <div class="calificacion-comentario">
+            <textarea placeholder="Escribe una breve reseña (opcional)..."></textarea>
+        </div>
+
+        <div class="calificacion-acciones">
+            <button class="btn-enviar-calificacion" id="btn-enviar-calificacion-t">Enviar Calificación</button>
+            <button class="btn-omitir-calificacion" id="btn-omitir-calificacion-t">Omitir</button>
+        </div>
+
+    </div>
+</section>
 
     <section class="seccion-videollamada-pizarra panel-seccion" id="panel-pizarra">
             

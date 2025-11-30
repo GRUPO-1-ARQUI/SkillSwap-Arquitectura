@@ -3600,6 +3600,12 @@ body.dark-mode .btn-header-chat:hover {
   color: #ff9800;
 }
 
+.rating-t {
+  margin-top: 5px;
+  font-size: 18px;
+  color: #ff9800;
+}
+
 .contenido-doble {
   display: flex;
   gap: 30px;
