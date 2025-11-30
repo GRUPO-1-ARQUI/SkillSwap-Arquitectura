@@ -6171,3 +6171,70 @@ body.dark-mode .nav-link-notificaciones svg path {
 }
 /*--------------------------------------*/
 
+/* --- Nuevos Estilos para la Tarjeta de Estadísticas (Coordinador) --- */
+
+#total-estudiantes {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espacio entre elementos */
+    padding: 25px;
+}
+
+/* El número grande de arriba */
+.estadistica-bloque.principal {
+    text-align: center;
+}
+
+.estadistica-titulo {
+    display: block;
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.estadistica-numero-grande {
+    display: block;
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--primary-color); /* Usa tu azul corporativo */
+    line-height: 1;
+}
+
+/* Línea separadora */
+.separador-reporte {
+    height: 1px;
+    background-color: #e0e0e0;
+    width: 100%;
+    margin: 5px 0;
+}
+
+/* Filas para Verificados y Activos */
+.estadistica-fila {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+}
+
+.estadistica-label {
+    color: #333;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espacio entre el icono y el texto */
+}
+
+.estadistica-valor {
+    font-weight: 700;
+    color: #000;
+    font-size: 18px;
+}
+
+/* Modo oscuro (Opcional, si quieres que se vea bien en Dark Mode) */
+body.dark-mode .estadistica-titulo { color: #aaa; }
+body.dark-mode .estadistica-numero-grande { color: #fff; }
+body.dark-mode .separador-reporte { background-color: #444; }
+body.dark-mode .estadistica-label { color: #ddd; }
+body.dark-mode .estadistica-valor { color: #fff; }
+/* --- Fin de Estilos para la Tarjeta de Estadísticas (Coordinador) --- */
