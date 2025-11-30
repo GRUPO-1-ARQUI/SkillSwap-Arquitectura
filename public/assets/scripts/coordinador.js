@@ -445,6 +445,75 @@
           modalRechazo.classList.remove('activo');
       });
   }
+
+  // ==========================================
+  // INTERACCIONES DEL DASHBOARD PRINCIPAL
+  // ==========================================
+
+  // 1. Flecha "Ver más" de Verificaciones
+  const btnVerMasVerif = document.getElementById('btn-ver-mas-verificaciones');
+  if (btnVerMasVerif) {
+      btnVerMasVerif.addEventListener('click', () => {
+          // Redirige a la sección completa de verificaciones
+          mostrarSeccion('panel-verificacion');
+      });
+  }
+
+  // 2. Flecha "Ver más" de Reportes
+  const btnVerMasRep = document.getElementById('btn-ver-mas-reportes');
+  if (btnVerMasRep) {
+      btnVerMasRep.addEventListener('click', () => {
+          // Redirige a la sección completa de reportes
+          mostrarSeccion('panel-reportes');
+      });
+  }
+
+  // 3. Mini Formulario de Búsqueda de Estudiantes
+  const formBusquedaDash = document.getElementById('form-busqueda-dashboard');
+  const inputNombreDash = document.getElementById('input-nombre-dash');
+  
+  // Referencia al input de la sección de Estudiantes (destino)
+  const inputEstudiantesPrincipal = document.getElementById('input-busqueda-estudiantes');
+
+  if (formBusquedaDash) {
+      formBusquedaDash.addEventListener('submit', (e) => {
+          e.preventDefault(); // Evita que se recargue la página
+          
+          const terminoBusqueda = inputNombreDash.value;
+          
+          // A. Cambiamos a la sección de estudiantes
+          mostrarSeccion('panel-estudiantes');
+          
+          // B. (Opcional) Pasamos el texto al buscador principal para simular continuidad
+          if (inputEstudiantesPrincipal) {
+              inputEstudiantesPrincipal.value = terminoBusqueda;
+              inputEstudiantesPrincipal.focus();
+              
+              // Simular clic en buscar si ya existe la función (opcional)
+              // realizarBusqueda(); 
+          }
+      });
+  }
+  
+  // 4. Iconos "Ojo" (Ver detalle) en las tarjetitas del dashboard
+  // Esto hace que los ojitos pequeños del dashboard también funcionen
+  const ojosDashboard = document.querySelectorAll('#panel-dashboard .item-icono-ver');
+  
+  ojosDashboard.forEach(ojo => {
+      ojo.addEventListener('click', (e) => {
+          e.preventDefault();
+          // Dependiendo de la columna, llevamos a uno u otro lado
+          // Como es prototipo, podemos llevarlos a la sección correspondiente
+          const columnaPadre = ojo.closest('.panel-columna');
+          const tituloColumna = columnaPadre.querySelector('h2').innerText;
+
+          if (tituloColumna.includes("Verificaciones")) {
+              mostrarSeccion('panel-verificacion');
+          } else if (tituloColumna.includes("Reportes")) {
+              mostrarSeccion('panel-reportes');
+          }
+      });
+  });
   
   
 
