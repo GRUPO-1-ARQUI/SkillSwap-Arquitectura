@@ -724,6 +724,157 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
+  // ==========================================
+  // LÓGICA: ADJUNTAR ARCHIVOS (SIMULACIÓN)
+  // ==========================================
+
+  const btnAdjuntar = document.getElementById('btn-adjuntar-archivo');
+  const inputArchivo = document.getElementById('input-archivo-oculto');
+
+  // 1. Al hacer clic en "+", abrimos el selector de archivos del sistema
+  if (btnAdjuntar && inputArchivo) {
+      btnAdjuntar.addEventListener('click', (e) => {
+          e.preventDefault();
+          inputArchivo.click(); // Simula clic en el input oculto
+      });
+
+      // 2. Detectar cuando el usuario seleccionó un archivo
+      inputArchivo.addEventListener('change', (e) => {
+          const archivo = e.target.files[0]; // Tomamos el primer archivo
+          
+          if (archivo) {
+              procesarArchivoYEnviar(archivo);
+          }
+          
+          // Limpiar el input para permitir seleccionar el mismo archivo de nuevo si se quiere
+          inputArchivo.value = '';
+      });
+  }
+
+  // 3. Función para "Enviar" el archivo al chat visualmente
+  function procesarArchivoYEnviar(archivo) {
+      const tipo = archivo.type;
+      const nombre = archivo.name;
+      let contenidoHTML = '';
+
+      // A. Si es una IMAGEN, mostramos una previsualización
+      if (tipo.startsWith('image/')) {
+          const reader = new FileReader();
+          
+          reader.onload = function(e) {
+              const urlImagen = e.target.result;
+              contenidoHTML = `
+                  <div class="archivo-info">
+                      <span class="archivo-nombre">${nombre}</span>
+                      <img src="${urlImagen}" class="preview-imagen-chat" alt="Imagen enviada">
+                  </div>
+              `;
+              agregarMensajeHTML(contenidoHTML, 'enviado');
+          };
+          
+          reader.readAsDataURL(archivo); // Leemos la imagen para mostrarla
+      } 
+      // B. Si es PDF u otro archivo, mostramos un icono
+      else {
+          contenidoHTML = `
+              <span class="icono-archivo-chat">📄</span>
+              <div class="archivo-info">
+                  <span class="archivo-nombre">${nombre}</span>
+                  <span class="archivo-tipo">${tipo.split('/')[1] || 'ARCHIVO'} • ${(archivo.size / 1024).toFixed(1)} KB</span>
+              </div>
+          `;
+          agregarMensajeHTML(contenidoHTML, 'enviado');
+      }
+  }
+
+  // Función auxiliar para agregar HTML complejo (burbujas de archivo)
+  function agregarMensajeHTML(html, tipo) {
+      const chatArea = document.querySelector('#panel-chat .area-mensajes');
+      if (!chatArea) return;
+
+      const nuevaBurbuja = document.createElement('div');
+      nuevaBurbuja.classList.add('burbuja-mensaje', tipo, 'archivo'); // Clase especial 'archivo'
+      nuevaBurbuja.innerHTML = html;
+      
+      chatArea.appendChild(nuevaBurbuja);
+      chatArea.scrollTop = chatArea.scrollHeight; // Bajar scroll
+      
+      // Opcional: Simular que el tutor lo "vio" o responde
+      // setTimeout(() => agregarMensaje("¡Gracias por el archivo! Lo revisaré.", 'recibido'), 2000);
+  }
+
+  // ==========================================
+  // LÓGICA: ADJUNTAR ARCHIVOS EN VIDEOLLAMADA
+  // ==========================================
+
+  const btnAdjuntarVideo = document.getElementById('btn-adjuntar-video');
+  const inputArchivoVideo = document.getElementById('input-archivo-video');
+  const chatAreaVideo = document.querySelector('.cuerpo-chat-llamada');
+
+  if (btnAdjuntarVideo && inputArchivoVideo) {
+      
+      // 1. Clic en el botón abre el selector
+      btnAdjuntarVideo.addEventListener('click', (e) => {
+          e.preventDefault();
+          inputArchivoVideo.click();
+      });
+
+      // 2. Al seleccionar archivo
+      inputArchivoVideo.addEventListener('change', (e) => {
+          const archivo = e.target.files[0];
+          if (archivo) {
+              enviarArchivoEnVideo(archivo);
+          }
+          inputArchivoVideo.value = ''; // Limpiar
+      });
+  }
+
+  function enviarArchivoEnVideo(archivo) {
+      const tipo = archivo.type;
+      const nombre = archivo.name;
+      let contenidoHTML = '';
+
+      // Crear lector de archivos
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+          // Si es imagen
+          if (tipo.startsWith('image/')) {
+              contenidoHTML = `
+                  <div class="archivo-info">
+                      <strong>Tú:</strong> <br>
+                      <img src="${e.target.result}" class="preview-imagen-chat" alt="Imagen enviada">
+                  </div>
+              `;
+          } 
+          // Si es otro archivo (PDF, etc)
+          else {
+              contenidoHTML = `
+                  <div class="archivo-info" style="display: flex; align-items: center; gap: 10px;">
+                      <span style="font-size: 24px;">📄</span>
+                      <div>
+                          <strong>Tú:</strong> <br>
+                          <span class="archivo-nombre">${nombre}</span> <br>
+                          <span class="archivo-tipo" style="font-size: 10px;">${(archivo.size / 1024).toFixed(1)} KB</span>
+                      </div>
+                  </div>
+              `;
+          }
+
+          // Crear la burbuja en el chat lateral
+          const nuevaBurbuja = document.createElement('div');
+          nuevaBurbuja.classList.add('mensaje-chat-llamada', 'propio'); // Usamos estilos del chat de video
+          nuevaBurbuja.innerHTML = contenidoHTML;
+
+          if (chatAreaVideo) {
+              chatAreaVideo.appendChild(nuevaBurbuja);
+              chatAreaVideo.scrollTop = chatAreaVideo.scrollHeight; // Scroll al final
+          }
+      };
+
+      reader.readAsDataURL(archivo);
+  }
+
    // ==========================================
   // LÓGICA DE CERRAR SESIÓN
   // ==========================================
