@@ -1225,13 +1225,14 @@
 
           <div class="habilidades">
             <strong>Habilidades:</strong>
-            <ul>
+            <ul id="lista-habilidades-perfil">
               <li>Paciente </li>
               <li>Amable </li>
               <li>Activo </li>
               <li class="agregar" id="btn-add-habilidades" style="cursor: pointer;" title="Añadir Habilidad">➕</li>
             </ul>
           </div>
+
         </div>
       </div>
 
@@ -1261,26 +1262,50 @@
         <h3 class="habilidades-nombre-perfil">Alexandra Yamile Meza Soza</h3>
     </aside>
 
-    <main class="habilidades-contenido-principal">
+<main class="habilidades-contenido-principal">
         <h1 class="habilidades-titulo-principal">Añadir habilidades</h1>
 
         <div class="habilidades-actuales-contenedor">
             <h2>Habilidades actuales:</h2>
-            <div class="tags-actuales-wrapper">
-                <span class="habilidad-tag">Paciente</span>
-                <span class="habilidad-tag">Amable</span>
-                <span class="habilidad-tag">Activo</span>
-            </div>
+            <div class="tags-actuales-wrapper" id="contenedor-habilidades-edicion">
+                </div>
         </div>
 
         <div class="habilidades-agregar-contenedor">
             <h2>Habilidades a agregar:</h2>
             <select name="habilidades" id="habilidades-select" multiple size="4" class="habilidades-select-box">
-                <option value="comunicacion">Comunicación</option>
-                <option value="liderazgo">Liderazgo</option>
-                <option value="puntualidad">Puntualidad</option>
-                <option value="empatia">Empatía</option>
+                <option value="Comunicación">Comunicación</option>
+                <option value="Liderazgo">Liderazgo</option>
+                <option value="Puntualidad">Puntualidad</option>
+                <option value="Empatía">Empatía</option>
+                <option value="Responsabilidad">Responsabilidad</option>
+                <option value="Atento">Atento</option>
+                <option value="Oratoria">Oratoria</option>
             </select>
+            
+            <button id="btn-confirmar-agregar-habilidad" style="
+                margin-top: 15px;
+                padding: 10px 20px;
+                background-color: #005a9c;
+                color: white;
+                border: none;
+                border-radius: 20px;
+                cursor: pointer;
+                font-weight: bold;">
+                Agregar Seleccionadas
+            </button>
+            
+            <button id="btn-volver-de-habilidades" style="
+                margin-top: 15px;
+                margin-left: 10px;
+                padding: 10px 20px;
+                background-color: #ccc;
+                color: #333;
+                border: none;
+                border-radius: 20px;
+                cursor: pointer;">
+                Volver
+            </button>
         </div>
     </main>
     
