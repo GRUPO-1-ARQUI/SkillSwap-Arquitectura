@@ -18,7 +18,7 @@
 
     /*Variables de color de texto*/
     --button-text-color: #ffff;
-    --placeholder-text-color: #c7c6cd;
+    --placeholder-text-color: #f4f4f4;
     --text-color: #000000;
 
     /*Variables de tamanio del nav y foot*/
@@ -919,6 +919,16 @@ body.dark-mode .btn-header-chat {
 }
 body.dark-mode .btn-header-chat:hover {
     background-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode {
+    background-color: #202020;
+    color: var(--text-color);
+}
+
+body.dark-mode .barra-navegacion {
+    background-color: #1a1a1a;
+    border-bottom: 1px solid #333;
 }
 
 /* Área principal de mensajes */
@@ -4942,6 +4952,14 @@ body.dark-mode {
 
 /* Ajustes específicos para elementos que no usan variables */
 
+body.dark-mode .icono-lupa {
+    content: url("../images/imagen-lupa-dkmd.png");
+}
+
+body.dark-mode .logo-ss {
+    content: url("../images/SkillSwap_logo_dkmd.png");
+}
+
 /* Títulos y texto fuerte */
 body.dark-mode h1,
 body.dark-mode h2,
@@ -5018,7 +5036,7 @@ body.dark-mode .ajustes-contenido p,
 body.dark-mode .formulario-chat label,
 body.dark-mode .sobre-nosotros-texto-bloque p,
 body.dark-mode .tarjeta-info-vm p {
-    color: #dcdcdc;
+    color: whitesmoke;
 }
 
 /* Botones amarillos (mantenerlos pero con texto oscuro) */
@@ -5057,6 +5075,14 @@ body.dark-mode .habilidad-tag {
     background-color: #007bff;
 }
 
+body.dark-mode .area-mensajes {
+    background-color: #505357;
+}
+
+body.dark-mode .chat-input-area {
+    background-color: #333;
+}
+
 
 /* SVGs que son negros por defecto */
 body.dark-mode svg path[fill="black"] {
@@ -5078,16 +5104,24 @@ body.dark-de .seccion-footer .terminos-condiciones {
 }
 
 /* Chat */
-body.dark-mode .burbuja-mensaje.recibido {
+body.dark-mode .burbuja-mensaje.recibido,
+body.dark-mode #panel-perfil,
+body.dark-mode .campo-busqueda {
     background-color: #333;
     color: #e0e0e0;
 }
 
 /* Ajustes Sidebar */
 body.dark-mode .ajustes-sidebar,
+body.dark-mode .descripcion,
 body.dark-mode .ajustes-sidebar-chat {
     background-color: #1e1e1e;
 }
+
+body.dark-mode .btnes-temas-hab li {
+    color: black;
+}
+
 body.dark-mode .ajustes-link.activo,
 body.dark-mode .ajustes-link-chat.activo {
     background-color: #f7f9fc;
@@ -5098,6 +5132,9 @@ body.dark-mode .ajustes-link-chat {
     color: #e0e0e0;
 }
  body.dark-mode .ajustes-link:hover,
+ body.dark-mode .tarjeta-tutor,
+ body.dark-mode .columna-historial-sesiones,
+ body.dark-mode .tarjeta-sesion,
  body.dark-mode .ajustes-link-chat:hover {
     background-color: #333;
 }
