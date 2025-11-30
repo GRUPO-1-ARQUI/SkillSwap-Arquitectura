@@ -271,7 +271,10 @@
         </main>
 
         <footer class="chat-input-area">
-            <button class="chat-boton-adjuntar" aria-label="Adjuntar archivo">+</button>
+            <input type="file" id="input-archivo-oculto" style="display: none;" accept="image/*,.pdf">
+
+            <button class="chat-boton-adjuntar" id="btn-adjuntar-archivo" aria-label="Adjuntar archivo">+</button>
+
             <input type="text" class="chat-input-texto" id="chat-input-principal" placeholder="Escribe un mensaje">
             
             <button class="chat-boton-enviar" id="chat-btn-enviar" aria-label="Enviar mensaje">
@@ -331,6 +334,10 @@
                     </div>
                 </div>
                 <div class="footer-chat-llamada">
+                    <input type="file" id="input-archivo-video" style="display: none;" accept="image/*,.pdf">
+                    
+                    <button id="btn-adjuntar-video" class="btn-adjuntar-video" title="Adjuntar archivo">+</button>
+                    
                     <input type="text" placeholder="Escribir mensaje...">
                     <button>➤</button>
                 </div>

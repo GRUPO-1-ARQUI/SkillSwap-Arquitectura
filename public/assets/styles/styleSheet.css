@@ -6352,3 +6352,95 @@ body.dark-mode .creditos-container {
     color: #ffc107;
 }
 /*aca termina estilos para creditos */
+
+/* --- Estilos para Archivos en el Chat --- */
+
+.burbuja-mensaje.archivo {
+    background-color: #f0f4f8;
+    border: 1px solid #d1d9e6;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 250px;
+}
+
+/* Para mensajes enviados por mí (derecha) */
+.burbuja-mensaje.enviado.archivo {
+    background-color: #e3f2fd; /* Azulito claro */
+    border-color: #bbdefb;
+    align-self: flex-end;
+}
+
+.preview-imagen-chat {
+    max-width: 200px;
+    max-height: 150px;
+    border-radius: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+}
+
+.archivo-info {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.archivo-nombre {
+    font-weight: 600;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #333;
+}
+
+.archivo-tipo {
+    font-size: 11px;
+    color: #666;
+    text-transform: uppercase;
+}
+
+.icono-archivo-chat {
+    font-size: 24px;
+}
+/*aca termina estilos para archivos en el chat */
+
+/* --- Estilos para Adjuntar en Videollamada --- */
+
+.btn-adjuntar-video {
+    background-color: #333 !important; /* Fondo oscuro */
+    color: white !important;
+    border: 1px solid #555 !important;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 5px;
+    transition: background-color 0.2s;
+}
+
+.btn-adjuntar-video:hover {
+    background-color: #555 !important;
+}
+
+/* Ajuste para que la imagen se vea bien en el chat oscuro de la llamada */
+.mensaje-chat-llamada img.preview-imagen-chat {
+    max-width: 100%;
+    border-radius: 4px;
+    margin-top: 5px;
+    border: 1px solid #555;
+}
+
+.mensaje-chat-llamada .archivo-info {
+    color: white; /* Texto blanco en fondo oscuro */
+}
+.mensaje-chat-llamada .archivo-tipo {
+    color: #aaa;
+}
+/*aca termina estilos para adjuntar en videollamada */
