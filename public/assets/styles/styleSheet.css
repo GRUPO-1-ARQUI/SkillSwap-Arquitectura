@@ -6504,3 +6504,316 @@ body.dark-mode .creditos-container {
 }
 
 /*aca termina lo nuevo de coordinador*/
+
+
+/* --- Estilos Filtro Estudiante --- */
+.wrapper-filtro-estudiante {
+    position: relative;
+    display: inline-block;
+}
+
+.menu-filtros-busqueda {
+    display: none; /* Oculto por defecto */
+    position: absolute;
+    top: 110%;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    z-index: 100;
+    min-width: 160px;
+    overflow: hidden;
+}
+
+.menu-filtros-busqueda.activo {
+    display: block; /* Se muestra con JS */
+    animation: fadeIn 0.2s ease;
+}
+
+.opcion-filtro {
+    padding: 12px 15px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.2s;
+}
+
+.opcion-filtro:last-child { border-bottom: none; }
+
+.opcion-filtro:hover {
+    background-color: #f7f9fc;
+    color: #005a9c;
+}
+
+.opcion-filtro.seleccionado {
+    background-color: #eef5ff;
+    color: #005a9c;
+    font-weight: bold;
+    border-left: 4px solid #005a9c;
+}
+/*aca termina filtro del estudiante*/
+
+/* --- Estilos Búsqueda Principal --- */
+.boton-buscar-principal {
+    background-color: #005a9c;
+    color: white;
+    border: none;
+    padding: 0 25px;
+    border-radius: 0 30px 30px 0; /* Redondeado a la derecha */
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    transition: background 0.2s;
+}
+
+.boton-buscar-principal:hover {
+    background-color: #00447a;
+}
+/* --- Estilos Exclusivos para la Búsqueda Principal (Dashboard) --- */
+
+/* Ajuste para que el input no tenga esquinas redondas a la derecha */
+.campo-busqueda-wrapper-principal {
+    flex-grow: 1;
+    position: relative; /* Por si quieres poner el icono dentro */
+}
+
+.contenedor-barra-busqueda-principal {
+    display: flex;
+    background: white;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08); /* Sombra suave */
+    padding: 5px;
+    max-width: 700px; /* Ancho máximo solo para esta barra */
+    width: 100%;      /* Para que se adapte si la pantalla es menor a 700px */
+    margin: 0 auto 40px auto; /* Centrado horizontal */
+    align-items: center;
+}
+
+.campo-busqueda-principal {
+    border: none;
+    outline: none;
+    width: 100%;
+    padding: 15px 20px; /* Un poco más de relleno para que se vea grande */
+    font-size: 16px;
+    border-radius: 30px 0 0 30px; /* Redondeado solo a la izquierda */
+    background-color: transparent;
+}
+
+/* El botón de buscar */
+.boton-buscar-principal {
+    background-color: #005a9c;
+    color: white;
+    border: none;
+    padding: 0 30px;
+    border-radius: 0 30px 30px 0; /* Redondeado a la derecha */
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    height: 100%; /* Asegura que tenga la misma altura que el input */
+    min-height: 50px; /* Altura mínima para que se vea bien */
+    transition: background 0.2s;
+}
+
+.boton-buscar-principal:hover {
+    background-color: #00447a;
+}
+
+/* Ajuste para el icono de la lupa si lo usas dentro del input */
+.contenedor-barra-busqueda-principal .icono-lupa-busqueda {
+    padding-left: 15px;
+    display: flex;
+    align-items: center;
+}
+
+/* --- Tarjetas de Tutor para la Búsqueda Principal (Dashboard) --- */
+
+.tarjeta-tutor-dashboard {
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 16px; /* Bordes más redondos */
+    padding: 20px;
+    display: flex;
+    flex-direction: column; /* Diseño vertical limpio */
+    gap: 15px;
+    width: 250px; /* Ancho fijo para que se vean uniformes */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.tarjeta-tutor-dashboard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    border-color: #bbdefb;
+}
+
+/* Sección superior: Foto + Texto */
+.tarjeta-tutor-dashboard .tutor-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.tarjeta-tutor-dashboard .tutor-foto {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #f0f0f0;
+}
+
+.tarjeta-tutor-dashboard .tutor-datos h3 {
+    font-size: 16px;
+    margin: 0 0 4px 0;
+    color: #333;
+    font-weight: 700;
+}
+
+.tarjeta-tutor-dashboard .tutor-datos p {
+    font-size: 13px;
+    margin: 0 0 4px 0;
+    color: #666;
+}
+
+.tarjeta-tutor-dashboard .tutor-rating {
+    font-size: 12px;
+    font-weight: 600;
+    color: #f39c12; /* Color estrella */
+    background-color: #fff8e1;
+    padding: 2px 8px;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+/* Sección Tags */
+.tarjeta-tutor-dashboard .tutor-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Reutilizamos estilo de tag pero aseguramos tamaño */
+.tarjeta-tutor-dashboard .tag-tutor {
+    font-size: 11px;
+    background-color: #f0f7ff;
+    color: #005a9c;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+/* Botones de acción */
+.tarjeta-tutor-dashboard .tutor-acciones {
+    display: flex;
+    gap: 10px;
+    margin-top: auto; /* Empuja los botones al final */
+}
+
+.tarjeta-tutor-dashboard .btn-ver-perfil,
+.tarjeta-tutor-dashboard .btn-solicitar {
+    flex: 1;
+    padding: 8px 0;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: background 0.2s;
+}
+
+.tarjeta-tutor-dashboard .btn-ver-perfil {
+    background-color: #f5f5f5;
+    color: #555;
+}
+.tarjeta-tutor-dashboard .btn-ver-perfil:hover { background-color: #e0e0e0; }
+
+.tarjeta-tutor-dashboard .btn-solicitar {
+    background-color: #005a9c;
+    color: white;
+}
+.tarjeta-tutor-dashboard .btn-solicitar:hover { background-color: #00447a; }
+
+
+/* --- Estilos Videollamada Interactiva --- */
+
+/* Estado desactivado para Micrófono/Cámara */
+.btn-control.desactivado {
+    background-color: #dc3545 !important; /* Rojo */
+    color: white !important;
+    position: relative;
+}
+
+/* Opcional: Una línea tachada sobre el icono usando CSS (o cambias el icono en JS) */
+.btn-control.desactivado::after {
+    content: "/";
+    position: absolute;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg); /* Tacha diagonal */
+}
+
+/* Estilos de la Pizarra */
+.pizarra-overlay {
+    /* Asegúrate que tus estilos previos de overlay tengan display flex para centrar */
+    display: none; 
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+}
+
+.pizarra-overlay.activa {
+    display: flex; /* Se activa con JS */
+}
+
+.pizarra-contenido {
+    background: #f0f0f0;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.pizarra-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.btn-control {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background-color: #3c4043;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.btn-control:hover {
+    background-color: #505357;
+    transform: scale(1.05);
+}
+
+.btn-control.colgar {
+    background-color: #ea4335;
+}
+.btn-control.colgar:hover {
+    background-color: #d93025;
+}
+
+.btn-control.compartir {
+    background-color: #005a9c;
+}
+
+
