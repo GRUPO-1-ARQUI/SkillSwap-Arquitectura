@@ -6487,3 +6487,20 @@ body.dark-mode .creditos-container {
     color: #aaa;
 }
 /*aca termina estilos para adjuntar en videollamada */
+
+
+/* esto es de coordinador */
+
+.panel-ver-mas:hover {
+    background-color: #e0e0e0; /* Fondo gris suave */
+    border-radius: 8px;
+    transform: translateY(3px); /* Se mueve un poquito hacia abajo */
+    transition: all 0.2s ease;
+}
+
+.panel-ver-mas {
+    transition: all 0.2s ease;
+    padding: 5px; /* Un poco de aire */
+}
+
+/*aca termina lo nuevo de coordinador*/
