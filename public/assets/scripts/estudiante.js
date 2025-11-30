@@ -1091,7 +1091,361 @@ document.addEventListener('DOMContentLoaded', () => {
   // Inicializar al cargar
   renderizarHabilidades();
 
+  // ==========================================
+  // INTERACCIONES DEL DASHBOARD (ESTUDIANTE)
+  // ==========================================
+
+  // 1. Botones "Ver detalles" en las tarjetas de sesión
+  // Seleccionamos todos los botones que tengan esa clase
+  const botonesDetalleSesion = document.querySelectorAll('.dash-est-boton-detalle');
+
+  botonesDetalleSesion.forEach(boton => {
+      boton.addEventListener('click', (e) => {
+          e.preventDefault();
+          // Redirigir a la sección de Sesiones
+          mostrarSeccionEstudiante('panel-sesiones');
+          
+          // Opcional: Simular que buscamos esa sesión específica
+          console.log("Navegando al detalle de la sesión...");
+      });
+  });
+
+  // 2. Enlace "Ver todas" (Solicitudes) -> Abre la campanita
+  const btnVerTodasSolicitudes = document.getElementById('btn-ver-todas-solicitudes');
   
+  if (btnVerTodasSolicitudes) {
+      btnVerTodasSolicitudes.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation(); // Evitar conflictos de cierre
+          
+          // Simular clic en la campana de notificaciones para abrirla
+          const campana = document.getElementById('nav-notificaciones');
+          const dropdown = document.getElementById('dropdown-notificaciones');
+          
+          if (dropdown && campana) {
+              dropdown.classList.add('activo');
+              // Hacemos scroll suave hacia arriba para que se vea
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+      });
+  }
+
+  // 3. Botón "Ver todos mis tutores" -> Ir a Buscar Tutores
+  const btnVerTodosTutores = document.getElementById('btn-ver-todos-tutores');
+  
+  if (btnVerTodosTutores) {
+      btnVerTodosTutores.addEventListener('click', (e) => {
+          e.preventDefault();
+          // Redirigir a la sección de búsqueda/tutores
+          mostrarSeccionEstudiante('panel-tutores');
+      });
+  }
+
+  // ==========================================
+  // BUSCADOR Y FILTROS - MIS TUTORES
+  // ==========================================
+
+  const inputBusquedaTutores = document.getElementById('input-busqueda-tutores');
+  const btnFiltroTutores = document.getElementById('btn-filtro-tutores');
+  const menuFiltrosTutores = document.getElementById('menu-filtros-tutores');
+  const opcionesFiltroTutores = document.querySelectorAll('#menu-filtros-tutores .opcion-filtro');
+  
+  // Estado inicial del filtro
+  let filtroTutorActual = 'nombre'; // 'nombre' o 'curso'
+
+  // 1. Mostrar/Ocultar Menú
+  if (btnFiltroTutores && menuFiltrosTutores) {
+      btnFiltroTutores.addEventListener('click', (e) => {
+          e.stopPropagation();
+          menuFiltrosTutores.classList.toggle('activo');
+      });
+
+      document.addEventListener('click', (e) => {
+          if (!menuFiltrosTutores.contains(e.target) && !btnFiltroTutores.contains(e.target)) {
+              menuFiltrosTutores.classList.remove('activo');
+          }
+      });
+  }
+
+  // 2. Selección de Filtro (Nombre vs Curso)
+  if (opcionesFiltroTutores) {
+      opcionesFiltroTutores.forEach(opcion => {
+          opcion.addEventListener('click', (e) => {
+              // Actualizar variable
+              filtroTutorActual = e.target.dataset.tipo;
+              
+              // Actualizar UI del menú
+              opcionesFiltroTutores.forEach(op => op.classList.remove('seleccionado'));
+              e.target.classList.add('seleccionado');
+              
+              // Actualizar Placeholder para guiar al usuario
+              if (filtroTutorActual === 'nombre') {
+                  inputBusquedaTutores.placeholder = "Buscar por nombre (ej: Victor)...";
+              } else {
+                  inputBusquedaTutores.placeholder = "Buscar por curso (ej: SQL, Figma)...";
+              }
+              
+              menuFiltrosTutores.classList.remove('activo');
+              
+              // Re-ejecutar la búsqueda si ya había texto escrito
+              filtrarTutores(); 
+          });
+      });
+  }
+
+  // 3. Lógica de Filtrado en Tiempo Real
+  if (inputBusquedaTutores) {
+      inputBusquedaTutores.addEventListener('keyup', filtrarTutores);
+  }
+
+  function filtrarTutores() {
+      const texto = inputBusquedaTutores.value.toLowerCase().trim();
+      const tarjetas = document.querySelectorAll('#panel-tutores .tarjeta-tutor');
+
+      tarjetas.forEach(tarjeta => {
+          let coincide = false;
+
+          if (filtroTutorActual === 'nombre') {
+              // Buscar en el nombre del tutor
+              const nombre = tarjeta.querySelector('.tutor-nombre').textContent.toLowerCase();
+              if (nombre.includes(texto)) {
+                  coincide = true;
+              }
+          } else {
+              // Buscar en los tags (temas/cursos)
+              const tags = Array.from(tarjeta.querySelectorAll('.tag-tutor'))
+                                .map(tag => tag.textContent.toLowerCase());
+              // Ver si alguno de los tags incluye el texto buscado
+              if (tags.some(tag => tag.includes(texto))) {
+                  coincide = true;
+              }
+          }
+
+          // Mostrar u ocultar tarjeta
+          if (coincide) {
+              tarjeta.style.display = 'flex';
+          } else {
+              tarjeta.style.display = 'none';
+          }
+      });
+  }
+
+  // ==========================================
+  // BÚSQUEDA PRINCIPAL (SIMULACIÓN)
+  // ==========================================
+
+  const inputBusquedaMain = document.getElementById('input-busqueda-principal');
+  const btnBuscarMain = document.getElementById('btn-buscar-principal');
+  const contenidoInicial = document.getElementById('contenido-inicial-busqueda');
+  const resultadosWrapper = document.getElementById('resultados-busqueda-wrapper');
+  const listaResultados = document.getElementById('lista-resultados-dinamica');
+  const terminoDisplay = document.getElementById('termino-buscado-display');
+  const btnLimpiarBusqueda = document.getElementById('btn-limpiar-busqueda');
+  const msgNoResultados = document.getElementById('mensaje-no-resultados');
+
+  // Mini "Base de Datos" Simulada
+  const datosTutores = [
+      {
+          nombre: "Victor Alberca",
+          carrera: "Ingeniería de Software",
+          rating: "4.8",
+          tags: ["SQL", "Base de Datos", "Backend"],
+          img: "../assets/images/ima-foto-victor.png"
+      },
+      {
+          nombre: "Maria Lopez",
+          carrera: "Diseño Gráfico",
+          rating: "4.9",
+          tags: ["Figma", "UX/UI", "Prototipado"],
+          img: "../assets/images/imagen-tutor-1.png"
+      },
+      {
+          nombre: "Juan Perez",
+          carrera: "Ingeniería Civil",
+          rating: "4.5",
+          tags: ["Calculo", "Física", "Matemáticas"],
+          img: "../assets/images/imagen-tutor-2.png" // Usamos una imagen genérica si no hay
+      },
+      {
+          nombre: "Ana Garcia",
+          carrera: "Ciencias de la Computación",
+          rating: "5.0",
+          tags: ["Python", "Algoritmos", "IA"],
+          img: "../assets/images/ima-chica1.png" 
+      }
+  ];
+
+  // Función para ejecutar la búsqueda
+  function realizarBusquedaPrincipal() {
+      const texto = inputBusquedaMain.value.toLowerCase().trim();
+      
+      if (texto === "") {
+          alert("Por favor ingresa un término de búsqueda.");
+          return;
+      }
+
+      // 1. Ocultar inicio y mostrar resultados
+      contenidoInicial.style.display = 'none';
+      resultadosWrapper.style.display = 'block';
+      terminoDisplay.textContent = inputBusquedaMain.value;
+      listaResultados.innerHTML = ''; // Limpiar anteriores
+      msgNoResultados.style.display = 'none';
+
+      // 2. Filtrar datos
+      const encontrados = datosTutores.filter(tutor => {
+          const coincideNombre = tutor.nombre.toLowerCase().includes(texto);
+          const coincideTag = tutor.tags.some(tag => tag.toLowerCase().includes(texto));
+          return coincideNombre || coincideTag;
+      });
+
+// 3. Renderizar resultados
+if (encontrados.length > 0) {
+    encontrados.forEach(tutor => {
+        const card = document.createElement('article');
+        
+        // ¡AQUÍ ESTÁ EL CAMBIO! Usamos la nueva clase
+        card.className = 'tarjeta-tutor-dashboard'; 
+        
+        card.innerHTML = `
+            <div class="tutor-info">
+                <img src="${tutor.img}" alt="${tutor.nombre}" class="tutor-foto">
+                <div class="tutor-datos">
+                    <h3 class="tutor-nombre">${tutor.nombre}</h3>
+                    <p class="tutor-carrera">${tutor.carrera}</p>
+                    <div class="tutor-rating">⭐ ${tutor.rating}</div>
+                </div>
+            </div>
+            <div class="tutor-tags">
+                ${tutor.tags.map(tag => `<span class="tag-tutor">${tag}</span>`).join('')}
+            </div>
+            <div class="tutor-acciones">
+                <button class="btn-ver-perfil" onclick="mostrarSeccionEstudiante('panel-tutores')">Perfil</button>
+                <button class="btn-solicitar">Solicitar</button>
+            </div>
+        `;
+        listaResultados.appendChild(card);
+    });
+}
+  }
+
+  // Event Listeners
+  if (btnBuscarMain) {
+      btnBuscarMain.addEventListener('click', (e) => {
+          e.preventDefault();
+          realizarBusquedaPrincipal();
+      });
+  }
+
+  if (inputBusquedaMain) {
+      inputBusquedaMain.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+              e.preventDefault();
+              realizarBusquedaPrincipal();
+          }
+      });
+  }
+
+  if (btnLimpiarBusqueda) {
+      btnLimpiarBusqueda.addEventListener('click', (e) => {
+          e.preventDefault();
+          // Volver al estado inicial
+          resultadosWrapper.style.display = 'none';
+          contenidoInicial.style.display = 'block';
+          inputBusquedaMain.value = '';
+      });
+  }
+  
+  // ==========================================
+  // SIMULACIÓN VIDEOLLAMADA (Mic, Cam, Pizarra)
+  // ==========================================
+
+  // 1. Botones de Control (Micrófono y Cámara)
+  const btnMicro = document.getElementById('btn-micro-video');
+  const btnCamara = document.getElementById('btn-camara-video');
+  
+  // Función para alternar estado
+  function alternarEstadoDispositivo(boton, tipo) {
+      boton.classList.toggle('desactivado');
+      const estaDesactivado = boton.classList.contains('desactivado');
+      
+      // Feedback visual opcional (tooltip o console)
+      if (estaDesactivado) {
+          console.log(`${tipo} desactivado`);
+          // Aquí podrías mostrar un pequeño aviso visual en la pantalla
+      } else {
+          console.log(`${tipo} activado`);
+      }
+  }
+
+  if (btnMicro) {
+      btnMicro.addEventListener('click', (e) => {
+          e.preventDefault();
+          alternarEstadoDispositivo(btnMicro, "Micrófono");
+      });
+  }
+
+  if (btnCamara) {
+      btnCamara.addEventListener('click', (e) => {
+          e.preventDefault();
+          alternarEstadoDispositivo(btnCamara, "Cámara");
+          
+          // Opcional: Apagar tu video simulado
+          const miVideo = document.querySelector('.video-propio img'); // o video
+          if (miVideo) miVideo.style.opacity = btnCamara.classList.contains('desactivado') ? "0.3" : "1";
+      });
+  }
+
+  // 2. Lógica de la PIZARRA (Canvas)
+  const canvas = document.getElementById('mi-canvas-dibujo');
+  const btnLimpiar = document.getElementById('btn-limpiar-pizarra');
+  const btnCerrarPizarraInt = document.getElementById('btn-cerrar-pizarra-interno');
+  const pizarraDiv = document.getElementById('pizarra-overlay');
+  
+  // Variable para dibujar
+  let dibujando = false;
+  let ctx = null;
+
+  if (canvas) {
+      ctx = canvas.getContext('2d');
+      ctx.lineWidth = 3;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = '#000000'; // Color negro por defecto
+
+      // Eventos del Mouse para dibujar
+      canvas.addEventListener('mousedown', (e) => {
+          dibujando = true;
+          ctx.beginPath();
+          ctx.moveTo(e.offsetX, e.offsetY);
+      });
+
+      canvas.addEventListener('mousemove', (e) => {
+          if (!dibujando) return;
+          ctx.lineTo(e.offsetX, e.offsetY);
+          ctx.stroke();
+      });
+
+      canvas.addEventListener('mouseup', () => dibujando = false);
+      canvas.addEventListener('mouseout', () => dibujando = false);
+  }
+
+  // Botón Limpiar
+  if (btnLimpiar && ctx) {
+      btnLimpiar.addEventListener('click', () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+      });
+  }
+
+  // Botón Cerrar interno
+  if (btnCerrarPizarraInt && pizarraDiv) {
+      btnCerrarPizarraInt.addEventListener('click', () => {
+          pizarraDiv.classList.remove('activa');
+          // Actualizar el botón principal si tiene clase activo
+          const btnToggle = document.getElementById('btn-toggle-pizarra');
+          if (btnToggle) btnToggle.classList.remove('activo');
+      });
+  }
+
+
 
   // --- INICIO POR DEFECTO ---
   // Mostrar Dashboard al cargar

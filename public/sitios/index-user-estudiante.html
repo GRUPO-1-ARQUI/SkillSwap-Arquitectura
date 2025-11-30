@@ -347,9 +347,16 @@
                 <span class="etiqueta-nombre">Victor Alberca (Tutor) 🎙️</span>
 
                 
-                <div id="pizarra-overlay" class="pizarra-contenedor">
-                    <div class="pizarra-lienzo">
-                        <p class="pizarra-placeholder">✨ Pizarra Interactiva (Modo Dibujo Próximamente) ✨</p>
+                <div class="pizarra-overlay" id="pizarra-overlay">
+                    <div class="pizarra-contenido">
+                        <div class="pizarra-header">
+                            <h3>Pizarra Compartida</h3>
+                            <div class="pizarra-tools">
+                                <button id="btn-limpiar-pizarra" style="background: #ffeba7; border:none; padding: 5px 10px; cursor:pointer; border-radius:5px;">Borrar Todo</button>
+                                <button id="btn-cerrar-pizarra-interno" style="background: #ffadad; border:none; padding: 5px 10px; cursor:pointer; border-radius:5px;">X</button>
+                            </div>
+                        </div>
+                        <canvas id="mi-canvas-dibujo" width="800" height="500" style="background: white; border-radius: 8px; cursor: crosshair; touch-action: none;"></canvas>
                     </div>
                 </div>
             </div>
@@ -394,15 +401,15 @@
         </div>
 
 <div class="controles-videollamada-bar">
-            <button class="btn-control-llamada" title="Silenciar">
+            <button class="btn-control" id="btn-micro-video" title="Silenciar">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
             </button>
 
-            <button class="btn-control-llamada" title="Cámara">
+            <button class="btn-control" id="btn-camara-video" title="Cámara">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"></path><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
             </button>
 
-            <button class="btn-control-llamada" id="btn-toggle-pizarra" title="Abrir Pizarra">
+            <button class="btn-control" id="btn-toggle-pizarra" title="Abrir Pizarra">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M2 3h20v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V3z"></path>
                     <path d="M8.5 21h7"></path>
@@ -420,7 +427,7 @@
                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
             </button>
 
-            <button class="btn-control-llamada colgar" id="btn-colgar-llamada-a" title="Colgar">
+            <button class="btn-control colgar"id="btn-colgar-llamada-a" title="Colgar">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.42 19.42 0 0 1-3.33-2.67m-2.67-3.34a19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91"></path><line x1="23" y1="1" x2="1" y2="23"></line></svg>
             </button>
         </div>
@@ -651,32 +658,80 @@
 
     <section class="seccion-busqueda-principal panel-seccion" id="panel-buscar">
     
-        <h1 class="titulo-busqueda">Hola Alexandra! ¿Que aprenderemos hoy?</h1>
-
-        <div class="contenedor-barra-busqueda">
-            <div class="campo-busqueda-wrapper">
-                <span class="icono-lupa-busqueda">
-    <img src="/imagenes/imagen-lupa.png" alt="">
-                </span>
-                <input type="text" class="campo-busqueda" placeholder="Busca un tema...">
-            </div>
-            <button class="boton-filtros">
-                Filtros 
-                <span class="icono-filtro">
-
-<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M31.875 17.9998H13.3425M6.801 17.9998H4.125M6.801 17.9998C6.801 17.1326 7.14552 16.3008 7.75876 15.6876C8.372 15.0744 9.20374 14.7298 10.071 14.7298C10.9383 14.7298 11.77 15.0744 12.3832 15.6876C12.9965 16.3008 13.341 17.1326 13.341 17.9998C13.341 18.8671 12.9965 19.6988 12.3832 20.3121C11.77 20.9253 10.9383 21.2698 10.071 21.2698C9.20374 21.2698 8.372 20.9253 7.75876 20.3121C7.14552 19.6988 6.801 18.8671 6.801 17.9998ZM31.875 27.9103H23.253M23.253 27.9103C23.253 28.7778 22.9077 29.6105 22.2943 30.2239C21.6809 30.8372 20.849 31.1818 19.9815 31.1818C19.1142 31.1818 18.2825 30.8358 17.6693 30.2226C17.056 29.6093 16.7115 28.7776 16.7115 27.9103M23.253 27.9103C23.253 27.0429 22.9077 26.2117 22.2943 25.5983C21.6809 24.9849 20.849 24.6403 19.9815 24.6403C19.1142 24.6403 18.2825 24.9849 17.6693 25.5981C17.056 26.2113 16.7115 27.0431 16.7115 27.9103M16.7115 27.9103H4.125M31.875 8.08934H27.2175M20.676 8.08934H4.125M20.676 8.08934C20.676 7.22208 21.0205 6.39034 21.6338 5.7771C22.247 5.16385 23.0787 4.81934 23.946 4.81934C24.3754 4.81934 24.8006 4.90392 25.1974 5.06825C25.5941 5.23258 25.9546 5.47345 26.2582 5.7771C26.5619 6.08074 26.8028 6.44123 26.9671 6.83796C27.1314 7.2347 27.216 7.65991 27.216 8.08934C27.216 8.51876 27.1314 8.94398 26.9671 9.34071C26.8028 9.73745 26.5619 10.0979 26.2582 10.4016C25.9546 10.7052 25.5941 10.9461 25.1974 11.1104C24.8006 11.2748 24.3754 11.3593 23.946 11.3593C23.0787 11.3593 22.247 11.0148 21.6338 10.4016C21.0205 9.78833 20.676 8.95659 20.676 8.08934Z" stroke="white" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round"/>
-</svg>
-
-                </span>
-        </button>
+<h1 class="titulo-busqueda">Encuentra tu tutor ideal</h1>
+    
+    <div class="contenedor-barra-busqueda-principal">
+        <div class="campo-busqueda-wrapper-principal" style="display: flex; align-items: center;">
+            <span class="icono-lupa-busqueda">
+                <img src="../assets/images/imagen-lupa.png" alt="Buscar">
+            </span>
+            <input type="text" id="input-busqueda-principal" class="campo-busqueda-principal" placeholder="Busca por curso (ej. Python) o tutor...">
+        </div>
+        <button class="boton-buscar-principal" id="btn-buscar-principal">Buscar</button>
     </div>
 
-    <div class="contenedor-tags-busqueda">
-        <a href="#" class="tag-busqueda">Matematica Discreta</a>
-        <a href="#" class="tag-busqueda">Figma</a>
-        <a href="#" class="tag-busqueda">Algoritmos</a>
-        <a href="#" class="tag-busqueda">Creatividad Y Liderazgo</a>
+    <div id="contenido-inicial-busqueda">
+        <div class="seccion-recomendados">
+            <h2 class="subtitulo-seccion">Recomendados para ti</h2>
+
+            <div class="tarjetas-recomendados" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+            
+            <article class="tarjeta-tutor-dashboard">
+                <div class="tutor-info">
+                    <img src="../assets/images/ima-foto-victor.png" alt="Foto Tutor" class="tutor-foto">
+                    <div class="tutor-datos">
+                        <h3 class="tutor-nombre">Victor Alberca</h3>
+                        <p class="tutor-carrera">Ingeniería de Software</p>
+                        <div class="tutor-rating">⭐ 4.8</div>
+                    </div>
+                </div>
+                <div class="tutor-tags">
+                    <span class="tag-tutor">SQL</span>
+                    <span class="tag-tutor">Base de Datos</span>
+                </div>
+                <div class="tutor-acciones">
+                    <button class="btn-ver-perfil" onclick="mostrarSeccionEstudiante('panel-tutores')">Perfil</button>
+                    <button class="btn-solicitar">Solicitar</button>
+                </div>
+            </article>
+
+            <article class="tarjeta-tutor-dashboard">
+                <div class="tutor-info">
+                    <img src="../assets/images/ima-chica1.png" alt="Foto Tutor" class="tutor-foto">
+                    <div class="tutor-datos">
+                        <h3 class="tutor-nombre">Maria Lopez</h3>
+                        <p class="tutor-carrera">Diseño Gráfico</p>
+                        <div class="tutor-rating">⭐ 4.9</div>
+                    </div>
+                </div>
+                <div class="tutor-tags">
+                    <span class="tag-tutor">Figma</span>
+                    <span class="tag-tutor">UX/UI</span>
+                </div>
+                <div class="tutor-acciones">
+                    <button class="btn-ver-perfil">Perfil</button>
+                    <button class="btn-solicitar">Solicitar</button>
+                </div>
+            </article>
+
+        </div>
+
+
+        </div>
+    </div>
+
+    <div id="resultados-busqueda-wrapper" style="display: none; margin-top: 30px;">
+        <h2 class="subtitulo-seccion">Resultados de búsqueda: <span id="termino-buscado-display" style="color: #005a9c;"></span></h2>
+        <button id="btn-limpiar-busqueda" style="margin-bottom: 20px; background: none; border: none; color: #666; text-decoration: underline; cursor: pointer;">
+            ← Volver a recomendados
+        </button>
+        
+        <div class="tarjetas-recomendados" id="lista-resultados-dinamica" style="justify-content: flex-start; flex-wrap: wrap; gap: 20px;">
+        </div>
+        
+        <div id="mensaje-no-resultados" style="display: none; text-align: center; width: 100%; color: #666; margin-top: 20px;">
+            <p>No encontramos tutores con ese criterio. Prueba con "SQL", "Figma" o "Victor".</p>
+        </div>
     </div>
 
     </section>
@@ -794,30 +849,32 @@
 
   <section class="seccion-resultados-busqueda panel-seccion" id="panel-tutores">
 
-    <div class="contenedor-barra-busqueda">
-        <div class="campo-busqueda-wrapper">
-            <span class="icono-lupa-busqueda">
-                
-    <svg width="36" height="34" viewBox="0 0 36 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M16.0098 0.5C20.1321 0.500019 24.0806 2.04658 26.9873 4.79199C29.893 7.53646 31.5195 11.2529 31.5195 15.1211C31.5195 18.9893 29.8929 22.7057 26.9873 25.4502C24.0806 28.1956 20.1321 29.7431 16.0098 29.7432C11.8874 29.7432 7.93895 28.1956 5.03223 25.4502C2.12656 22.7057 0.5 18.9893 0.5 15.1211C0.50007 11.2529 2.12653 7.53646 5.03223 4.79199C7.93895 2.04661 11.8875 0.5 16.0098 0.5ZM16.0098 3.28027C12.7016 3.28027 9.52325 4.52109 7.17578 6.73828C4.8274 8.95635 3.50202 11.9712 3.50195 15.1211C3.50195 18.2709 4.82747 21.2858 7.17578 23.5039C9.52325 25.7211 12.7015 26.9619 16.0098 26.9619C17.6484 26.9619 19.2718 26.6573 20.7871 26.0645C22.3023 25.4716 23.6812 24.6019 24.8438 23.5039C26.0062 22.4058 26.9297 21.1006 27.5605 19.6621C28.1915 18.2234 28.5166 16.6802 28.5166 15.1211C28.5166 13.5621 28.1914 12.0187 27.5605 10.5801C26.9297 9.14168 26.0062 7.83628 24.8438 6.73828C23.6812 5.64024 22.3024 4.77058 20.7871 4.17773C19.2718 3.58491 17.6484 3.28028 16.0098 3.28027Z" fill="black" stroke="black"/>
-<path d="M26.0713 23.1816C26.4783 23.183 26.863 23.3376 27.1416 23.6025L35.0967 31.1631C35.3623 31.4274 35.5033 31.7736 35.499 32.126C35.4946 32.481 35.3427 32.8265 35.0664 33.0859C34.7892 33.3463 34.4092 33.4978 34.0068 33.5C33.6546 33.5019 33.3175 33.3894 33.0508 33.1885L32.9414 33.0977L24.9932 25.543V25.542C24.7155 25.2781 24.5653 24.9275 24.5664 24.5684C24.5675 24.2093 24.7197 23.8591 24.999 23.5967L25.0254 23.5713C25.3035 23.3232 25.6771 23.1804 26.0713 23.1816Z" fill="black" stroke="black"/>
-</svg>
-
-            </span>
-            <input type="text" class="campo-busqueda" value="Algoritmos">
-        </div>
-        <button class="boton-filtros">
+    <h1 class="titulo-busqueda">Mis Tutores Favoritos</h1>
+<br>
+<div class="contenedor-barra-busqueda">
+    <div class="campo-busqueda-wrapper">
+        <span class="icono-lupa-busqueda">
+            <img src="../assets/images/imagen-lupa.png" alt="Buscar">
+        </span>
+        <input type="text" id="input-busqueda-tutores" class="campo-busqueda" placeholder="Buscar tutor...">
+    </div>
+    
+    <div class="wrapper-filtro-estudiante" style="position: relative;">
+        <button class="boton-filtros" id="btn-filtro-tutores">
             Filtros 
-
             <span class="icono-filtro">
-<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M31.875 18H13.3425M6.801 18H4.125M6.801 18C6.801 17.1327 7.14552 16.301 7.75876 15.6877C8.372 15.0745 9.20374 14.73 10.071 14.73C10.9383 14.73 11.77 15.0745 12.3832 15.6877C12.9965 16.301 13.341 17.1327 13.341 18C13.341 18.8672 12.9965 19.699 12.3832 20.3122C11.77 20.9254 10.9383 21.27 10.071 21.27C9.20374 21.27 8.372 20.9254 7.75876 20.3122C7.14552 19.699 6.801 18.8672 6.801 18ZM31.875 27.9105H23.253M23.253 27.9105C23.253 28.7779 22.9077 29.6106 22.2943 30.224C21.6809 30.8374 20.849 31.182 19.9815 31.182C19.1142 31.182 18.2825 30.8359 17.6693 30.2227C17.056 29.6095 16.7115 28.7777 16.7115 27.9105M23.253 27.9105C23.253 27.043 22.9077 26.2118 22.2943 25.5984C21.6809 24.9851 20.849 24.6405 19.9815 24.6405C19.1142 24.6405 18.2825 24.985 17.6693 25.5982C17.056 26.2115 16.7115 27.0432 16.7115 27.9105M16.7115 27.9105H4.125M31.875 8.08946H27.2175M20.676 8.08946H4.125M20.676 8.08946C20.676 7.2222 21.0205 6.39046 21.6338 5.77722C22.247 5.16397 23.0787 4.81946 23.946 4.81946C24.3754 4.81946 24.8006 4.90404 25.1974 5.06837C25.5941 5.2327 25.9546 5.47357 26.2582 5.77722C26.5619 6.08087 26.8028 6.44135 26.9671 6.83808C27.1314 7.23482 27.216 7.66004 27.216 8.08946C27.216 8.51888 27.1314 8.9441 26.9671 9.34083C26.8028 9.73757 26.5619 10.098 26.2582 10.4017C25.9546 10.7053 25.5941 10.9462 25.1974 11.1105C24.8006 11.2749 24.3754 11.3595 23.946 11.3595C23.0787 11.3595 22.247 11.0149 21.6338 10.4017C21.0205 9.78845 20.676 8.95672 20.676 8.08946Z" stroke="white" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round"/>
-</svg>
-
-
+                <svg width="24" height="24" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M31.875 17.9998H13.3425M6.801 17.9998H4.125M6.801 17.9998C6.801 17.1326 7.14552 16.3008 7.75876 15.6876C8.372 15.0744 9.20374 14.7298 10.071 14.7298C10.9383 14.7298 11.77 15.0744 12.3832 15.6876C12.9965 16.3008 13.341 17.1326 13.341 17.9998C13.341 18.8671 12.9965 19.6988 12.3832 20.3121C11.77 20.9253 10.9383 21.2698 10.071 21.2698C9.20374 21.2698 8.372 20.9253 7.75876 20.3121C7.14552 19.6988 6.801 18.8671 6.801 17.9998ZM31.875 27.9103H23.253M23.253 27.9103C23.253 28.7778 22.9077 29.6105 22.2943 30.2239C21.6809 30.8372 20.849 31.1818 19.9815 31.1818C19.1142 31.1818 18.2825 30.8358 17.6693 30.2226C17.056 29.6093 16.7115 28.7776 16.7115 27.9103M23.253 27.9103C23.253 27.0429 22.9077 26.2117 22.2943 25.5983C21.6809 24.9849 20.849 24.6403 19.9815 24.6403C19.1142 24.6403 18.2825 24.9849 17.6693 25.5981C17.056 26.2113 16.7115 27.0431 16.7115 27.9103M16.7115 27.9103H4.125M31.875 8.08934H27.2175M20.676 8.08934H4.125M20.676 8.08934C20.676 7.22208 21.0205 6.39034 21.6338 5.7771C22.247 5.16385 23.0787 4.81934 23.946 4.81934C24.3754 4.81934 24.8006 4.90392 25.1974 5.06825C25.5941 5.23258 25.9546 5.47345 26.2582 5.7771C26.5619 6.08074 26.8028 6.44123 26.9671 6.83796C27.1314 7.2347 27.216 7.65991 27.216 8.08934C27.216 8.51876 27.1314 8.94398 26.9671 9.34071C26.8028 9.73745 26.5619 10.0979 26.2582 10.4016C25.9546 10.7052 25.5941 10.9461 25.1974 11.1104C24.8006 11.2748 24.3754 11.3593 23.946 11.3593C23.0787 11.3593 22.247 11.0148 21.6338 10.4016C21.0205 9.78833 20.676 8.95659 20.676 8.08934Z" stroke="white" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round"/>
+                </svg>
             </span>
         </button>
+
+        <div class="menu-filtros-busqueda" id="menu-filtros-tutores">
+            <div class="opcion-filtro seleccionado" data-tipo="nombre">Por Nombre</div>
+            <div class="opcion-filtro" data-tipo="curso">Por Curso/Tema</div>
+        </div>
     </div>
+</div>
 
     <div class="grid-resultados">
         
@@ -1631,7 +1688,7 @@
       <div class="dash-est-sub-seccion">
         <div class="dash-est-sub-header">
           <h2 class="dash-est-subtitulo">Solicitudes</h2>
-          <a href="#" class="dash-est-ver-todas">Ver todas</a>
+          <a href="#" class="dash-est-ver-todas" id="btn-ver-todas-solicitudes">Ver todas</a>
         </div>
         <span class="dash-est-subtitulo-info">¡Tienes 3 solicitudes pendientes!</span>
         
@@ -1679,7 +1736,7 @@
           <span class="dash-est-tutor-fav activo">❤</span>
         </div>
         
-        <button class="dash-est-boton-ver-tutores">Ver todos mis tutores</button>
+        <button class="dash-est-boton-ver-tutores" id="btn-ver-todos-tutores">Ver todos mis tutores</button>
       </div>
 
     </div>
