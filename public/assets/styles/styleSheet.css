@@ -5497,7 +5497,7 @@ body.dark-mode .nav-link-notificaciones svg path {
 
 
 
-
+/*ACAAAAAAA SON TODOS LOS ESTUDIANTES*/
 
 
 
@@ -6119,3 +6119,17 @@ body.dark-mode .nav-link-notificaciones svg path {
     font-weight: 700;
     border-left: 4px solid #005a9c;
 }
+
+
+
+
+/*ACA SE VA A AGREGAR ALGO DE ESTUDIANTE*/
+
+#contenedor-habilidades-edicion {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+/*--------------------------------------*/
+
