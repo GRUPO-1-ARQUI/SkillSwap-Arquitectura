@@ -766,19 +766,21 @@
 
     <div class="contenido-verificaciones-vacio">
         
-        <div class="panel-vacio-mensajes">
-            <div class="icono-mensaje-vacio">
-                
-<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M41.6665 58.332L31.5165 65.107C24.2331 69.957 20.5915 72.382 18.6165 76.082C16.6415 79.7904 16.6581 84.1404 16.6915 92.832C16.7248 103.315 16.8248 113.982 17.0915 124.782C17.7331 150.407 18.0498 163.215 27.4748 172.632C36.8915 182.049 49.8748 182.382 75.8415 183.032C91.9473 183.435 108.061 183.435 124.166 183.032C150.133 182.382 163.116 182.057 172.533 172.632C181.95 163.215 182.275 150.407 182.916 124.782C183.183 113.982 183.283 103.315 183.316 92.8404C183.341 84.1404 183.358 79.7904 181.383 76.0904C179.416 72.382 175.775 69.957 168.491 65.107L158.333 58.332" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
-<path d="M16.668 83.332L74.2763 117.899C86.8096 125.415 93.0763 129.165 100.001 129.165C106.926 129.165 113.193 125.415 125.726 117.89L183.335 83.332" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
-<path d="M41.668 99.9994V49.9994C41.668 34.2827 41.668 26.4327 46.5513 21.5493C51.4346 16.666 59.2846 16.666 75.0013 16.666H125.001C140.718 16.666 148.568 16.666 153.451 21.5493C158.335 26.4327 158.335 34.2827 158.335 49.9994V99.9994" stroke="white" stroke-width="1.5"/>
-<path d="M83.3359 83.3333H116.669M83.3359 50H116.669" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-
-            </div>
-            <h3>No tiene más mensajes</h3>
+    <div class="panel-vacio-mensajes" style="background-color: transparent; color: #333; margin-top: 50px;">
+        <div class="icono-mensaje-vacio">
+            <svg width="100" height="100" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z" stroke="#28a745" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M7.75 12L10.58 14.83L16.25 9.17004" stroke="#28a745" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
         </div>
+        <h2 style="color: #28a745; margin-top: 20px;">¡Todo al día!</h2>
+        <p style="font-size: 18px; color: #666;">No tienes solicitudes de verificación pendientes.</p>
+        <p style="font-size: 14px; color: #888;">Buen trabajo, Coordinador.</p>
+        
+        <button onclick="window.location.reload()" style="margin-top: 20px; padding: 10px 20px; border-radius: 20px; border: 1px solid #005a9c; background: white; color: #005a9c; cursor: pointer;">
+            Actualizar lista
+        </button>
+    </div>
 
         <div class="panel-vacio-detalle">
             <div class="icono-detalle-vacio">
@@ -795,6 +797,19 @@
     </div>
 
 </section>
+
+<div id="modal-confirmacion" class="modal-overlay">
+    <div class="modal-contenido">
+        <div class="modal-icono-alerta">!</div>
+        <h3>¿Estás seguro de rechazar?</h3>
+        <p>Esta acción es irreversible y eliminará <strong id="cantidad-rechazo">0</strong> solicitud(es) de la lista.</p>
+        
+        <div class="modal-botones">
+            <button id="btn-cancelar-modal" class="btn-modal secundario">Cancelar</button>
+            <button id="btn-confirmar-rechazo" class="btn-modal peligro">Sí, Rechazar</button>
+        </div>
+    </div>
+</div>
 
      <footer>
       <div class="seccion-footer">

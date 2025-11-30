@@ -352,6 +352,100 @@
           alert("Navegando al detalle de reportes de Juan Perez...");
       });
   }
+
+  // ==========================================
+  // LÓGICA: Procesar Verificaciones (CON MODAL)
+  // ==========================================
+
+  // Elementos del Modal
+  const modalRechazo = document.getElementById('modal-confirmacion');
+  const btnCancelarModal = document.getElementById('btn-cancelar-modal');
+  const btnConfirmarRechazo = document.getElementById('btn-confirmar-rechazo');
+  const spanCantidad = document.getElementById('cantidad-rechazo');
+
+  // Elementos del Panel
+  const btnAceptarVerif = document.querySelector('#panel-verificacion .boton-accion-coord.aceptar');
+  const btnRechazarVerif = document.querySelector('#panel-verificacion .boton-accion-coord.rechazar');
+
+  // Función CORE (Ejecuta la acción real)
+  function ejecutarAccionMasiva(accion) {
+      const checkboxesMarcados = document.querySelectorAll('#panel-verificacion .correo-checkbox:checked');
+      
+      // Eliminar visualmente con animación
+      checkboxesMarcados.forEach(checkbox => {
+          const tarjeta = checkbox.closest('.tarjeta-correo-item');
+          if (tarjeta) {
+              tarjeta.style.transition = "all 0.3s ease";
+              tarjeta.style.opacity = "0";
+              tarjeta.style.transform = "translateX(20px)";
+              setTimeout(() => tarjeta.remove(), 300);
+          }
+      });
+
+      // Verificar si quedó vacío después de borrar
+      setTimeout(() => {
+          const restantes = document.querySelectorAll('#panel-verificacion .tarjeta-correo-item');
+          if (restantes.length === 0) {
+              mostrarSeccion('panel-verificacion-vacio');
+          } else {
+              // Mensaje de éxito discreto
+              console.log(`Acción ${accion} completada.`);
+          }
+      }, 350);
+  }
+
+  // 1. Botón RECHAZAR (Abre el Modal Rojo)
+  if (btnRechazarVerif) {
+      btnRechazarVerif.addEventListener('click', (e) => {
+          e.preventDefault();
+          const seleccionados = document.querySelectorAll('#panel-verificacion .correo-checkbox:checked').length;
+
+          if (seleccionados === 0) {
+              alert("Selecciona al menos un estudiante para rechazar.");
+              return;
+          }
+
+          // Actualizar texto del modal y mostrarlo
+          if(spanCantidad) spanCantidad.textContent = seleccionados;
+          modalRechazo.classList.add('activo');
+      });
+  }
+
+  // 2. Botón ACEPTAR (Mantenemos confirmación simple o directa, según prefieras)
+  if (btnAceptarVerif) {
+      btnAceptarVerif.addEventListener('click', (e) => {
+          e.preventDefault();
+          const seleccionados = document.querySelectorAll('#panel-verificacion .correo-checkbox:checked').length;
+          
+          if (seleccionados === 0) {
+              alert("Selecciona al menos un estudiante para aceptar.");
+              return;
+          }
+
+          if(confirm(`¿Deseas validar a los ${seleccionados} estudiantes seleccionados?`)) {
+              ejecutarAccionMasiva('aceptar');
+              alert("¡Validación exitosa!");
+          }
+      });
+  }
+
+  // --- Lógica interna del Modal ---
+  
+  // A. Confirmar Rechazo (Botón Rojo del Modal)
+  if (btnConfirmarRechazo) {
+      btnConfirmarRechazo.addEventListener('click', () => {
+          ejecutarAccionMasiva('rechazar');
+          modalRechazo.classList.remove('activo'); // Cerrar modal
+      });
+  }
+
+  // B. Cancelar (Cerrar modal)
+  if (btnCancelarModal) {
+      btnCancelarModal.addEventListener('click', () => {
+          modalRechazo.classList.remove('activo');
+      });
+  }
+  
   
 
     // Opcional: Nos aseguramos de que el dashboard sea lo primero que se vea al cargar la página.
