@@ -194,6 +194,90 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
+  // --- Lógica para agregar habilidades desde el SELECT ---
+  const btnGuardarHabilidad = document.querySelector('#btn-guardar-habilidad');
+
+  if (btnGuardarHabilidad) {
+      btnGuardarHabilidad.addEventListener('click', () => {
+
+          const selectH = document.querySelector('#habilidades-select');
+          const listaPerfilH = document.querySelector('.habilidades ul');
+          const liAgregarH = document.querySelector('.habilidades .agregar'); // el botón ➕
+
+          if (!selectH) return;
+
+          // Obtener habilidades seleccionadas
+          const seleccionadas = [...selectH.selectedOptions].map(opt => opt.text.trim());
+
+          if (seleccionadas.length === 0) {
+              alert("Selecciona al menos una habilidad.");
+              return;
+          }
+
+          seleccionadas.forEach(texto => {
+              // Evitar duplicados
+              const existe = [...listaPerfilH.querySelectorAll('li')]
+                  .some(li => li.textContent.trim().toLowerCase() === texto.toLowerCase());
+
+              if (!existe) {
+                  // Crear <li> nuevo
+                  const nuevoLi = document.createElement('li');
+                  nuevoLi.textContent = texto;
+
+                  // Insertarlo antes del botón +
+                  listaPerfilH.insertBefore(nuevoLi, liAgregarH);
+              }
+          });
+
+          // Regresar al perfil del estudiante
+          mostrarSeccionEstudiante('panel-perfil');
+      });
+  }
+
+
+  // Botón Guardar del panel de dominio
+    const btnGuardarTema = document.querySelector('#btn-guardar-tema');
+
+    if (btnGuardarTema) {
+        btnGuardarTema.addEventListener('click', () => {
+            const select = document.querySelector('#temas-select');
+            const listaPerfil = document.querySelector('.temas-dominio ul');
+            const liAgregar = document.querySelector('#btn-add-dominio'); // el ➕
+
+            // Verificamos si hay selección
+            const opcion = select.value;
+            const texto = select.options[select.selectedIndex]?.text;
+
+            if (!opcion || !texto) return;
+
+            // Evitar duplicados
+            const existe = [...listaPerfil.querySelectorAll('li')]
+                .some(li => li.textContent.trim().toLowerCase() === texto.toLowerCase());
+
+            if (existe) {
+                alert("Este tema ya está en la lista.");
+                return;
+            }
+
+            // Crear nuevo elemento <li>
+            const nuevoLi = document.createElement('li');
+            nuevoLi.textContent = texto;
+
+            // Insertarlo antes del botón ➕
+            listaPerfil.insertBefore(nuevoLi, liAgregar);
+
+            // Opcional: cerrar panel
+            mostrarSeccionEstudiante('panel-perfil');
+        });
+    }
+
+  const btnPlusDominio = document.querySelector('.dominio-tag-agregar');
+
+  if (btnPlusDominio) {
+      btnPlusDominio.addEventListener('click', () => {
+          mostrarSeccionEstudiante('panel-add-dominio');
+      });
+  }
 
   // --- E. TEMAS DE COLOR (Ajustes de Apariencia) ---
   const colorButtons = document.querySelectorAll('.btn-color');
@@ -202,6 +286,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const savedColorTheme = localStorage.getItem('colorTheme');
   if (savedColorTheme) {
       document.body.classList.add(savedColorTheme);
+
+      const btnAgregarTema = document.querySelector('.dominio-tag-agregar');
+
       // Actualizar selección visual
       const colorName = savedColorTheme.replace('theme-', '');
       const activeBtn = document.querySelector(`.btn-color[data-color="${colorName}"]`);

@@ -4336,6 +4336,31 @@ body.dark-mode .btn-header-chat:hover {
     background-color: #f0f2f5;
 }
 
+#btn-guardar-habilidad {
+    color: #fff;
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    padding: 8px 18px;
+    border-radius: 999px;
+    margin: 20px;
+    border: none;
+}
+
+#btn-guardar-tema {
+    color: #fff;
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    padding: 8px 18px;
+    border-radius: 999px;
+    margin: 20px;
+    border: none;
+}
+
+#panel-add-dominio {
+    align-items: center;
+    justify-content: center;
+}
+
 /*seccion nosotros*/
 
 .seccion-sobre-nosotros-principal {
@@ -4466,6 +4491,8 @@ body.dark-mode .btn-header-chat:hover {
 
 .btn-iniciarsesion,
 .btn-registrase,
+.btn-guardar-dominio,
+.btn-guardar-habilidad,
 .llamado-accion-boton,
 .llamado-accion-boton2,
 .contact-button {
@@ -4475,6 +4502,8 @@ body.dark-mode .btn-header-chat:hover {
 
 .btn-iniciarsesion:hover,
 .btn-registrase:hover,
+.btn-guardar-dominio:hover,
+.btn-guardar-habilidad:hover,
 .llamado-accion-boton:hover,
 .llamado-accion-boton2:hover,
 .contact-button:hover {
@@ -5292,7 +5321,10 @@ body.theme-pink {
 body.theme-pink .btn-iniciarsesion, 
 body.theme-pink .dash-est-boton-detalle,
 body.theme-pink .boton-chat-guardar,
+body.theme-pink .btn-guardar-dominio,
+body.theme-pink .btn-guardar-habilidad,
 body.theme-pink .btn-add-reply,
+body.theme-pink .boton-toggle.activo,
 body.theme-pink .ajustes-link.activo {
     background-color: #e83e8c !important;
 }
@@ -5305,11 +5337,14 @@ body.theme-lightblue {
     --primary-color: #17a2b8;
     --secondary-color: #d1ecf1;
 }
-body.theme-lightblue .btn-iniciarsesion, 
-body.theme-lightblue .dash-est-boton-detalle,
-body.theme-lightblue .boton-chat-guardar,
-body.theme-lightblue .btn-add-reply,
-body.theme-lightblue .ajustes-link.activo {
+body.theme-pink .btn-iniciarsesion, 
+body.theme-pink .dash-est-boton-detalle,
+body.theme-pink .boton-chat-guardar,
+body.theme-pink .btn-guardar-dominio,
+body.theme-pink .btn-guardar-habilidad,
+body.theme-pink .btn-add-reply,
+body.theme-pink .boton-toggle.activo,
+body.theme-pink .ajustes-link.activo {
     background-color: #17a2b8 !important;
 }
 body.theme-lightblue .ajustes-link.activo {
@@ -5321,11 +5356,14 @@ body.theme-orange {
     --primary-color: #fd7e14;
     --secondary-color: #ffeeba;
 }
-body.theme-orange .btn-iniciarsesion, 
-body.theme-orange .dash-est-boton-detalle,
-body.theme-orange .boton-chat-guardar,
-body.theme-orange .btn-add-reply,
-body.theme-orange .ajustes-link.activo {
+body.theme-pink .btn-iniciarsesion, 
+body.theme-pink .dash-est-boton-detalle,
+body.theme-pink .boton-chat-guardar,
+body.theme-pink .btn-guardar-dominio,
+body.theme-pink .btn-guardar-habilida,
+body.theme-pink .btn-add-reply,
+body.theme-pink .boton-toggle.activo,
+body.theme-pink .ajustes-link.activo {
     background-color: #fd7e14 !important;
 }
 body.theme-orange .ajustes-link.activo {
