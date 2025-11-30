@@ -563,20 +563,58 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
-  // --- Lógica de la Calificación ---
+ // ==========================================
+  // LÓGICA: CRÉDITOS Y CALIFICACIÓN
+  // ==========================================
+
+  // 1. Cargar créditos guardados al iniciar
+  const displayCreditos = document.getElementById('perfil-creditos-valor');
+  let misCreditos = parseInt(localStorage.getItem('userCreditos')) || 0;
+  
+  if (displayCreditos) {
+      displayCreditos.textContent = misCreditos;
+  }
+
+  // 2. Lógica del botón Enviar Calificación
   const btnEnviarCalif = document.getElementById('btn-enviar-calificacion');
   const btnOmitirCalif = document.getElementById('btn-omitir-calificacion');
 
-  function cerrarCalificacion() {
-      alert("¡Gracias por tu feedback!"); // Mensaje opcional
-      mostrarSeccionEstudiante('panel-dashboard-estudiante');
+  if (btnEnviarCalif) {
+      btnEnviarCalif.addEventListener('click', (e) => {
+          e.preventDefault();
+          
+          // Verificar cuántas estrellas se seleccionaron
+          // Buscamos el input radio que esté "checked" dentro de .calificacion-estrellas
+          const estrellaSeleccionada = document.querySelector('input[name="rating"]:checked');
+          
+          let mensaje = "¡Gracias por tu calificación!";
+          
+          // Si seleccionó 5 estrellas, damos crédito (Simulación de recompensa)
+          if (estrellaSeleccionada && estrellaSeleccionada.value === "5") {
+              misCreditos++;
+              localStorage.setItem('userCreditos', misCreditos); // Guardar
+              
+              if (displayCreditos) displayCreditos.textContent = misCreditos; // Actualizar visualmente
+              
+              mensaje = "🌟 ¡Excelente! Has completado una sesión exitosa.\n🪙 ¡Ganaste 1 crédito por tu desempeño!";
+          }
+
+          alert(mensaje);
+          
+          // Volver al dashboard
+          mostrarSeccionEstudiante('panel-dashboard-estudiante');
+          
+          // Opcional: Limpiar la selección de estrellas para la próxima
+          if (estrellaSeleccionada) estrellaSeleccionada.checked = false;
+      });
   }
 
-  if (btnEnviarCalif) btnEnviarCalif.addEventListener('click', cerrarCalificacion);
-  if (btnOmitirCalif) btnOmitirCalif.addEventListener('click', (e) => {
-      e.preventDefault();
-      mostrarSeccionEstudiante('panel-dashboard-estudiante');
-  });
+  if (btnOmitirCalif) {
+      btnOmitirCalif.addEventListener('click', (e) => {
+          e.preventDefault();
+          mostrarSeccionEstudiante('panel-dashboard-estudiante');
+      });
+  }
 
   // --- I. CALENDARIO SEMANAL (Dashboard) ---
   const btnAbrirCalendario = document.getElementById('btn-abrir-calendario');
@@ -830,6 +868,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Inicializar al cargar
   renderizarHabilidades();
+
+  
 
   // --- INICIO POR DEFECTO ---
   // Mostrar Dashboard al cargar
