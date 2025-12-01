@@ -727,7 +727,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const chatInputMain = document.getElementById('chat-input-principal');
   const chatBtnEnviar = document.getElementById('chat-btn-enviar');
-  const chatAreaMensajes = document.querySelector('#panel-chat .area-mensajes');
+  const chatAreaMensajes = document.querySelector('#panel-chat-aprendiz .area-mensajes');
 
   // Función para agregar un mensaje al chat
   function agregarMensaje(texto, tipo) {
@@ -860,7 +860,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Función auxiliar para agregar HTML complejo (burbujas de archivo)
   function agregarMensajeHTML(html, tipo) {
-      const chatArea = document.querySelector('#panel-chat .area-mensajes');
+      const chatArea = document.querySelector('#panel-chat-aprendiz .area-mensajes');
       if (!chatArea) return;
 
       const nuevaBurbuja = document.createElement('div');
