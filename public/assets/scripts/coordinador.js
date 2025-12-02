@@ -81,40 +81,66 @@
 
 
   // ==========================================
-  // Lógica: Mostrar Detalle de Verificación (Coordinador)
+  // Lógica: Mostrar Detalle (Responsive tipo Outlook)
   // ==========================================
   
+  const contenedorVerificaciones = document.querySelector('.contenido-verificaciones-coord');
   const tarjetasVerificacion = document.querySelectorAll('.tarjeta-correo-item');
   const panelVacio = document.getElementById('vista-detalle-vacia');
   const panelLleno = document.getElementById('vista-detalle-llena');
-  const btnCerrarDetalle = document.getElementById('btn-cerrar-detalle');
 
-  // Verificamos que existan los paneles en esta página
+  // 1. Crear el botón "Volver" dinámicamente si no existe
+  let btnVolver = document.querySelector('.btn-volver-movil');
+  if (!btnVolver && panelLleno) {
+      btnVolver = document.createElement('button');
+      btnVolver.className = 'btn-volver-movil';
+      btnVolver.innerHTML = '← Volver a la lista';
+      // Lo insertamos al principio del panel de detalle
+      panelLleno.prepend(btnVolver);
+      
+      // Lógica del botón volver
+      btnVolver.addEventListener('click', () => {
+          contenedorVerificaciones.classList.remove('mostrando-detalle');
+          // Limpiar selección visual si quieres
+          tarjetasVerificacion.forEach(t => t.style.backgroundColor = '');
+      });
+  }
+
   if (panelVacio && panelLleno) {
       
-      // 1. Evento: Clic en una tarjeta de la lista
       tarjetasVerificacion.forEach(tarjeta => {
           tarjeta.addEventListener('click', (e) => {
-              // Si el clic fue en el checkbox, no abrimos el detalle
+              // Evitar si es clic en checkbox
               if (e.target.type === 'checkbox' || e.target.classList.contains('correo-checkbox')) {
                   return;
               }
 
-              // Lógica de cambio de panel
-              panelVacio.style.display = 'none'; // Oculta el vacío
-              panelLleno.style.display = 'flex'; // Muestra el lleno
+              // A. Lógica Desktop (Cambio de Vacio a Lleno)
+              panelVacio.style.display = 'none'; 
+              panelLleno.style.display = 'flex'; 
+
+              // B. Lógica Móvil (Clase para ocultar lista y mostrar detalle)
+              // Solo aplicamos esto si la pantalla es pequeña, o simplemente siempre (el CSS decide)
+              contenedorVerificaciones.classList.add('mostrando-detalle');
+
+              // Scroll arriba para que el usuario vea el inicio del detalle
+              window.scrollTo({ top: 0, behavior: 'smooth' });
           });
       });
 
-      // 2. Evento: Clic en el botón "Cerrar" (X)
+      // Botón Cerrar (X) existente - Ahora también debe servir para "volver" en móvil
+      const btnCerrarDetalle = document.getElementById('btn-cerrar-detalle');
       if (btnCerrarDetalle) {
           btnCerrarDetalle.addEventListener('click', () => {
-              panelLleno.style.display = 'none'; // Oculta el lleno
-              panelVacio.style.display = 'flex'; // Muestra el vacío (o block si prefieres)
+              // Desktop
+              panelLleno.style.display = 'none';
+              panelVacio.style.display = 'flex';
+              
+              // Móvil
+              contenedorVerificaciones.classList.remove('mostrando-detalle');
           });
       }
   }
-
   // ==========================================
   // NUEVO: Exportar Reporte a CSV
   // ==========================================

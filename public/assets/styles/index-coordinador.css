@@ -1,0 +1,190 @@
+/* =========================================
+   DISEÑO RESPONSIVE: COORDINADOR
+   ========================================= */
+
+/* --- TABLETS Y MÓVILES (Pantallas menores a 1024px) --- */
+@media (max-width: 1024px) {
+    
+
+    .panel-coordinador-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+    }
+
+
+    .reportes-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px;
+    }
+    
+    .reporte-tarjeta, 
+    .reporte-tarjeta-larga {
+        width: 100%;
+        height: auto; 
+    }
+}
+
+/* --- MÓVILES (Pantallas menores a 768px) --- */
+@media (max-width: 768px) {
+
+
+    body {
+        margin-top: 0; 
+    }
+
+
+    /* PANELES Y SECCIONES */
+    .panel-coordinador-seccion,
+    .seccion-reportes-coordinador,
+    .seccion-verificaciones-coordinador,
+    .seccion-busqueda-admin,
+    .seccion-verificaciones-vacio {
+        padding: 20px 15px; 
+    }
+
+    .panel-coordinador-grid {
+        grid-template-columns: 1fr !important; 
+    }
+
+    /* SECCIÓN VERIFICACIONES (Lista | Detalle) */
+    .contenido-verificaciones-coord,
+    .contenido-verificaciones-vacio {
+        grid-template-columns: 1fr !important;
+        height: auto; 
+    }
+
+ 
+    /* El panel de detalle  aparecerá debajo de la lista */
+    .panel-detalle-vacio-coord,
+    .panel-detalle-completo-coord {
+        min-height: 300px;
+    }
+
+    /* BARRAS DE BÚSQUEDA Y FILTROS */
+
+    .barra-busqueda-coord,
+    .contenedor-barra-busqueda-admin,
+    .barra-busqueda-verificaciones {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .campo-busqueda-wrapper-coord,
+    .campo-busqueda-wrapper-admin,
+    .campo-busqueda-wrapper-verificaciones {
+        width: 100%;
+    }
+    
+    /* Ajustamos los inputs para que no se desborden */
+    .campo-busqueda-coord,
+    .campo-busqueda-admin,
+    .campo-busqueda-verificaciones {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    /* El botón de filtro lo ponemos ancho completo o centrado */
+    .boton-filtros-coord,
+    .boton-filtros-admin,
+    .boton-filtros-verificaciones {
+        width: 100%;
+        border-radius: 10px;
+        margin-top: 10px;
+    }
+
+    /* 5. TEXTOS Y TÍTULOS */
+    .panel-coordinador-titulo-principal,
+    .titulo-reportes-principal {
+        font-size: 24px; 
+        margin-bottom: 20px;
+    }
+    
+    /* Ajuste de estadísticas */
+    .estadistica-numero-grande {
+        font-size: 36px;
+    }
+
+    /* 6. MODAL */
+    .modal-contenido {
+        width: 95%; 
+        padding: 20px;
+    }
+}
+
+/* =========================================
+         (VERIFICACIONES)
+   ========================================= */
+
+@media (max-width: 768px) {
+
+    /* CONTENEDOR PRINCIPAL */
+    /* Quitamos el Grid para manejar la visibilidad con 'display: block' */
+    .contenido-verificaciones-coord {
+        display: block !important; 
+        position: relative;
+    }
+
+    /* 2. LISTA DE CORREOS (Visible por defecto) */
+    .panel-lista-correos {
+        display: flex;  
+        width: 100%;
+        height: auto;
+        overflow-y: visible; 
+    }
+
+    /* 3. DETALLES (Ocultos por defecto en móvil) */
+    .panel-detalle-vacio-coord,
+    .panel-detalle-completo-coord {
+        display: none !important; 
+        width: 100%;
+    }
+
+    /* --- ESTADO: CUANDO SE ABRE UN CORREO --- */
+    
+    /* Ocultamos la lista */
+    .contenido-verificaciones-coord.mostrando-detalle .panel-lista-correos {
+        display: none !important;
+    }
+
+    /* Mostramos el detalle */
+    .contenido-verificaciones-coord.mostrando-detalle .panel-detalle-completo-coord {
+        display: flex !important;
+        animation: slideInRight 0.3s ease; 
+    }
+
+    /* Animación suave tipo app */
+    @keyframes slideInRight {
+        from { transform: translateX(20px); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+
+    /* 4. BOTÓN VOLVER (Solo móvil) */
+    /* Este botón lo inyectaremos con JS o lo activamos aquí */
+    .btn-volver-movil {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        background: none;
+        border: none;
+        color: #005a9c;
+        font-weight: 700;
+        font-size: 16px;
+        padding: 10px 0;
+        cursor: pointer;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #eee;
+        width: 100%;
+    }
+    
+    /* Ajuste de la barra de búsqueda para que no estorbe en modo detalle */
+    .contenido-verificaciones-coord.mostrando-detalle ~ .barra-busqueda-coord,
+    .contenido-verificaciones-coord.mostrando-detalle ~ .barra-acciones-coord {
+        display: none; 
+    }
+}
+
+/* En escritorio ocultamos el botón de volver */
+@media (min-width: 769px) {
+    .btn-volver-movil {
+        display: none !important;
+    }
+}
