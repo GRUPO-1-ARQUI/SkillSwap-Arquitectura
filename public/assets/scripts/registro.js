@@ -2,10 +2,11 @@ document.getElementById("form").addEventListener("submit", function (event) {
   event.preventDefault(); // Evita que el form se envíe automáticamente
 
   if (this.checkValidity()) {
-    // Si el formulario es válido, redirige
+    const email = document.getElementById('email').value;
+    alert(`¡Registro exitoso!\n\nSe ha enviado un mensaje de confirmación a: ${email}.\nPor favor, verifica tu bandeja de entrada para activar tu cuenta.`);
+
     window.location.href = "index-login.html";
   } else {
-    // Activa los mensajes nativos del navegador
     this.reportValidity();
   }
 });
@@ -15,7 +16,7 @@ document.getElementById('email').addEventListener('input', function () {
 
     if (!regex.test(this.value)) {
         this.setCustomValidity("El correo debe terminar en .edu.pe");
-        } else {
+    } else {
         this.setCustomValidity("");
-        }
+    }
 });

@@ -635,7 +635,7 @@ body
   /* Botones más grandes */
   .btn-iniciarsesion,
   .btn-registrase {
-    width: 70%;
+    width: 100%;
     text-align: center;
   }
 .menu-horizontal.activo .menu-horizontal-opciones {
