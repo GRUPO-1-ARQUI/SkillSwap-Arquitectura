@@ -277,7 +277,8 @@ body {
 }
 
 .llamado-accion-boton {
-  margin: 30px 0px;
+  margin: 30px auto 0px auto;
+  display: block;
   font-family: inherit;
   color: #ffffff;
   padding: 10px 20px;
@@ -287,6 +288,7 @@ body {
   background-color: #ffc107;
   border: 2px solid #ffc107;
   cursor: pointer;
+  text-decoration: none;
 }
 
 /* -----------Seccion 2 ------*/
@@ -301,7 +303,7 @@ body {
 .division-general-nosotros {
   display: flex;
   flex-direction: column;
-  gap: 50px;
+  gap: 30px;
   justify-content: center;
 }
 .division-contenido-row{
@@ -312,20 +314,22 @@ body {
   width: 100%;
 }
 .division-nosotros-txt {
-  justify-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
 }
 
 .elementos-nosotros-txt{
-   display: flex; 
+    display: flex; 
     flex-direction: row; 
     align-items: center; 
-    margin-bottom: 30px; 
-    gap: 15px;
-    width: 100%;
-    margin-bottom: 90px;
+    gap: 30px;
+    max-width: 90%;
 }
 .llamado-accion-boton2{
-   margin: 30px 0px;
+
   font-family: inherit;
   color: #ffffff;
   padding: 10px 20px;
@@ -336,7 +340,7 @@ body {
   border: 2px solid #ffc107;
   cursor: pointer;
   display: block;
-  margin: 30px auto 0 auto; 
+  margin: 0 auto;
 }
 .ns-icono img {
     /* Define un tamaño fijo para todos los iconos */
@@ -344,31 +348,137 @@ body {
     height: auto;
 }
 
-.division-nosotros-ima img {
-  width: 1000px;
+.division-nosotros-ima  
+{
+    display: flex;
+    width: 90%;
+    justify-content: center;
+    align-content: center;
+}
+.division-nosotros-ima img 
+{
+  width: 100%;
 }
 
 /* Seccion 3 */
 .seccion-socios{
+      margin: 50px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0 50px;
 }
 
-.socios-logos {
-  padding-top: 20px;
-  padding-bottom: 50px;
+.socios-logos 
+{
+    padding: 30px 0px;
+    width: 100%;
 }
 
-.socios-logos img{
-  width: auto;
-  height: auto;
+.socios-logos-row
+{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 10px;
+}
+
+.socio-logo{
+  width: 15%;
+  padding: 20px;
+  width: 200px;
+  height: 200px;
+  align-content: center;
+align-content: center;
+
   
+}
+.socio-logo img
+{
+  width: 100%; 
+  height: 100%;
+    object-fit: contain; /* Mantiene proporción sin deformarse */
+}
+
+/* Tablets y pantallas medianas */
+@media screen and (max-width: 1024px) 
+{
+    .division-contenido-row 
+    {
+        flex-direction: column-reverse;
+        gap: 30px;
+        align-items: center;
+
+    }
+
+    .elementos-nosotros-txt
+    {
+        width: 65%;
+    }
+
+    .division-nosotros-ima img {
+        width: 80%;
+        max-width: 600px;
+    }
+
+    .llamado-accion-texto {
+        font-size: 36px;
+        width: 90%;
+    }
+
+    .seccion-nosotros {
+        margin: 30px;
+    }
+
+    .barra-navegacion {
+        padding: 0 10px;
+    }
+}
+
+/* Móviles (smartphones) */
+@media screen and (max-width: 768px) 
+{
+    .menu-horizontal-opciones 
+    {
+        flex-direction: column-reverse;
+        gap: 30px;
+        background-color: #ffffff;
+        position: fixed;
+        top: 75px;
+        left: -100%;
+        width: 100%;
+        height: calc(100% - 75px);
+        transition: left 0.3s ease;
+    }
+
+    .llamado-accion-texto {
+        font-size: 28px;
+    }
+
+    .division-nosotros-ima img {
+        width: 90%;
+        max-width: 400px;
+    }
+
+    .seccion-nosotros {
+        margin: 20px;
+    }
+
+    .elementos-nosotros-txt
+    {
+        width: 90%;
+    }
+
+    .llamado-accion-boton,
+    .llamado-accion-boton2 {
+        width: 80%;
+        font-size: 16px;
+        padding: 12px 20px;
+    }
 }
 
 .seccion-registro-cuenta, .seccion-inicio-sesion
 {
+    margin: 50px;
     display: flex;
     flex-direction: column;
     align-items: center; 
@@ -424,15 +534,18 @@ body {
   background-color: #193b69;
   color: white;
   text-align: center;
-  padding: 20px 0;
+  padding: 20px;
   margin-top: 50px;   
 }
 
+.seccion-footer p {
+  margin: 0 auto;
+}
 /* seccion about the product */
 .seccion-atp {
+      margin: 50px;
   display: flex;
-  flex-direction: column;
-  padding: 0 50px;   
+  flex-direction: column; 
 }
 
 .div-video-atp {
@@ -4571,7 +4684,6 @@ body.dark-mode .barra-navegacion {
 
 /*NUEVOS ESTILOS RECIENTES*/
 
-
 .btn-iniciarsesion,
 .btn-registrase,
 .btn-guardar-dominio,
@@ -4615,14 +4727,10 @@ body.dark-mode .barra-navegacion {
   transform: scale(1.03); /* Agranda la imagen un 3% */
 }
 
-.socios-logos img {
-  transition: transform 0.3s ease, opacity 0.3s ease;
+.socio-logo:hover {
+  transform: translateY(-5px); /* Eleva tarjeta */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Añade sombra */
   cursor: pointer;
-}
-
-.socios-logos img:hover {
-  transform: scale(1.1); /* Agranda el logo  */
-  opacity: 0.7; /* efecto de "iluminado" */
 }
 
 .div-video-atp video {
@@ -4635,8 +4743,6 @@ body.dark-mode .barra-navegacion {
 }
 
 /*ACA SECCIONES PARA NOSOTROS*/
-
-
 
 .sobre-nosotros-texto-bloque {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
