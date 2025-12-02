@@ -6,82 +6,42 @@
     <title>SkillSwap</title>
     <link rel="stylesheet" href="../assets/styles/styleSheet.css">
     <link rel="stylesheet" href="../assets/styles/index-sobre-nosotros.css">
+     <link rel="stylesheet" href="../assets/styles/alianzas.css">
          <link rel="icon" href="../favicon.ico" type="image/x-icon" />
 </head>
 <body>
-    <nav class="barra-navegacion">
+<nav class="barra-navegacion">
       <div class="logo">
         <a href="../index.html">
-          <img
-          src="../assets/images/SkillSwap_logo.png"
-          alt="Logo de la aplicacion SkillSwap"
-        />
+          <img src="../assets/images/SkillSwap_logo.png" alt="Logo de la aplicacion SkillSwap" />
         </a>
-        
       </div>
+
       <div class="menu-horizontal">
         <ul class="menu-horizontal-opciones">
-          <li>
-            <a href="index-user-estudiante.html">Estudiantes</a>
-          </li>
-
-          <li>
-            <a href="index-user-coordinador.html">Coordinador</a>
-          </li>
-
-          <li>
-            <a href="index-sobre-nosotros.html">Sobre nosotros</a>
-            <!--
-            <ul class="menu-vertical-lp">
-              <li><a href="">Información</a></li>
-              <li><a href="">Visión</a></li>
-              <li><a href="">Misión</a></li>
-            </ul> 
-            -->
-          </li>
-
-          <!--
-          <li>
-            <a href=""> Contactenos</a>
-            <ul class="menu-vertical-lp-conts">
-              <li>
-                <a href="https://www.facebook.com">
-                  <img src="imagenes/facebook-logo.png" alt="Logo de Facebook" class="conts-logos"/>
-                  <p>Facebook</p>
-                </a>
-              </li>
-              <li>
-                <a href="https://www.instagram.com">
-                  <img src="imagenes/instagram-logo.png" alt="Logo de Instagram" class="conts-logos"/>
-                  <p>Instagram</p>
-                </a>
-              </li>
-              <li>
-                <a href="https://wa.me/">
-                  <img src="imagenes/whatsapp-logo.png" alt="Logo de WhatsApp" class="conts-logos"/>
-                  <p>WhatsApp</p>
-                </a>
-              </li>
-              <li>
-                <a href="https://mail.google.com/">
-                  <img src="imagenes/email-logo.png" alt="Logo de Email" class="conts-logos"/>
-                  <p>Email</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-
-           -->
-
-          <li>
-              <a href="in.html">
-              <button class="btn-iniciarsesion">Iniciar Sesion</button>
-              </a>
+            <li class="dropdown">
+                <a href="alianzas.html" class="dropbtn">Alianzas </a>
+                <div class="dropdown-content">
+                    <a href="alianzas.html#beneficios-institucionales">Beneficios</a>
+                    <a href="alianzas.html#universidades-afiliadas">Universidades Afiliadas</a>
+                    <a href="alianzas.html#contacto-form">Contacto</a>
+                </div>
             </li>
-           <li>
-              <a href="istrarse.html">
+            <li><a href="proyectos.html">Proyectos</a></li>
+            <li><a href="index-user-estudiante.html">Estudiantes</a></li>
+            <li><a href="index-user-coordinador.html">Coordinador</a></li>
+            <li><a href="index-sobre-nosotros.html">Sobre nosotros</a></li>
+
+          <li>
+            <a href="index-login.html">
+              <button class="btn-iniciarsesion">Iniciar Sesion</button>
+            </a>
+          </li>
+
+          <li>
+            <a href="index-registrarse.html">
               <button class="btn-registrase">Registrarse</button>
-              </a>
+            </a>
           </li>
         </ul>
       </div>
@@ -220,6 +180,8 @@
     </div>
 
 </section>
+
+<script src="../assets/scripts/sobre-nosotros.js"></script>
   <footer>
       <div class="seccion-footer">
         <p>2025 SkillSwap. Todos los derechos reservados. <a href="archivos/TerminosCondiciones.pdf" class="terminos-condiciones">Terminos y Condiciones</a> </p>

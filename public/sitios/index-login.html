@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../assets/styles/styleSheet-login.css" />
+    <link rel="stylesheet" href="../assets/styles/styleSheet.css" />
+    <link rel="stylesheet" href="../assets/styles/alianzas.css">
          <link rel="icon" href="../favicon.ico" type="image/x-icon" />
     <title>SkillSwap - Login</title>
   </head>
@@ -19,9 +20,16 @@
 
       <div class="menu-horizontal">
         <ul class="menu-horizontal-opciones">
-          <li><a href="index-user-estudiante.html">Estudiantes</a></li>
-          <li><a href="index-user-coordinador.html">Coordinador</a></li>
-          <li><a href="index-sobre-nosotros.html">Sobre nosotros</a></li>
+            <li class="dropdown">
+                <a href="alianzas.html" class="dropbtn">Alianzas </a>
+                <div class="dropdown-content">
+                    <a href="#beneficios">Beneficios</a>
+                    <a href="#universidades-afiliadas">Universidades Afiliadas</a>
+                    <a href="#contacto-form">Contacto</a>
+                </div>
+            </li>
+            <li><a href="proyectos.html">Proyectos</a></li>
+            <li><a href="index-sobre-nosotros.html">Sobre nosotros</a></li>
 
           <li>
             <a href="index-login.html">
@@ -36,11 +44,13 @@
           </li>
         </ul>
       </div>
+      
     </nav>
 
   <section id="inicio-sesion" class="pantalla activa">
       <div class="seccion-inicio-sesion">
         <h1>Inicio de Sesión</h1>
+        
         <form class="formulario-inicio-sesion" onsubmit="validarLogin(event)">
           
           <div class="formulario-inicio-sesion-elemento">
@@ -56,13 +66,11 @@
           <div class="formulario-inicio-sesion-elemento">
             <input type="submit" value="Iniciar Sesión">
           </div>
-
-          <div class="formulario-inicio-sesion-elemento">
-            <label>¿No tienes cuenta?
-             <a href="index-registrarse.html">Regístrate</a>
-            </label>
-          </div>
         </form>
+
+        <label>¿No tienes cuenta?
+          <a href="index-registrarse.html">Regístrate</a>
+        </label>
       </div>
     </section>
 
@@ -70,7 +78,7 @@
 
      <footer>
       <div class="seccion-footer">
-        <p>2025 SkillSwap. Todos los derechos reservados. <a href="../archivos/TerminosCondiciones.pdf" class="terminos-condiciones">Terminos y Condiciones</a> </p>
+        <p>2025 SkillSwap... Todos los derechos reservados. <a href="../archivos/TerminosCondiciones.pdf" class="terminos-condiciones">Terminos y Condiciones</a> </p>
       </div>
     </footer>
 
