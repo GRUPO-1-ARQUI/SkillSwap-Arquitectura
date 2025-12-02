@@ -1,3 +1,191 @@
+
+
+/* ==========================================
+   ESTILOS GENERALES: BARRA DE BÚSQUEDA Y FILTROS
+   ========================================== */
+
+/* 1. Contenedor Principal (La fila) */
+.barra-busqueda-coord {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espacio entre el buscador y el botón de filtro */
+    width: 100%;
+    margin-bottom: 25px;
+    position: relative; /* Para controlar z-index si es necesario */
+}
+
+/* 2. Wrapper del Input (El buscador) */
+.campo-busqueda-wrapper-coord {
+    flex-grow: 1; /* Ocupa todo el espacio disponible */
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* El Input mismo */
+.campo-busqueda-coord {
+    width: 100%;
+    padding: 12px 20px 12px 50px; /* Padding izquierdo para el icono de lupa */
+    border-radius: 50px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.campo-busqueda-coord:focus {
+    border-color: #005a9c;
+    box-shadow: 0 0 0 3px rgba(0, 90, 156, 0.1);
+}
+
+/* Icono de Lupa dentro del input */
+.icono-lupa-coord {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; /* Para que el clic pase al input */
+    display: flex;
+    align-items: center;
+}
+
+/* 3. Wrapper del Botón Filtro + Menú */
+.wrapper-filtro-coord {
+    position: relative; /* Indispensable para que el menú flote respecto a esto */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 4. Botón Circular de Filtro */
+.boton-filtros-coord {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* Círculo perfecto */
+    background-color: #ffffff;
+    border: 1px solid #005a9c; /* Borde azul */
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease;
+    padding: 0; /* Sin relleno extra */
+}
+
+.boton-filtros-coord:hover {
+    background-color: #eef5ff; /* Azul muy suave al pasar el mouse */
+    transform: scale(1.05); /* Pequeño zoom */
+}
+
+.icono-filtro-coord {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icono-filtro-coord svg {
+    width: 24px;
+    height: 24px;
+    fill: #005a9c; /* Color del icono */
+}
+
+/* 5. Menú Desplegable (Dropdown) */
+.menu-filtros-busqueda {
+    position: absolute;
+    top: 120%; /* Un poco separado del botón hacia abajo */
+    right: 0;  /* Alineado a la derecha del botón */
+    width: 200px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    display: none; /* Oculto por defecto */
+    z-index: 100;
+    padding: 5px 0;
+    overflow: hidden;
+}
+
+/* Clase activa para mostrar el menú (JS la activa) */
+.menu-filtros-busqueda.activo {
+    display: block;
+    animation: fadeInDown 0.2s ease-out;
+}
+
+/* Opciones del menú */
+.opcion-filtro {
+    padding: 12px 20px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border-bottom: 1px solid #f9f9f9;
+}
+
+.opcion-filtro:last-child {
+    border-bottom: none;
+}
+
+.opcion-filtro:hover {
+    background-color: #f0f7ff;
+    color: #005a9c;
+}
+
+.opcion-filtro.seleccionado {
+    font-weight: 700;
+    background-color: #e6f0fa;
+    color: #005a9c;
+    border-left: 4px solid #005a9c;
+}
+
+/* Animación suave para el menú */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Las opciones individuales dentro del menú */
+.opcion-filtro {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+.opcion-filtro:hover {
+    background-color: #f4f8fb; /* Un azul muy clarito */
+    color: #005A9C;
+}
+
+
+.opcion-filtro.seleccionado {
+    background-color: #e8f0fe;
+    color: #005A9C;
+    font-weight: 600; /* Negrita */
+    border-left: 3px solid #005A9C; /* Pequeña barra azul a la izquierda */
+}
+
+/* Pequeña animación para que no aparezca de golpe */
+@keyframes aparecerMenu {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 /* =========================================
    DISEÑO RESPONSIVE: COORDINADOR
    ========================================= */
@@ -62,20 +250,17 @@
     /* BARRAS DE BÚSQUEDA Y FILTROS */
 
     .barra-busqueda-coord,
-    .contenedor-barra-busqueda-admin,
     .barra-busqueda-verificaciones {
         flex-direction: column;
         width: 100%;
     }
 
-    .campo-busqueda-wrapper-coord,
     .campo-busqueda-wrapper-admin,
     .campo-busqueda-wrapper-verificaciones {
         width: 100%;
     }
     
     /* Ajustamos los inputs para que no se desborden */
-    .campo-busqueda-coord,
     .campo-busqueda-admin,
     .campo-busqueda-verificaciones {
         width: 100%;
@@ -83,7 +268,6 @@
     }
 
     /* El botón de filtro lo ponemos ancho completo o centrado */
-    .boton-filtros-coord,
     .boton-filtros-admin,
     .boton-filtros-verificaciones {
         width: 100%;
@@ -108,6 +292,8 @@
         width: 95%; 
         padding: 20px;
     }
+
+
 }
 
 /* =========================================
@@ -157,8 +343,34 @@
         to { transform: translateX(0); opacity: 1; }
     }
 
-    /* 4. BOTÓN VOLVER (Solo móvil) */
-    /* Este botón lo inyectaremos con JS o lo activamos aquí */
+    .wrapper-filtro-admin {
+        flex-direction: column;
+        align-items: stretch; /* Estira los elementos para ocupar el ancho */
+        gap: 15px; /* Espacio entre el título, el buscador y el filtro */
+        margin-bottom: 20px; /* Un poco de aire extra abajo */
+    }
+
+
+    .wrapper-filtro-admin h2 {
+        text-align: center;
+        margin-bottom: 5px;
+    }
+
+    .contenedor-busqueda-admin {
+        width: 100%;
+    }
+
+    .input-buscar-admin {
+        width: 100%; /* Asegura que el input use todo el espacio */
+    }
+
+    .filtro-admin {
+        width: 100%;
+        margin: 0; /* Quitamos márgenes laterales si los tenía */
+    }
+
+    
+
     .btn-volver-movil {
         display: flex;
         align-items: center;
@@ -180,6 +392,69 @@
     .contenido-verificaciones-coord.mostrando-detalle ~ .barra-acciones-coord {
         display: none; 
     }
+
+
+
+
+    /* 1. Contenedor Principal: Forzar columna */
+    .barra-busqueda-coord {
+        display: flex !important;
+        flex-direction: column !important; /* Uno debajo del otro */
+        align-items: flex-end !important; /* Alinear items a la derecha */
+        gap: 15px !important;
+        height: auto !important; /* Permitir que crezca */
+    }
+
+    /* 2. Wrapper del Input: Forzar ancho completo */
+    .campo-busqueda-wrapper-coord {
+        width: 100% !important;
+        flex-grow: 0 !important; /* ANULAMOS el efecto de estiramiento del style.css */
+        max-width: none !important;
+    }
+
+    /* 3. El Input mismo */
+    .campo-busqueda-coord {
+        width: 100% !important;
+    }
+
+    /* 4. Wrapper del Botón Filtro (El contenedor relativo) */
+    .wrapper-filtro-coord {
+        width: auto !important; /* Que NO ocupe el 100% */
+        align-self: flex-end !important; /* Pegado a la derecha */
+        display: block !important; /* O flex, pero controlado */
+    }
+
+    /* 5. El Botón Circular: Recuperar su forma */
+    .boton-filtros-coord {
+        width: 50px !important;
+        height: 50px !important;
+        border-radius: 50% !important; /* Círculo perfecto */
+        padding: 0 !important; /* Sin relleno extra */
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        margin: 0 !important;
+        flex-shrink: 0 !important; /* Evitar que se aplaste */
+    }
+
+    /* 6. Ajuste del icono SVG para que quede centrado */
+    .icono-filtro-coord, 
+    .icono-filtro-coord svg {
+        width: 24px !important;
+        height: 24px !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+    
+    /* 7. Ajuste del menú desplegable para que no se salga de pantalla */
+    .menu-filtros-busqueda {
+        right: 0 !important;
+        left: auto !important;
+        width: 180px !important;
+        top: 110% !important;
+    }
+    
 }
 
 /* En escritorio ocultamos el botón de volver */
