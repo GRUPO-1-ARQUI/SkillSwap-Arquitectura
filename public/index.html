@@ -9,6 +9,13 @@
   </head>
   <body>
     <nav class="barra-navegacion">
+      <!-- Botón menú hamburguesa -->
+      <div class="menu-hamburguesa" id="btn-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+      </div>
+
       <div class="logo">
         <a href="index.html">
           <img
@@ -206,5 +213,15 @@
         <p>2025 SkillSwap. Todos los derechos reservados. <a href="archivos/TerminosCondiciones.pdf" class="terminos-condiciones">Terminos y Condiciones</a> </p>
       </div>
     </footer>
+    <!--script menu hamburguesa-->
+  <script>
+      const btnMenu = document.getElementById('btn-menu');
+      const menu = document.querySelector('.barra-navegacion .menu-horizontal');
+
+      btnMenu.addEventListener('click', () => {
+      menu.classList.toggle('activo');
+  });
+  </script>
+
   </body>
 </html>
