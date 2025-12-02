@@ -4,40 +4,47 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../assets/styles/styleSheet-registrarse.css" />
+    <link rel="stylesheet" href="../assets/styles/alianzas.css">
     <link rel="icon" href="../favicon.ico" type="image/x-icon" />
     <title>SkillSwap</title>
   </head>
 
   <body>
     <!-- Barra de Navegación -->
-    <nav class="barra-navegacion">
+     <nav class="barra-navegacion">
       <div class="logo">
         <a href="../index.html">
-          <img src="../assets/images/SkillSwap_logo.png" alt="Logo de la aplicacion SkillSwap"/>
+          <img src="../assets/images/SkillSwap_logo.png" alt="Logo de la aplicacion SkillSwap" />
         </a>
       </div>
 
       <div class="menu-horizontal">
         <ul class="menu-horizontal-opciones">
-          <li><a href="r-estudiante.html">Estudiantes</a></li>
-
-          <li><a href="r-coordinador.html">Coordinador</a></li>
-
-          <li><a href="re-nosotros.html">Sobre nosotros</a></li>
+            <li class="dropdown">
+                <a href="alianzas.html" class="dropbtn">Alianzas </a>
+                <div class="dropdown-content">
+                    <a href="#beneficios">Beneficios</a>
+                    <a href="#universidades-afiliadas">Universidades Afiliadas</a>
+                    <a href="#contacto-form">Contacto</a>
+                </div>
+            </li>
+            <li><a href="proyectos.html">Proyectos</a></li>
+            <li><a href="index-sobre-nosotros.html">Sobre nosotros</a></li>
 
           <li>
-              <a href="index-login.html">
+            <a href="index-login.html">
               <button class="btn-iniciarsesion">Iniciar Sesion</button>
-              </a>
-            </li>
+            </a>
+          </li>
 
-           <li>
-              <a href="index-registrarse.html">
+          <li>
+            <a href="index-registrarse.html">
               <button class="btn-registrase">Registrarse</button>
-              </a>
-            </li>
+            </a>
+          </li>
         </ul>
       </div>
+      
     </nav>
 
     <!-- Sección de Registro -->
