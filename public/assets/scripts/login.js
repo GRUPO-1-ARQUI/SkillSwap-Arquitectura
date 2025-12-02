@@ -1,3 +1,11 @@
+     const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+
+
 // Función que maneja el inicio de sesión
 function validarLogin(event) {
     // 1. Evitar que el formulario recargue la página
