@@ -1,0 +1,101 @@
+/* =========================================
+   DISEÑO RESPONSIVE: SOBRE NOSOTROS
+   Archivo: assets/styles/responsive-nosotros.css
+   ========================================= */
+
+/* Tablets y Móviles (Pantallas menores a 768px) */
+@media (max-width: 768px) {
+
+    /* 1. Ajuste del Contenedor Principal */
+    /* Reducimos el padding para ganar espacio en pantallas pequeñas */
+    .seccion-sobre-nosotros-principal {
+        padding: 20px; 
+        width: 100%;
+    }
+
+    /* 2. Bloque de Texto (Introducción) */
+    .sobre-nosotros-texto-bloque {
+        padding: 20px; /* Menos relleno interno */
+    }
+    
+    .sobre-nosotros-texto-bloque h2 {
+        font-size: 24px; /* Fuente un poco más pequeña */
+        text-align: center;
+    }
+
+    .sobre-nosotros-texto-bloque p {
+        text-align: justify; /* Justificar texto para mejor lectura en móvil */
+        font-size: 15px;
+    }
+
+    /* 3. Grid Visión y Misión */
+    /* Pasamos de 2 columnas a 1 sola columna */
+    .vision-mision-grid {
+        grid-template-columns: 1fr; /* Una sola columna que ocupa todo el ancho */
+
+        gap: 30px; /* Reducimos el espacio entre tarjetas */
+    }
+
+    .tarjeta-info-vm {
+        padding: 20px;
+    }
+
+    /* 4. El Equipo */
+    .equipo-contenedor h2 {
+        text-align: center;
+        font-size: 24px;
+    }
+
+    /* Ajustamos el grid del equipo para móviles */
+    .equipo-grid {
+        /* Usamos repeat con auto-fit, pero ajustamos el minmax 
+           para asegurar que en móviles muy pequeños se vean bien.
+           Esto intentará poner 2 por fila si caben, o 1 si es muy estrecho.
+        */
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); 
+        gap: 15px;
+    }
+
+    /* Hacemos las tarjetas del equipo un poco más compactas */
+    .equipo-miembro {
+        padding: 15px;
+    }
+
+    .equipo-imagen-wrapper {
+        width: 100px; /* Imagen un poco más pequeña */
+        height: 100px;
+    }
+}
+
+/* Móviles Pequeños (Pantallas menores a 480px) */
+@media (max-width: 480px) {
+    
+    /* Ajuste temporal de la Barra de Navegación 
+       (Como NO usaremos hamburguesa aun, apilamos los links para que no se rompa el diseño) */
+    .barra-navegacion {
+        height: auto; /* Altura automática para que crezca */
+        flex-direction: column; /* Elementos uno debajo del otro */
+        padding: 10px;
+        position: relative; /* Quitamos fixed temporalmente para evitar problemas de scroll */
+    }
+
+    body {
+        margin-top: 0; /* Quitamos el margen superior porque el nav ya no es fixed */
+    }
+
+    .menu-horizontal-opciones {
+        flex-direction: column; /* Links en columna */
+        gap: 10px;
+        padding-top: 15px;
+    }
+
+    .menu-horizontal-opciones li a {
+        padding: 5px; /* Menos espacio entre links */
+        font-size: 14px;
+    }
+
+    /* Ajuste extra para el equipo en pantallas muy angostas */
+    .equipo-grid {
+        grid-template-columns: 1fr; /* Forzamos 2 columnas para que no se vea una lista eterna */
+    }
+}
