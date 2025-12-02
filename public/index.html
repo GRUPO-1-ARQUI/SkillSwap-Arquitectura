@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="assets/styles/styleSheet.css" />
+    <link rel="stylesheet" href="assets/styles/styleSheet-index.css" />
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <title>SkillSwap</title>
   </head>
@@ -107,9 +107,8 @@
         ¡Únete a miles de estudiantes que comparten conocimiento en la red
         interuniversitaria más grande del Perú!
       </h2>
-      <a href="sitios\index-registrarse.html">
-       <button class= "llamado-accion-boton">Unirse a la comunidad!</button>
-       </a>   
+      <button class= "llamado-accion-boton" onclick="location.href='sitios/index-registrarse.html'">Unirse a la comunidad!</button>
+
     </section>
     <!--seccion 2-->
     <section class="seccion-nosotros">
@@ -125,7 +124,7 @@
                     </div>
                     <div class="ns-texto">
                         <h2>Busca habilidades</h2>
-                        <p> Encuentra estudiantes de otras universidades que dominan el tema que necesitas</p> 
+                        <p>Encuentra estudiantes de otras universidades que dominan el tema que necesitas</p> 
                     </div>  
               </div>
               <div class="elementos-nosotros-txt">
@@ -146,7 +145,7 @@
                         <p>Realiza una sesión y califica tu experiencia</p> 
                       </div>
               </div>
-              <button class="llamado-accion-boton2">Empezar a aprender</button>
+              <button class="llamado-accion-boton2" onclick="location.href='sitios/index-login.html'">Empezar a aprender</button>
             </div>
             <div class="division-nosotros-ima">
               <img src="assets/images/imagen-derecha-seccion.png" alt="Imagen referencial de las pantallas en la plataforma">
@@ -157,12 +156,19 @@
     </section>
     <!--seccion 3-->
     <section class="seccion-socios">
-      <div class="socios-titulo">
-          <h1>Socios-Universidades Afiliadas</h1>
-      </div>
-      <div class="socios-logos">
-        <img src="assets/images/logos-universidades.png">
-      </div>
+      <div class="division-general-socios"></div>
+        <div class="socios-titulo">
+            <h1>Socios-Universidades Afiliadas</h1>
+        </div>
+        <div class="socios-logos">
+          <div class="socios-logos-row">
+            <a href="https://www.esan.edu.pe" target="_blank"><div class="socio-logo"><img src="assets/images/esan_logo2.png" alt="logo de la ESAN"></div></a>
+            <a href="https://www.upc.edu.pe" target="_blank"><div class="socio-logo"><img src="assets/images/upc_logo.png" alt="logo de la UPC"></div></a>
+            <a href="https://www.pucp.edu.pe" target="_blank"><div class="socio-logo"><img src="assets/images/pucp_logo.png" alt="logo de la PUCP"></div></a>
+            <a href="https://www.ulima.edu.pe" target="_blank"><div class="socio-logo"><img src="assets/images/u_lima_logo.svg" alt="logo de la ULIMA"></div></a>
+            <a href="https://www.unmsm.edu.pe" target="_blank"><div class="socio-logo"><img src="assets/images/unmsm_logo.png" alt="logo de la UNMSM"></div></a>
+          </div>
+        </div>
     </section>
 
     <!-- seccion about the product -->
