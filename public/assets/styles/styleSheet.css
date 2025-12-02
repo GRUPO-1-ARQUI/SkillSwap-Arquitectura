@@ -2871,11 +2871,6 @@ body.dark-mode .barra-navegacion {
     margin-bottom: 20px;
 }
 
-.campo-busqueda-wrapper-coord {
-    position: relative;
-    flex-grow: 1;
-}
-
 .icono-lupa-coord {
     position: absolute;
     left: 20px;

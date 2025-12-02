@@ -541,6 +541,104 @@
       });
   });
   
+  // ==========================================
+  // LÓGICA DE FILTRO: SECCIÓN VERIFICACIONES
+  // ==========================================
+
+  const btnFiltroVerif = document.getElementById('btn-toggle-filtro-verif');
+  const menuFiltrosVerif = document.getElementById('menu-filtros-verif');
+  const opcionesVerif = document.querySelectorAll('#menu-filtros-verif .opcion-filtro');
+  const inputBusquedaVerif = document.getElementById('input-busqueda-verif');
+
+  // Estado del filtro actual
+  let filtroVerifActual = 'nombre';
+
+  if (btnFiltroVerif && menuFiltrosVerif) {
+      
+      // 1. Abrir/Cerrar menú
+      btnFiltroVerif.addEventListener('click', (e) => {
+          e.stopPropagation();
+          menuFiltrosVerif.classList.toggle('activo');
+      });
+
+      // 2. Cerrar al hacer clic fuera
+      document.addEventListener('click', (e) => {
+          if (!menuFiltrosVerif.contains(e.target) && !btnFiltroVerif.contains(e.target)) {
+              menuFiltrosVerif.classList.remove('activo');
+          }
+      });
+
+      // 3. Selección de opciones (Nombre / Código)
+      opcionesVerif.forEach(opcion => {
+          opcion.addEventListener('click', (e) => {
+              // Actualizar variable de estado
+              filtroVerifActual = e.target.dataset.tipo;
+
+              // Actualizar visualmente la opción seleccionada (negrita/color)
+              opcionesVerif.forEach(op => op.classList.remove('seleccionado'));
+              e.target.classList.add('seleccionado');
+
+              // Cambiar el placeholder del input para dar feedback al usuario
+              if (filtroVerifActual === 'nombre') {
+                  inputBusquedaVerif.placeholder = "Buscar alumno por nombre...";
+              } else {
+                  inputBusquedaVerif.placeholder = "Buscar alumno por código (ej: u20...)";
+              }
+
+              // Cerrar menú
+              menuFiltrosVerif.classList.remove('activo');
+              
+              // Enfocar el input para que escriban de una vez
+              if(inputBusquedaVerif) inputBusquedaVerif.focus();
+          });
+      });
+  }
+
+  // ==========================================
+  // LÓGICA DE BÚSQUEDA EN TIEMPO REAL
+  // ==========================================
+  
+  // 1. Detectar cuando el usuario escribe en el input
+  if (inputBusquedaVerif) {
+      inputBusquedaVerif.addEventListener('input', function() {
+          const textoBusqueda = this.value.toLowerCase().trim(); // Lo que escribió el usuario (en minúsculas)
+          
+          // Seleccionamos todas las tarjetas de la lista de correos
+          const tarjetas = document.querySelectorAll('.panel-lista-correos .tarjeta-correo-item');
+
+          // 2. Recorremos cada tarjeta para ver si coincide
+          tarjetas.forEach(tarjeta => {
+              // Buscamos el nombre dentro de la tarjeta
+              const nombreEstudiante = tarjeta.querySelector('.correo-nombre').textContent.toLowerCase();
+              
+              // (Opcional) Si tuvieras el código en el HTML, podrías buscarlo así:
+              // const codigoEstudiante = tarjeta.querySelector('.correo-codigo')?.textContent.toLowerCase() || "";
+
+              let hayCoincidencia = false;
+
+              // 3. Decidimos si mostrar o no según el filtro activo
+              if (filtroVerifActual === 'nombre') {
+                  // Si el filtro es "Nombre", revisamos si el nombre incluye lo escrito
+                  if (nombreEstudiante.includes(textoBusqueda)) {
+                      hayCoincidencia = true;
+                  }
+              } else {
+                  // Si el filtro es "Código", buscamos en el código (o en todo el texto si no tienes campo código específico)
+                  // Como en tu HTML actual solo veo Nombre y Universidad, buscaremos en todo el texto de la tarjeta por si acaso
+                  if (tarjeta.textContent.toLowerCase().includes(textoBusqueda)) {
+                      hayCoincidencia = true;
+                  }
+              }
+
+              // 4. Mostrar u Ocultar la tarjeta
+              if (hayCoincidencia) {
+                  tarjeta.style.display = 'flex'; // Mostrar (flex porque es el display original)
+              } else {
+                  tarjeta.style.display = 'none'; // Ocultar
+              }
+          });
+      });
+  }
   
 
     // Opcional: Nos aseguramos de que el dashboard sea lo primero que se vea al cargar la página.
