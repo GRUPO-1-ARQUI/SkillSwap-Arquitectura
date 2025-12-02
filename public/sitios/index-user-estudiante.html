@@ -552,8 +552,45 @@
             <button class="btn-omitir-calificacion" id="btn-omitir-calificacion-a">Omitir</button>
         </div>
 
+        <div style="margin-top: 20px; font-size: 14px; color: #666;">
+            ¿Hubo algún problema? 
+            <a href="#" id="btn-abrir-reporte-t" style="color: #DC3545; font-weight: 700; text-decoration: none;">Reportar usuario</a>
+        </div>
+
     </div>
 </section>
+
+<div id="modal-reporte-usuario" class="modal-overlay">
+    <div class="modal-contenido" style="text-align: left; max-width: 450px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h3 style="margin: 0; color: #DC3545; font-size: 20px;">Reportar Usuario</h3>
+            <span id="btn-cerrar-modal-reporte" style="cursor: pointer; font-size: 20px; color: #aaa;">✕</span>
+        </div>
+        
+        <p style="font-size: 14px; color: #555; margin-bottom: 15px;">
+            Por favor, describe el motivo del reporte. Esto será revisado por un administrador.
+        </p>
+
+        <form id="form-reporte">
+            <label style="font-weight: 600; font-size: 14px; display: block; margin-bottom: 5px;">Motivo:</label>
+            <select id="motivo-reporte" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #ccc; margin-bottom: 15px;">
+                <option value="">Selecciona un motivo...</option>
+                <option value="ausencia">El usuario no se conectó</option>
+                <option value="conducta">Comportamiento inadecuado/ofensivo</option>
+                <option value="tecnico">Problemas técnicos graves</option>
+                <option value="otro">Otro</option>
+            </select>
+
+            <label style="font-weight: 600; font-size: 14px; display: block; margin-bottom: 5px;">Descripción detallada:</label>
+            <textarea id="descripcion-reporte" style="width: 100%; height: 80px; padding: 10px; border-radius: 6px; border: 1px solid #ccc; resize: none; box-sizing: border-box;" placeholder="Explica brevemente lo sucedido..."></textarea>
+
+            <div class="modal-botones" style="margin-top: 20px;">
+                <button type="button" id="btn-cancelar-reporte" class="btn-modal secundario">Cancelar</button>
+                <button type="submit" class="btn-modal peligro">Enviar Reporte</button>
+            </div>
+        </form>
+    </div>
+</div>
 
     <section class="seccion-calificar-estudiante panel-seccion" id="panel-calificar-t">
     <div class="calificacion-container">
@@ -1504,13 +1541,9 @@
 
         <div class="habilidades-actuales-contenedor">
             <h2>Habilidades actuales:</h2>
-            <div class="tags-actuales-wrapper">
-                <span class="habilidad-tag">Paciente</span>
-                <span class="habilidad-tag">Amable</span>
-                <span class="habilidad-tag">Activo</span>
+            <div class="tags-actuales-wrapper" id="contenedor-habilidades-edicion">
             </div>
         </div>
-
         <div class="habilidades-agregar-contenedor">
             <h2>Habilidades a agregar:</h2>
             <select name="habilidades" id="habilidades-select" multiple size="4" class="habilidades-select-box">

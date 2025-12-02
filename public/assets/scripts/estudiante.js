@@ -966,7 +966,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
-  // ==============================================================
+// ==============================================================
   // GESTIÓN DE HABILIDADES (TAGS)
   // ==============================================================
 
@@ -974,25 +974,24 @@ document.addEventListener('DOMContentLoaded', () => {
   let misHabilidades = JSON.parse(localStorage.getItem('userHabilidades')) || ["Paciente", "Amable", "Activo"];
 
   // Referencias al DOM
-  const listaPerfil = document.getElementById('lista-habilidades-perfil');
-  const contenedorEdicion = document.getElementById('contenedor-habilidades-edicion');
+  const listaPerfil = document.getElementById('lista-habilidades-perfil'); // Lista en el perfil principal
+  const contenedorEdicion = document.getElementById('contenedor-habilidades-edicion'); // Contenedor en la pantalla de añadir
   const selectHabilidades = document.getElementById('habilidades-select');
-  const btnConfirmarAdd = document.getElementById('btn-confirmar-agregar-habilidad');
+  const btnConfirmarAdd = document.getElementById('btn-guardar-habilidad'); // Ojo con el ID, asegúrate que coincida con tu HTML
   const btnVolverHabilidades = document.getElementById('btn-volver-de-habilidades');
 
   // 2. Función para renderizar (dibujar) las habilidades en ambas pantallas
   function renderizarHabilidades() {
-      // A. Renderizar en el PERFIL (la vista principal)
+      
+      // --- A. Renderizar en el PERFIL (la vista principal) ---
       if (listaPerfil) {
           // Limpiamos la lista pero guardamos el botón de "+"
           const btnAgregar = listaPerfil.querySelector('.agregar');
           listaPerfil.innerHTML = ''; 
           
-          misHabilidades.forEach((habilidad, index) => {
+          misHabilidades.forEach((habilidad) => {
               const li = document.createElement('li');
               li.textContent = habilidad;
-              // Opcional: Agregar una 'x' pequeña para borrar directo desde el perfil
-              // li.innerHTML += ` <span style="cursor:pointer; color:red; margin-left:5px;" onclick="eliminarHabilidad(${index})">×</span>`;
               listaPerfil.appendChild(li);
           });
 
@@ -1006,23 +1005,25 @@ document.addEventListener('DOMContentLoaded', () => {
           }
       }
 
-      // B. Renderizar en el PANEL DE AGREGAR (para ver y eliminar)
+      // --- B. Renderizar en el PANEL DE AGREGAR (para ver y eliminar) ---
       if (contenedorEdicion) {
-          contenedorEdicion.innerHTML = '';
+          contenedorEdicion.innerHTML = ''; // Limpiamos para volver a pintar
+          
           misHabilidades.forEach((habilidad, index) => {
               const span = document.createElement('span');
-              span.className = 'habilidad-tag'; // Usamos tu estilo existente
+              span.className = 'habilidad-tag'; // Tu clase de estilo
               span.style.marginRight = '10px';
               span.style.marginBottom = '10px';
-              span.style.display = 'inline-block';
+              span.style.display = 'inline-flex'; // Mejor alineación
+              span.style.alignItems = 'center';
               
-              // Agregamos la X para eliminar
-              span.innerHTML = `${habilidad} <b class="btn-eliminar-tag" data-index="${index}" style="cursor:pointer; margin-left:8px; color: #ffcccc;">✕</b>`;
+              // Insertamos el texto y la X roja
+              span.innerHTML = `${habilidad} <b class="btn-eliminar-tag" data-index="${index}" style="cursor:pointer; margin-left:8px; color: #ffcccc; font-weight:bold;">✕</b>`;
               
               contenedorEdicion.appendChild(span);
           });
 
-          // Agregar listeners a las X rojas
+          // Agregar listeners a las X rojas (para eliminar)
           document.querySelectorAll('.btn-eliminar-tag').forEach(btn => {
               btn.addEventListener('click', (e) => {
                   const index = e.target.dataset.index;
@@ -1054,8 +1055,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (agregadasCount > 0) {
           guardarYActualizar();
-          alert(`Se agregaron ${agregadasCount} habilidades.`);
-          selectHabilidades.value = ""; // Limpiar selección
+          // alert(`Se agregaron ${agregadasCount} habilidades.`); // Opcional
+          selectHabilidades.value = ""; // Limpiar selección visual
       } else {
           alert("Esas habilidades ya las tienes agregadas.");
       }
@@ -1063,8 +1064,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 4. Función para eliminar habilidad
   function eliminarHabilidad(index) {
-      misHabilidades.splice(index, 1);
-      guardarYActualizar();
+      misHabilidades.splice(index, 1); // Elimina el elemento del array
+      guardarYActualizar(); // Guarda y vuelve a pintar
   }
 
   // 5. Guardar en LocalStorage y refrescar vista
@@ -1549,6 +1550,58 @@ if (encontrados.length > 0) {
               btnVerTodasHistorial.textContent = "Ocultar";
           });
       }
+  }
+
+  // ==========================================
+  // LÓGICA DE REPORTAR USUARIO 
+  // ==========================================
+
+  const btnAbrirReporteT = document.getElementById('btn-abrir-reporte-t');
+  const modalReporte = document.getElementById('modal-reporte-usuario');
+  const btnCerrarModalReporte = document.getElementById('btn-cerrar-modal-reporte');
+  const btnCancelarReporte = document.getElementById('btn-cancelar-reporte');
+  const formReporte = document.getElementById('form-reporte');
+
+  // 1. Abrir el modal de reporte
+  if (btnAbrirReporteT && modalReporte) {
+      btnAbrirReporteT.addEventListener('click', (e) => {
+          e.preventDefault();
+          modalReporte.classList.add('activo'); // Usa la clase css existente para mostrar modales
+      });
+  }
+
+  // 2. Cerrar el modal (X o Cancelar)
+  const cerrarModalReporte = () => {
+      if (modalReporte) modalReporte.classList.remove('activo');
+      if (formReporte) formReporte.reset(); // Limpiar formulario
+  };
+
+  if (btnCerrarModalReporte) btnCerrarModalReporte.addEventListener('click', cerrarModalReporte);
+  if (btnCancelarReporte) btnCancelarReporte.addEventListener('click', cerrarModalReporte);
+
+  // 3. Enviar el reporte
+  if (formReporte) {
+      formReporte.addEventListener('submit', (e) => {
+          e.preventDefault();
+          
+          const motivo = document.getElementById('motivo-reporte').value;
+          const descripcion = document.getElementById('descripcion-reporte').value;
+
+          if (!motivo) {
+              alert("Por favor selecciona un motivo para el reporte.");
+              return;
+          }
+
+          // Simulación de envío
+          console.log("Enviando reporte:", { motivo, descripcion });
+
+          // Cerrar modal actual
+          cerrarModalReporte();
+
+          // Mostrar confirmación y redirigir
+          alert("✅ Reporte enviado correctamente.\nEl caso será revisado por un administrador.");
+          mostrarSeccionEstudiante('panel-dashboard-estudiante');
+      });
   }
 
   // --- INICIO POR DEFECTO ---
