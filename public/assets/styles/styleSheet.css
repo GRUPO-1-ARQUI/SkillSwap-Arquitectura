@@ -1581,6 +1581,10 @@ body.dark-mode .barra-navegacion {
     text-align: center;
 }
 
+.subtitulo-seccion {
+    padding-bottom: 20px;
+}
+
 .subtitulo-sesiones {
     font-family: "Inter", sans-serif;
     font-size: 30px;
@@ -3254,6 +3258,7 @@ body.dark-mode .barra-navegacion {
     align-items: center;
     border-bottom: 1px solid #f0f0f0;
     padding-bottom: 10px;
+    gap: 10px;
 }
 
 .tarjeta-sesion-header h3 {
@@ -4844,9 +4849,9 @@ body.dark-mode .barra-navegacion {
     color: #212529;
 }
 
-.tag-sesion.pendiente {
-    background-color: var(--secondary-color); /* #ffc107 */
-}
+/* .tag-sesion.pendiente {
+    background-color: var(--secondary-color);
+} */
 
 .tag-sesion.confirmada {
     background-color: #28a745; 
@@ -5170,7 +5175,6 @@ body.dark-mode .dash-est-boton-programar,
 body.dark-mode .tag-busqueda,
 body.dark-mode .tag-tutor,
 body.dark-mode .perfil-tag,
-body.dark-mode .tag-sesion.pendiente,
 body.dark-mode .boton-cambiar-foto,
 body.dark-mode .boton-cambiar-foto-dominio,
 body.dark-mode .dominio-tag {
@@ -5236,6 +5240,7 @@ body.dark-mode .campo-busqueda {
 /* Ajustes Sidebar */
 body.dark-mode .ajustes-sidebar,
 body.dark-mode .descripcion,
+body.dark-mode .tarjeta-reseña,
 body.dark-mode .ajustes-sidebar-chat {
     background-color: #1e1e1e;
 }
@@ -5255,6 +5260,7 @@ body.dark-mode .ajustes-link-chat {
 }
  body.dark-mode .ajustes-link:hover,
  body.dark-mode .tarjeta-tutor,
+ body.dark-mode .tarjeta-perfil-tutor,
  body.dark-mode .columna-historial-sesiones,
  body.dark-mode .tarjeta-sesion,
  body.dark-mode .ajustes-link-chat:hover {
@@ -5339,6 +5345,7 @@ body.dark-mode .descripcion p.editable-field-active {
     box-shadow: 0 4px 20px rgba(0,0,0,0.05);
     overflow: hidden;
     margin-top: 20px;
+    gap: 25px;
 }
 
 /* Sidebar (Menú lateral) */
@@ -5488,12 +5495,23 @@ body.theme-pink .dash-est-boton-detalle,
 body.theme-pink .boton-chat-guardar,
 body.theme-pink .btn-guardar-dominio,
 body.theme-pink .btn-guardar-habilidad,
+body.theme-pink .dash-est-boton-calendario,
+body.theme-pink .dash-est-boton-ver-tutores,
 body.theme-pink .btn-add-reply,
+body.theme-pink .boton-filtros,
+body.theme-pink .boton-buscar-principal,
+body.theme-pink .btn-solicitar,
+body.theme-pink .boton-ver-todas,
+body.theme-pink .boton-ver-detalles,
+body.theme-pink .boton-solicitar-tutoria,
+body.theme-pink .btn-control-llamada.activo,
+body.theme-pink .btn-control-llamada.compartir,
 body.theme-pink .boton-toggle.activo,
 body.theme-pink .ajustes-link.activo {
     background-color: #e83e8c !important;
 }
-body.theme-pink .ajustes-link.activo {
+body.theme-pink .ajustes-link.activo,
+body.theme-pink .ajustes-link-chat.activo {
     color: #e83e8c !important;
     background-color: #fce4ec !important; /* Fondo suave pink */
 }
@@ -5502,17 +5520,28 @@ body.theme-lightblue {
     --primary-color: #17a2b8;
     --secondary-color: #d1ecf1;
 }
-body.theme-pink .btn-iniciarsesion, 
-body.theme-pink .dash-est-boton-detalle,
-body.theme-pink .boton-chat-guardar,
-body.theme-pink .btn-guardar-dominio,
-body.theme-pink .btn-guardar-habilidad,
-body.theme-pink .btn-add-reply,
-body.theme-pink .boton-toggle.activo,
-body.theme-pink .ajustes-link.activo {
+body.theme-lightblue .btn-iniciarsesion, 
+body.theme-lightblue .dash-est-boton-detalle,
+body.theme-lightblue .boton-chat-guardar,
+body.theme-lightblue .btn-guardar-dominio,
+body.theme-lightblue .btn-guardar-habilidad,
+body.theme-lightblue .dash-est-boton-calendario,
+body.theme-lightblue .dash-est-boton-ver-tutores,
+body.theme-lightblue .btn-add-reply,
+body.theme-lightblue .boton-filtros,
+body.theme-lightblue .boton-buscar-principal,
+body.theme-lightblue .btn-solicitar,
+body.theme-lightblue .boton-ver-todas,
+body.theme-lightblue .boton-ver-detalles,
+body.theme-lightblue .boton-solicitar-tutoria,
+body.theme-lightblue .btn-control-llamada.activo,
+body.theme-lightblue .btn-control-llamada.compartir,
+body.theme-lightblue .boton-toggle.activo,
+body.theme-lightblue .ajustes-link.activo {
     background-color: #17a2b8 !important;
 }
-body.theme-lightblue .ajustes-link.activo {
+body.theme-lightblue .ajustes-link.activo,
+body.theme-lightblue .ajustes-link-chat.activo {
     color: #17a2b8 !important;
     background-color: #e0f7fa !important;
 }
@@ -5521,17 +5550,28 @@ body.theme-orange {
     --primary-color: #fd7e14;
     --secondary-color: #ffeeba;
 }
-body.theme-pink .btn-iniciarsesion, 
-body.theme-pink .dash-est-boton-detalle,
-body.theme-pink .boton-chat-guardar,
-body.theme-pink .btn-guardar-dominio,
-body.theme-pink .btn-guardar-habilida,
-body.theme-pink .btn-add-reply,
-body.theme-pink .boton-toggle.activo,
-body.theme-pink .ajustes-link.activo {
+body.theme-orange .btn-iniciarsesion, 
+body.theme-orange .dash-est-boton-detalle,
+body.theme-orange .boton-chat-guardar,
+body.theme-orange .btn-guardar-dominio,
+body.theme-orange .btn-guardar-habilida,
+body.theme-orange .dash-est-boton-calendario,
+body.theme-orange .dash-est-boton-ver-tutores,
+body.theme-orange .btn-add-reply,
+body.theme-orange .boton-filtros,
+body.theme-orange .boton-buscar-principal,
+body.theme-orange .btn-solicitar,
+body.theme-orange .boton-ver-todas,
+body.theme-orange .boton-ver-detalles,
+body.theme-orange .boton-solicitar-tutoria,
+body.theme-orange .btn-control-llamada.activo,
+body.theme-orange .btn-control-llamada.compartir,
+body.theme-orange .boton-toggle.activo,
+body.theme-orange .ajustes-link.activo {
     background-color: #fd7e14 !important;
 }
-body.theme-orange .ajustes-link.activo {
+body.theme-orange .ajustes-link.activo,
+body.theme-orange .ajustes-link-chat.activo {
     color: #fd7e14 !important;
     background-color: #fff3e0 !important;
 }
