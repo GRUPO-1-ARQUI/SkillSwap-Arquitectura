@@ -235,49 +235,123 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
-  // Botón Guardar del panel de dominio
-    const btnGuardarTema = document.querySelector('#btn-guardar-tema');
+  // ==============================================================
+  // GESTIÓN DE TEMAS DE DOMINIO (SCENARIO 1 & 2)
+  // ==============================================================
 
-    if (btnGuardarTema) {
-        btnGuardarTema.addEventListener('click', () => {
-            const select = document.querySelector('#temas-select');
-            const listaPerfil = document.querySelector('.temas-dominio ul');
-            const liAgregar = document.querySelector('#btn-add-dominio'); // el ➕
+  // 1. Estado inicial
+  let misTemas = JSON.parse(localStorage.getItem('userTemas')) || ["Figma", "Algoritmos", "SQL"];
 
-            // Verificamos si hay selección
-            const opcion = select.value;
-            const texto = select.options[select.selectedIndex]?.text;
+  // Referencias al DOM
+  const listaPerfilDominio = document.getElementById('lista-dominio-perfil');
+  const contenedorEdicionDominio = document.getElementById('contenedor-dominio-edicion');
+  const selectTemas = document.getElementById('temas-select');
+  const btnGuardarTema = document.getElementById('btn-guardar-tema');
+  // Nota: El botón de ir a la sección "btn-add-dominio" ya tiene su listener en la navegación general o arriba.
 
-            if (!opcion || !texto) return;
+  // 2. Función de renderizado (Dibuja en ambos lados)
+  function renderizarTemas() {
+      // A. Renderizar en el PERFIL (Solo texto)
+      if (listaPerfilDominio) {
+          const btnAgregar = listaPerfilDominio.querySelector('.agregar');
+          listaPerfilDominio.innerHTML = ''; // Limpiar
 
-            // Evitar duplicados
-            const existe = [...listaPerfil.querySelectorAll('li')]
-                .some(li => li.textContent.trim().toLowerCase() === texto.toLowerCase());
+          misTemas.forEach((tema) => {
+              const li = document.createElement('li');
+              li.textContent = tema;
+              listaPerfilDominio.appendChild(li);
+          });
 
-            if (existe) {
-                alert("Este tema ya está en la lista.");
-                return;
-            }
+          // Volver a poner el botón "+" al final
+          if (btnAgregar) listaPerfilDominio.appendChild(btnAgregar);
+          
+          // Reactivar el clic del botón "+"
+          const nuevoBtnAdd = listaPerfilDominio.querySelector('.agregar');
+          if(nuevoBtnAdd) {
+              nuevoBtnAdd.addEventListener('click', () => mostrarSeccionEstudiante('panel-add-dominio'));
+          }
+      }
 
-            // Crear nuevo elemento <li>
-            const nuevoLi = document.createElement('li');
-            nuevoLi.textContent = texto;
+      // B. Renderizar en el PANEL DE EDICIÓN (Con la X para eliminar)
+      if (contenedorEdicionDominio) {
+          contenedorEdicionDominio.innerHTML = ''; // Limpiar
+          
+          misTemas.forEach((tema, index) => {
+              const span = document.createElement('span');
+              span.className = 'dominio-tag'; // Usamos tu estilo CSS existente
+              span.style.marginRight = '10px';
+              span.style.marginBottom = '10px';
+              span.style.display = 'inline-flex';
+              span.style.alignItems = 'center';
 
-            // Insertarlo antes del botón ➕
-            listaPerfil.insertBefore(nuevoLi, liAgregar);
+              // HTML con el nombre y la X roja
+              span.innerHTML = `${tema} <b class="btn-eliminar-tema" data-index="${index}" style="cursor:pointer; margin-left:8px; color: #ffcccc; font-weight:bold;">✕</b>`;
+              
+              contenedorEdicionDominio.appendChild(span);
+          });
 
-            // Opcional: cerrar panel
-            mostrarSeccionEstudiante('panel-perfil');
-        });
-    }
+          // Asignar evento eliminar a cada X
+          document.querySelectorAll('.btn-eliminar-tema').forEach(btn => {
+              btn.addEventListener('click', (e) => {
+                  const index = e.target.dataset.index;
+                  eliminarTema(index);
+              });
+          });
+      }
+  }
 
-  const btnPlusDominio = document.querySelector('.dominio-tag-agregar');
+  // 3. Agregar temas desde el Select
+  function agregarTemasSeleccionados() {
+      if (!selectTemas) return;
+      
+      // Obtenemos el TEXTO de la opción (ej: "Matemática básica"), no el value ("matematica")
+      const opciones = Array.from(selectTemas.selectedOptions).map(o => o.text.trim());
 
-  if (btnPlusDominio) {
-      btnPlusDominio.addEventListener('click', () => {
-          mostrarSeccionEstudiante('panel-add-dominio');
+      if (opciones.length === 0) {
+          alert("Selecciona al menos un tema.");
+          return;
+      }
+
+      let count = 0;
+      opciones.forEach(tema => {
+          if (!misTemas.includes(tema)) { // Evitar duplicados
+              misTemas.push(tema);
+              count++;
+          }
+      });
+
+      if (count > 0) {
+          guardarYActualizarTemas();
+          selectTemas.value = ""; // Limpiar selección
+          alert(`Se agregaron ${count} temas correctamente.`);
+      } else {
+          alert("Ya tienes esos temas en tu lista.");
+      }
+  }
+
+  // 4. Eliminar tema
+  function eliminarTema(index) {
+      misTemas.splice(index, 1);
+      guardarYActualizarTemas();
+  }
+
+  // 5. Guardar y actualizar vista
+  function guardarYActualizarTemas() {
+      localStorage.setItem('userTemas', JSON.stringify(misTemas));
+      renderizarTemas();
+  }
+
+  // 6. Evento del botón Guardar
+  if (btnGuardarTema) {
+      // Asegúrate de borrar cualquier listener anterior clonando el nodo o simplemente asegurando que este código corra una vez
+      btnGuardarTema.addEventListener('click', (e) => {
+          e.preventDefault();
+          agregarTemasSeleccionados();
       });
   }
+
+  // Inicializar al cargar
+  renderizarTemas();
 
   // --- E. TEMAS DE COLOR (Ajustes de Apariencia) ---
   const colorButtons = document.querySelectorAll('.btn-color');
@@ -605,87 +679,86 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
-  // --- Lógica de la Calificación ---
-  const btnEnviarCalifA = document.getElementById('btn-enviar-calificacion-a');
-  const btnOmitirCalifA = document.getElementById('btn-omitir-calificacion-a');
-
-  function cerrarCalificacionA() {
-      alert("¡Gracias por tu feedback!"); // Mensaje opcional
-      mostrarSeccionEstudiante('panel-dashboard-estudiante');
-  }
-
-  if (btnEnviarCalifA) btnEnviarCalifA.addEventListener('click', cerrarCalificacionA);
-  if (btnOmitirCalifA) btnOmitirCalifA.addEventListener('click', (e) => {
-      e.preventDefault();
-      mostrarSeccionEstudiante('panel-dashboard-estudiante');
-  });
-
-  const btnEnviarCalifT = document.getElementById('btn-enviar-calificacion-t');
-  const btnOmitirCalifT = document.getElementById('btn-omitir-calificacion-t');
-
-  function cerrarCalificacionT() {
-      alert("¡Gracias por tu feedback!"); // Mensaje opcional
-      mostrarSeccionEstudiante('panel-dashboard-estudiante');
-  }
-
-  if (btnEnviarCalifT) btnEnviarCalifT.addEventListener('click', cerrarCalificacionT);
-  if (btnOmitirCalifT) btnOmitirCalifT.addEventListener('click', (e) => {
-      e.preventDefault();
-      mostrarSeccionEstudiante('panel-dashboard-estudiante');
-  });
-
-  // ==========================================
-  // LÓGICA: CRÉDITOS Y CALIFICACIÓN
+ // ==========================================
+  // LÓGICA: CRÉDITOS Y CALIFICACIÓN (CORREGIDO)
   // ==========================================
 
-  // 1. Cargar créditos guardados al iniciar
+  // 1. Cargar visualización de créditos
   const displayCreditos = document.getElementById('perfil-creditos-valor');
+  // Leemos del almacenamiento local (o iniciamos en 0)
   let misCreditos = parseInt(localStorage.getItem('userCreditos')) || 0;
   
+  // Pintamos el valor inicial al cargar la página
   if (displayCreditos) {
       displayCreditos.textContent = misCreditos;
   }
 
-  // 2. Lógica del botón Enviar Calificación
-  const btnEnviarCalif = document.getElementById('btn-enviar-calificacion');
-  const btnOmitirCalif = document.getElementById('btn-omitir-calificacion');
-
-  if (btnEnviarCalif) {
-      btnEnviarCalif.addEventListener('click', (e) => {
-          e.preventDefault();
+  /**
+   * Función reutilizable para procesar la calificación
+   * @param {string} nombreInputRadio - El 'name' de los radio buttons ('rating' o 'rating-t')
+   */
+  function procesarCalificacion(nombreInputRadio) {
+      // Buscamos cuál estrella está marcada en el grupo correcto
+      const estrellaSeleccionada = document.querySelector(`input[name="${nombreInputRadio}"]:checked`);
+      
+      let mensaje = "¡Gracias por tu feedback!";
+      
+      // Regla de negocio: Si califica con 5 estrellas, gana 1 crédito
+      if (estrellaSeleccionada && estrellaSeleccionada.value === "5") {
+          misCreditos++; // Aumentar variable
+          localStorage.setItem('userCreditos', misCreditos); // Guardar en navegador
           
-          // Verificar cuántas estrellas se seleccionaron
-          // Buscamos el input radio que esté "checked" dentro de .calificacion-estrellas
-          const estrellaSeleccionada = document.querySelector('input[name="rating"]:checked');
-          
-          let mensaje = "¡Gracias por tu calificación!";
-          
-          // Si seleccionó 5 estrellas, damos crédito (Simulación de recompensa)
-          if (estrellaSeleccionada && estrellaSeleccionada.value === "5") {
-              misCreditos++;
-              localStorage.setItem('userCreditos', misCreditos); // Guardar
-              
-              if (displayCreditos) displayCreditos.textContent = misCreditos; // Actualizar visualmente
-              
-              mensaje = "🌟 ¡Excelente! Has completado una sesión exitosa.\n🪙 ¡Ganaste 1 crédito por tu desempeño!";
+          // Actualizar el numerito en el perfil (barra lateral)
+          if (displayCreditos) {
+              displayCreditos.textContent = misCreditos;
+              // Pequeña animación visual (opcional)
+              displayCreditos.style.color = "#28a745"; // Verde momentáneo
+              setTimeout(() => displayCreditos.style.color = "", 500);
           }
-
-          alert(mensaje);
           
-          // Volver al dashboard
-          mostrarSeccionEstudiante('panel-dashboard-estudiante');
-          
-          // Opcional: Limpiar la selección de estrellas para la próxima
-          if (estrellaSeleccionada) estrellaSeleccionada.checked = false;
-      });
+          mensaje = "🌟 ¡Excelente sesión!\n🪙 ¡Has ganado 1 crédito por tu desempeño!";
+      }
+      
+      alert(mensaje);
+      
+      // Volver al dashboard
+      mostrarSeccionEstudiante('panel-dashboard-estudiante');
+      
+      // Limpiar selección para la próxima vez
+      if (estrellaSeleccionada) estrellaSeleccionada.checked = false;
   }
 
-  if (btnOmitirCalif) {
-      btnOmitirCalif.addEventListener('click', (e) => {
+  // 2. Event Listeners para los botones de enviar
+
+  // Caso A: Estudiante Califica (Panel A)
+  const btnEnviarCalifA = document.getElementById('btn-enviar-calificacion-a');
+  if (btnEnviarCalifA) {
+      btnEnviarCalifA.addEventListener('click', (e) => {
           e.preventDefault();
-          mostrarSeccionEstudiante('panel-dashboard-estudiante');
+          procesarCalificacion('rating'); // El name en el HTML es "rating"
       });
   }
+
+  // Caso B: Tutor Califica (Panel T)
+  const btnEnviarCalifT = document.getElementById('btn-enviar-calificacion-t');
+  if (btnEnviarCalifT) {
+      btnEnviarCalifT.addEventListener('click', (e) => {
+          e.preventDefault();
+          procesarCalificacion('rating-t'); // El name en el HTML es "rating-t"
+      });
+  }
+
+  // 3. Botones de Omitir (Regresan sin sumar puntos)
+  const btnOmitirA = document.getElementById('btn-omitir-calificacion-a');
+  const btnOmitirT = document.getElementById('btn-omitir-calificacion-t');
+
+  const regresarAlDashboard = (e) => {
+      e.preventDefault();
+      mostrarSeccionEstudiante('panel-dashboard-estudiante');
+  };
+
+  if (btnOmitirA) btnOmitirA.addEventListener('click', regresarAlDashboard);
+  if (btnOmitirT) btnOmitirT.addEventListener('click', regresarAlDashboard);
 
   // --- I. CALENDARIO SEMANAL (Dashboard) ---
   const btnAbrirCalendario = document.getElementById('btn-abrir-calendario');
@@ -1604,6 +1677,114 @@ if (encontrados.length > 0) {
       });
   }
 
+  // ==========================================
+  // LÓGICA: CAMBIO DE ESTADO (US - No Disponible)
+  // ==========================================
+
+  const indicadorEstado = document.getElementById('indicador-estado-usuario');
+  const btnGroupEstado = document.getElementById('btn-group-estado');
+
+  if (btnGroupEstado && indicadorEstado) {
+      const botonesEstado = btnGroupEstado.querySelectorAll('.boton-toggle');
+
+      botonesEstado.forEach(boton => {
+          boton.addEventListener('click', (e) => {
+              const estadoSeleccionado = e.target.textContent.trim();
+
+              if (estadoSeleccionado === 'Activo') {
+                  // Escenario 2: Volver a estar disponible
+                  indicadorEstado.classList.remove('ocupado'); // Vuelve a verde
+                  indicadorEstado.title = "Estado: Disponible";
+                  alert("✅ Ahora estás visible en las búsquedas.");
+              } 
+              else if (estadoSeleccionado === 'Ocupado') {
+                  // Escenario 1: Activar modo "No disponible"
+                  indicadorEstado.classList.add('ocupado'); // Cambia a rojo
+                  indicadorEstado.title = "Estado: No disponible (Exámenes/Carga alta)";
+                  alert("⛔ Modo 'No disponible' activado.\nTu perfil se ocultará temporalmente de las búsquedas.");
+              }
+          });
+      });
+  }
+
+  // ==========================================
+  // LÓGICA: MINI TARJETA DE PERFIL (US - Revisión Rápida)
+  // ==========================================
+
+  const miniPerfilOverlay = document.getElementById('mini-perfil-overlay');
+  const btnCerrarMini = document.getElementById('btn-cerrar-mini-perfil');
+  const triggersMiniPerfil = document.querySelectorAll('.trigger-mini-perfil');
+
+  // Elementos dentro de la tarjeta para rellenar
+  const miniImg = document.getElementById('mini-img');
+  const miniNombre = document.getElementById('mini-nombre');
+  const miniUni = document.getElementById('mini-uni');
+  const miniCurso = document.getElementById('mini-curso');
+
+  // 1. Función abrir tarjeta con datos dinámicos
+  triggersMiniPerfil.forEach(img => {
+      img.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation(); // Evitar que cierre el dropdown de notificaciones
+          
+          // Obtener datos del atributo data-
+          const data = e.target.dataset;
+          
+          // Llenar la tarjeta
+          if(miniImg) miniImg.src = data.foto;
+          if(miniNombre) miniNombre.textContent = data.nombre;
+          if(miniUni) miniUni.textContent = data.uni;
+          if(miniCurso) miniCurso.textContent = data.curso;
+
+          // Mostrar overlay
+          if(miniPerfilOverlay) miniPerfilOverlay.classList.add('activo');
+      });
+  });
+
+  // 2. Cerrar tarjeta
+  if (btnCerrarMini) {
+      btnCerrarMini.addEventListener('click', () => {
+          miniPerfilOverlay.classList.remove('activo');
+      });
+  }
+
+  // Cerrar al hacer clic fuera de la tarjeta
+  if (miniPerfilOverlay) {
+      miniPerfilOverlay.addEventListener('click', (e) => {
+          if (e.target === miniPerfilOverlay) {
+              miniPerfilOverlay.classList.remove('activo');
+          }
+      });
+  }
+
+  const btnEnviarRapido = document.getElementById('btn-enviar-rapido-mini');
+  const inputMensajeRapido = document.getElementById('input-mensaje-rapido-mini');
+
+  if (btnEnviarRapido && inputMensajeRapido) {
+      btnEnviarRapido.addEventListener('click', (e) => {
+          e.preventDefault();
+          
+          const mensaje = inputMensajeRapido.value.trim();
+          const nombreDestino = document.getElementById('mini-nombre').textContent;
+
+          if (mensaje === "") {
+              alert("Por favor escribe un mensaje.");
+              return;
+          }
+
+          // Simulación de envío
+          console.log(`Mensaje rápido enviado a ${nombreDestino}: ${mensaje}`);
+          
+          // Feedback visual
+          alert(`✅ Mensaje enviado a ${nombreDestino}:\n"${mensaje}"`);
+          
+          // Limpiar el input
+          inputMensajeRapido.value = "";
+          
+          // Opcional: Cerrar la tarjeta si se desea, o dejarla abierta para Aceptar/Rechazar
+          // miniPerfilOverlay.classList.remove('activo'); 
+      });
+  }
   // --- INICIO POR DEFECTO ---
   // Mostrar Dashboard al cargar
   mostrarSeccionEstudiante('panel-dashboard-estudiante');

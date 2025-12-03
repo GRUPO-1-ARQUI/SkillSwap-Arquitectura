@@ -1,0 +1,100 @@
+/* El badge de verificado arriba a la derecha */
+.badge-verificado-propio {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* El punto de estado abajo a la derecha */
+.indicador-estado-perfil {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: #28a745; /* Verde = Disponible */
+    border: 3px solid white; /* Borde blanco para resaltar */
+    transition: background-color 0.3s ease; /* Animación suave al cambiar color */
+}
+
+/* Clase para cuando esté ocupado (Rojo) */
+.indicador-estado-perfil.ocupado {
+    background-color: #dc3545; /* Rojo = No disponible */
+}
+/* --- CORRECCIÓN DE ALINEACIÓN PERFIL --- */
+
+/* 1. Alinear los títulos igual que los labels de arriba */
+.temas-dominio strong,
+.habilidades strong {
+  display: block;          /* Para que ocupe su propia línea */
+  font-weight: bold;
+  margin-bottom: 10px;     /* Espacio antes de los botones */
+  margin-top: 15px;        /* Espacio para separar del bloque anterior */
+  color: #333;             /* Asegurar color consistente */
+}
+
+/* 2. Alinear las listas de botones */
+.temas-dominio ul,
+.habilidades ul {
+  list-style: none;
+  padding-left: 0;         /* IMPORTANTE: Quita la sangría izquierda */
+  margin: 0;               /* Quita márgenes extraños */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;               /* Espacio entre botones */
+}
+
+/* 3. Estilo de los items (tags) */
+.temas-dominio li,
+.habilidades li {
+  background-color: #e0e0e0;
+  padding: 8px 16px;       /* Un poco más de relleno para que se vean mejor */
+  border-radius: 20px;
+  font-size: 14px;
+  color: #333;
+  display: flex;           /* Para alinear texto e iconos si los hay */
+  align-items: center;
+}
+
+/* 4. Botón de agregar (+) */
+.agregar {
+  background-color: #d1ffd1 !important; /* Verde suave */
+  cursor: pointer;
+  font-weight: bold;
+  border: 1px solid #b2eeb2; /* Un borde sutil */
+  transition: transform 0.2s ease;
+}
+
+.agregar:hover {
+  transform: scale(1.1);
+}
+
+.grupo-botones {
+    margin-bottom: 20px;
+
+}
+
+.ajustes{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+/*vamos a centrar*/
+.botones{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+
+}
