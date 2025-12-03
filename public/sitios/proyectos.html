@@ -4,8 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../assets/styles/styleSheet.css" />
-    <link rel="stylesheet" href="../assets/styles/alianzas.css">
-    <link rel="stylesheet" href="../assets/styles/proyectos.css" />
+    <link rel="stylesheet" href="../assets/styles/alianzas.css" />
+     <link rel="stylesheet" href="../assets/styles/proyectos.css" />
+    
+   
  
          <link rel="icon" href="../favicon.ico" type="image/x-icon" />
     <title>SkillSwap - Login</title>
@@ -14,7 +16,7 @@
   <body>
 
     <nav class="barra-navegacion">
-              <!-- Botón menú hamburguesa -->
+       <!-- Botón menú hamburguesa -->
       <div class="menu-hamburguesa" id="btn-menu">
           <span></span>
           <span></span>
@@ -29,16 +31,14 @@
       <div class="menu-horizontal">
         <ul class="menu-horizontal-opciones">
             <li class="dropdown">
-                <a href="alianzas.html" class="dropbtn">Alianzas </a>
-                <div class="dropdown-content">
-                    <a href="alianzas.html#beneficios-institucionales">Beneficios</a>
+                <a href="#" class="dropbtn" id="btn-alianzas">Alianzas</a>
+                <div class="dropdown-content" id="submenu-alianzas">
+                    <a href="alianzas.html#beneficios">Beneficios</a>
                     <a href="alianzas.html#universidades-afiliadas">Universidades Afiliadas</a>
                     <a href="alianzas.html#contacto-form">Contacto</a>
                 </div>
             </li>
             <li><a href="proyectos.html">Proyectos</a></li>
-            <li><a href="index-user-estudiante.html">Estudiantes</a></li>
-            <li><a href="index-user-coordinador.html">Coordinador</a></li>
             <li><a href="index-sobre-nosotros.html">Sobre nosotros</a></li>
 
           <li>
@@ -54,6 +54,7 @@
           </li>
         </ul>
       </div>
+      
     </nav>
 <header class="hero-proyectos">
         <div class="hero-overlay">
@@ -161,7 +162,31 @@
       </div>
     </footer>
 
+<script>
+// 1. MENU HAMBURGUESA PRINCIPAL
+    const btnMenu = document.getElementById('btn-menu');
+    const menu = document.querySelector('.barra-navegacion .menu-horizontal');
+    
+    if(btnMenu) {
+        btnMenu.addEventListener('click', () => {
+            menu.classList.toggle('activo');
+        });
+    }
 
+    // 2. SUBMENU ALIANZAS (SOLO MÓVIL)
+    const btnAlianzas = document.getElementById("btn-alianzas");
+    const submenuAlianzas = document.getElementById("submenu-alianzas");
+
+    if (btnAlianzas && submenuAlianzas) {
+        btnAlianzas.addEventListener("click", (event) => {
+            // Solo actuar si estamos en modo celular
+            if (window.innerWidth <= 768) {
+                event.preventDefault(); // Evita que recargue la página al tocar "Alianzas"
+                submenuAlianzas.classList.toggle("activo"); // Abre o cierra
+            }
+        });
+    }
+</script>
 
   </body>
 </html>

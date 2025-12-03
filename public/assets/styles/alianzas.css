@@ -330,48 +330,6 @@ body {
     transform: scale(1.12);
 }
 
-/* Responsive para menú */
-@media (max-width: 768px) {
-    .nav-links {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        position: absolute;
-        top: 70px;
-        left: 0;
-        background-color: white;
-        padding: 20px 0;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-
-    .nav-links.active {
-        display: flex;
-    }
-
-    .menu-toggle {
-        display: block;
-        cursor: pointer;
-    }
-    
-    .menu-toggle .bar {
-        display: block;
-        width: 25px;
-        height: 3px;
-        margin: 5px auto;
-        background-color: #333;
-    }
-    
-    /* En móvil, el dropdown se muestra estático o diferente */
-    .dropdown:hover .dropdown-content {
-        display: none; /* Deshabilitar hover en móvil */
-    }
-    .dropdown-content {
-        position: static;
-        box-shadow: none;
-        padding-left: 20px;
-        display: block; /* Mostrar siempre en menú móvil desplegado */
-    }
-}
 
 @media screen and (max-width: 768px) {
     
@@ -449,4 +407,25 @@ body {
         transition: 0.3s;
     }
 
+}
+
+@media (max-width: 768px) {
+    /* 1. Ocultamos el submenú por defecto */
+    #submenu-alianzas {
+        display: none !important; /* El !important asegura que borre cualquier rastro anterior */
+        position: static;
+        width: 100%;
+        box-shadow: none;
+    }
+
+    /* 2. MUY IMPORTANTE: Desactivamos el hover de escritorio */
+    /* Esto evita que se abra solo con "pasar el dedo" o al cargar */
+    .dropdown:hover .dropdown-content {
+        display: none; 
+    }
+
+    /* 3. Solo se muestra si JavaScript le pone la clase 'activo' */
+    #submenu-alianzas.activo {
+        display: block !important;
+    }
 }
