@@ -795,79 +795,151 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // LÓGICA DE CHAT INTERACTIVO (SIMULACIÓN)
+  // LÓGICA DE CHAT REUTILIZABLE (APRENDIZ Y TUTOR)
   // ==========================================
 
-  const chatInputMain = document.getElementById('chat-input-principal');
-  const chatBtnEnviar = document.getElementById('chat-btn-enviar');
-  const chatAreaMensajes = document.querySelector('#panel-chat-aprendiz .area-mensajes');
+  /**
+   * Función para activar un chat específico
+   * @param {string} idPanel - ID de la sección (ej: 'panel-chat-aprendiz')
+   * @param {string} idInput - ID del input de texto
+   * @param {string} idBtnEnviar - ID del botón de enviar
+   * @param {string} idBtnAdjuntar - ID del botón +
+   * @param {string} idInputArchivo - ID del input file oculto
+   */
+  function inicializarChat(idPanel, idInput, idBtnEnviar, idBtnAdjuntar, idInputArchivo) {
+      
+      const panel = document.getElementById(idPanel);
+      if (!panel) return; // Si no existe el panel, no hacemos nada
 
-  // Función para agregar un mensaje al chat
-  function agregarMensaje(texto, tipo) {
-      // Crear el div de la burbuja
-      const nuevaBurbuja = document.createElement('div');
-      nuevaBurbuja.classList.add('burbuja-mensaje', tipo); // tipo puede ser 'enviado' o 'recibido'
-      
-      // Insertar el texto
-      nuevaBurbuja.innerHTML = `<span>${texto}</span>`;
-      
-      // Agregar al área de mensajes
-      chatAreaMensajes.appendChild(nuevaBurbuja);
-      
-      // Hacer scroll automático hacia abajo para ver el último mensaje
-      chatAreaMensajes.scrollTop = chatAreaMensajes.scrollHeight;
-  }
+      const chatAreaMensajes = panel.querySelector('.area-mensajes');
+      const inputTexto = document.getElementById(idInput);
+      const btnEnviar = document.getElementById(idBtnEnviar);
+      const btnAdjuntar = document.getElementById(idBtnAdjuntar);
+      const inputArchivo = document.getElementById(idInputArchivo);
 
-  // Función para simular respuesta del tutor
-  function simularRespuestaTutor() {
-      // Mostramos un mensaje de "escribiendo..." (opcional, simplificado aquí)
-      setTimeout(() => {
-          const respuestasRandom = [
-              "¡Entendido! Me parece buena idea.",
-              "Claro, déjame revisar mis horarios.",
-              "¿Podrías enviarme el avance por correo?",
-              "Perfecto, nos vemos en la sesión.",
-              "¡Gracias por avisar!",
-              "Ok, coordinamos."
-          ];
-          const respuesta = respuestasRandom[Math.floor(Math.random() * respuestasRandom.length)];
-          agregarMensaje(respuesta, 'recibido');
-      }, 1500); // Responde después de 1.5 segundos
-  }
+      // --- FUNCIONES INTERNAS DEL CHAT ---
 
-  // Función principal de envío
-  function enviarMensajeChat() {
-      const texto = chatInputMain.value.trim();
-      
-      if (texto !== "") {
-          // 1. Agregar mensaje del usuario (derecha)
-          agregarMensaje(texto, 'enviado');
-          
-          // 2. Limpiar el input
-          chatInputMain.value = "";
-          
-          // 3. Simular respuesta del tutor (izquierda)
-          simularRespuestaTutor();
+      // 1. Agregar mensaje visualmente
+      const agregarMensaje = (texto, tipo, esHTML = false) => {
+          const nuevaBurbuja = document.createElement('div');
+          nuevaBurbuja.classList.add('burbuja-mensaje', tipo);
+          if (esHTML) {
+              nuevaBurbuja.classList.add('archivo'); // Estilo especial para archivos
+              nuevaBurbuja.innerHTML = texto;
+          } else {
+              nuevaBurbuja.innerHTML = `<span>${texto}</span>`;
+          }
+          chatAreaMensajes.appendChild(nuevaBurbuja);
+          chatAreaMensajes.scrollTop = chatAreaMensajes.scrollHeight;
+      };
+
+      // 2. Simular respuesta automática
+      const simularRespuesta = () => {
+          setTimeout(() => {
+              const respuestas = [
+                  "Entendido, déjame revisarlo.",
+                  "¡Perfecto! Coordinamos la hora.",
+                  "¿Podrías enviarme más detalles?",
+                  "Recibido, gracias.",
+                  "¡Genial! Nos vemos en la sesión."
+              ];
+              const respuestaAzar = respuestas[Math.floor(Math.random() * respuestas.length)];
+              agregarMensaje(respuestaAzar, 'recibido');
+          }, 1500);
+      };
+
+      // 3. Enviar texto
+      const enviarTexto = () => {
+          const texto = inputTexto.value.trim();
+          if (texto !== "") {
+              agregarMensaje(texto, 'enviado');
+              inputTexto.value = "";
+              simularRespuesta();
+          }
+      };
+
+      // 4. Procesar Archivo
+      const procesarArchivo = (archivo) => {
+          const tipo = archivo.type;
+          const nombre = archivo.name;
+          let html = '';
+
+          if (tipo.startsWith('image/')) {
+              const reader = new FileReader();
+              reader.onload = function(e) {
+                  html = `
+                      <div class="archivo-info">
+                          <span class="archivo-nombre" style="display:block; margin-bottom:5px; font-size:12px;">${nombre}</span>
+                          <img src="${e.target.result}" class="preview-imagen-chat" alt="Imagen" style="max-width:100%; border-radius:8px;">
+                      </div>`;
+                  agregarMensaje(html, 'enviado', true);
+              };
+              reader.readAsDataURL(archivo);
+          } else {
+              html = `
+                  <span style="font-size: 24px; margin-right:10px;">📄</span>
+                  <div class="archivo-info">
+                      <span class="archivo-nombre" style="font-weight:bold;">${nombre}</span>
+                      <span class="archivo-tipo" style="display:block; font-size:11px;">${(archivo.size / 1024).toFixed(1)} KB</span>
+                  </div>`;
+              agregarMensaje(html, 'enviado', true);
+          }
+          // Simular respuesta al archivo
+          setTimeout(() => agregarMensaje("Archivo recibido. Lo revisaré pronto.", 'recibido'), 2000);
+      };
+
+      // --- EVENT LISTENERS ---
+
+      // Enviar texto
+      if (btnEnviar) {
+          btnEnviar.addEventListener('click', (e) => {
+              e.preventDefault();
+              enviarTexto();
+          });
+      }
+      if (inputTexto) {
+          inputTexto.addEventListener('keypress', (e) => {
+              if (e.key === 'Enter') {
+                  e.preventDefault();
+                  enviarTexto();
+              }
+          });
+      }
+
+      // Adjuntar archivo
+      if (btnAdjuntar && inputArchivo) {
+          btnAdjuntar.addEventListener('click', (e) => {
+              e.preventDefault();
+              inputArchivo.click();
+          });
+
+          inputArchivo.addEventListener('change', (e) => {
+              const archivo = e.target.files[0];
+              if (archivo) procesarArchivo(archivo);
+              inputArchivo.value = ''; // Limpiar
+          });
       }
   }
 
-  // Eventos
-  if (chatBtnEnviar && chatInputMain) {
-      // Al hacer clic en el botón enviar
-      chatBtnEnviar.addEventListener('click', (e) => {
-          e.preventDefault();
-          enviarMensajeChat();
-      });
+  // --- INICIALIZACIÓN DE LOS DOS CHATS ---
+  
+  // 1. Chat Aprendiz (El original)
+  inicializarChat(
+      'panel-chat-aprendiz',      // ID Sección
+      'chat-input-principal',     // ID Input Texto
+      'chat-btn-enviar',          // ID Botón Enviar
+      'btn-adjuntar-archivo',     // ID Botón +
+      'input-archivo-oculto'      // ID Input File
+  );
 
-      // Al presionar "Enter" en el teclado
-      chatInputMain.addEventListener('keypress', (e) => {
-          if (e.key === 'Enter') {
-              e.preventDefault();
-              enviarMensajeChat();
-          }
-      });
-  }
-
+  // 2. Chat Tutor (El nuevo)
+  inicializarChat(
+      'panel-chat-tutor',           // ID Sección
+      'chat-input-tutor',           // ID Input Texto (NUEVO)
+      'chat-btn-enviar-tutor',      // ID Botón Enviar (NUEVO)
+      'btn-adjuntar-archivo-tutor', // ID Botón + (NUEVO)
+      'input-archivo-oculto-tutor'  // ID Input File (NUEVO)
+  );
   // ==========================================
   // LÓGICA: ADJUNTAR ARCHIVOS (SIMULACIÓN)
   // ==========================================
@@ -1375,28 +1447,68 @@ document.addEventListener('DOMContentLoaded', () => {
 // 3. Renderizar resultados
 if (encontrados.length > 0) {
     encontrados.forEach(tutor => {
-        const card = document.createElement('article');
+const card = document.createElement('article');
+    card.className = 'tarjeta-tutor-dashboard';
+    
+    // Generamos el HTML (Nota que quitamos el onclick inline para usar addEventListener)
+    card.innerHTML = `
+        <div class="tutor-info">
+            <img src="${tutor.img}" alt="${tutor.nombre}" class="tutor-foto">
+            <div class="tutor-datos">
+                <h3 class="tutor-nombre">${tutor.nombre}</h3>
+                <p class="tutor-carrera">${tutor.carrera}</p>
+                <div class="tutor-rating">⭐ ${tutor.rating}</div>
+            </div>
+        </div>
+        <div class="tutor-tags">
+            ${tutor.tags.map(tag => `<span class="tag-tutor">${tag}</span>`).join('')}
+        </div>
+        <div class="tutor-acciones">
+            <button class="btn-ver-perfil">Perfil</button>
+            <button class="btn-solicitar">Solicitar</button>
+        </div>
+    `;
+
+    // --- LÓGICA PARA EL BOTÓN SOLICITAR (Escenario 1 y 2) ---
+    const btnSolicitar = card.querySelector('.btn-solicitar');
+    btnSolicitar.addEventListener('click', () => {
+        // Actualizar nombre en el modal
+        if(spanNombreTutor) spanNombreTutor.textContent = tutor.nombre;
+        // Abrir modal
+        if(modalSolicitud) modalSolicitud.classList.add('activo');
+    });
+
+    // --- LÓGICA PARA EL BOTÓN PERFIL (Escenario 3) ---
+    const btnPerfil = card.querySelector('.btn-ver-perfil');
+    btnPerfil.addEventListener('click', () => {
+        // 1. Navegar a la sección de perfil del tutor
+        mostrarSeccionEstudiante('panel-perfil-tutor');
         
-        // ¡AQUÍ ESTÁ EL CAMBIO! Usamos la nueva clase
-        card.className = 'tarjeta-tutor-dashboard'; 
+        // 2. Buscar el botón "Solicitar Tutoria" en esa sección específica
+        const btnSolicitarEnPerfil = document.getElementById('btn-solicitar-tutoria');
         
-        card.innerHTML = `
-            <div class="tutor-info">
-                <img src="${tutor.img}" alt="${tutor.nombre}" class="tutor-foto">
-                <div class="tutor-datos">
-                    <h3 class="tutor-nombre">${tutor.nombre}</h3>
-                    <p class="tutor-carrera">${tutor.carrera}</p>
-                    <div class="tutor-rating">⭐ ${tutor.rating}</div>
-                </div>
-            </div>
-            <div class="tutor-tags">
-                ${tutor.tags.map(tag => `<span class="tag-tutor">${tag}</span>`).join('')}
-            </div>
-            <div class="tutor-acciones">
-                <button class="btn-ver-perfil" onclick="mostrarSeccionEstudiante('panel-tutores')">Perfil</button>
-                <button class="btn-solicitar">Solicitar</button>
-            </div>
-        `;
+        if (btnSolicitarEnPerfil) {
+            // 3. Deshabilitarlo visual y funcionalmente
+            btnSolicitarEnPerfil.disabled = true;
+            btnSolicitarEnPerfil.textContent = "No disponible (Vista previa)";
+            btnSolicitarEnPerfil.style.backgroundColor = "#ccc";
+            btnSolicitarEnPerfil.style.cursor = "not-allowed";
+            
+            // Opcional: Rehabilitarlo si sales de la sección para no afectar otros flujos
+            // (Esto es un extra simple para limpiar el estado si navegas luego)
+            setTimeout(() => {
+               // Solo para demostración: si quieres que se reactive al recargar o cambiar lógica
+               // normalmente aquí manejarías un estado global, pero para la HU basta con desactivarlo.
+            }, 5000); 
+        }
+        
+        // (Opcional) Actualizar los datos del perfil grande con los del tutor clickeado
+        // Esto hace que se vea real:
+        const nombreGrande = document.querySelector('.perfil-nombre-grande');
+        const fotoGrande = document.querySelector('.perfil-imagen-grande');
+        if(nombreGrande) nombreGrande.textContent = tutor.nombre;
+        if(fotoGrande) fotoGrande.src = tutor.img;
+    });
         listaResultados.appendChild(card);
     });
 }
@@ -1577,8 +1689,81 @@ if (encontrados.length > 0) {
           });
       }
 
-      // --- Interacción 3: Botón "Ver todas" (Historial) ---
-      // Simula cargar 3 sesiones pasadas (Agrega una tarjeta extra para completar 3)
+     // --- Interacción 3 UNIFICADA: Historial + Calificación (HU: Calificar sesión) ---
+      
+      // A. Función reutilizable para activar la lógica de calificación en un botón
+      const configurarBotonCalificacion = (btn) => {
+          btn.addEventListener('click', (e) => {
+              e.preventDefault();
+              
+              const tarjeta = btn.closest('.tarjeta-sesion');
+              let formCalificacion = tarjeta.querySelector('.form-calificacion-inline');
+              
+              if (formCalificacion) {
+                  // Toggle visibilidad
+                  if (formCalificacion.style.display === 'none') {
+                      formCalificacion.style.display = 'block';
+                      btn.textContent = "Ocultar calificación";
+                  } else {
+                      formCalificacion.style.display = 'none';
+                      btn.textContent = "Calificar / Ver detalles";
+                  }
+              } else {
+                  // Inyectar formulario por primera vez
+                  formCalificacion = document.createElement('div');
+                  formCalificacion.className = 'form-calificacion-inline';
+                  formCalificacion.style.marginTop = '15px';
+                  formCalificacion.style.borderTop = '1px solid #eee';
+                  formCalificacion.style.paddingTop = '10px';
+                  formCalificacion.style.animation = 'fadeIn 0.3s ease';
+                  
+                  formCalificacion.innerHTML = `
+                      <p style="font-size: 14px; font-weight: bold; margin-bottom: 8px; color: #005a9c;">
+                          Calificar sesión completada:
+                      </p>
+                      <div class="estrellas-inline" style="display: flex; gap: 5px; margin-bottom: 10px; cursor: pointer; font-size: 24px;">
+                          <span data-value="1">★</span><span data-value="2">★</span><span data-value="3">★</span><span data-value="4">★</span><span data-value="5">★</span>
+                      </div>
+                      <textarea class="comentario-inline" placeholder="Deja un comentario..." style="width: 100%; height: 60px; padding: 8px; border-radius: 6px; border: 1px solid #ccc; font-family: inherit; margin-bottom: 10px; resize: none; box-sizing: border-box;"></textarea>
+                      <button class="btn-enviar-calif-inline" style="background-color: #28a745; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 13px; width: 100%;">Enviar Calificación</button>
+                  `;
+
+                  tarjeta.insertBefore(formCalificacion, btn);
+                  btn.textContent = "Cancelar calificación";
+
+                  // Lógica interna: Estrellas y Enviar
+                  const estrellas = formCalificacion.querySelectorAll('.estrellas-inline span');
+                  let calificacionValor = 0;
+                  
+                  estrellas.forEach(estrella => {
+                      estrella.style.color = "#ccc";
+                      estrella.addEventListener('click', (ev) => {
+                          calificacionValor = parseInt(ev.target.dataset.value);
+                          estrellas.forEach(s => {
+                              s.style.color = (parseInt(s.dataset.value) <= calificacionValor) ? "#ffc107" : "#ccc";
+                          });
+                      });
+                  });
+
+                  formCalificacion.querySelector('.btn-enviar-calif-inline').addEventListener('click', () => {
+                      if (calificacionValor === 0) { alert("Por favor selecciona una calificación."); return; }
+                      const comentario = formCalificacion.querySelector('.comentario-inline').value;
+                      
+                      console.log(`Enviado: ${calificacionValor} estrellas. "${comentario}"`);
+                      alert(`¡Gracias! Has calificado la sesión con ${calificacionValor} estrellas.`);
+                      
+                      formCalificacion.innerHTML = `<p style="color: #28a745; font-weight: bold; text-align: center; margin-top: 10px;">¡Sesión calificada exitosamente! ✅</p>`;
+                      btn.style.display = 'none'; // Ocultar botón para no recalificar
+                  });
+              }
+          });
+      };
+
+      // B. Aplicar lógica a las tarjetas EXISTENTES al cargar
+      const botonesExistentes = panelSesiones.querySelectorAll('.columna-historial-sesiones .tarjeta-sesion .boton-ver-detalles');
+      botonesExistentes.forEach(btn => configurarBotonCalificacion(btn));
+
+      // C. Lógica del botón "Ver todas" (Crea tarjeta NUEVA y le aplica la lógica)
       const btnVerTodasHistorial = panelSesiones.querySelector('.columna-historial-sesiones .boton-ver-todas');
       const contenedorHistorial = panelSesiones.querySelector('.columna-historial-sesiones');
 
@@ -1586,22 +1771,21 @@ if (encontrados.length > 0) {
           btnVerTodasHistorial.addEventListener('click', (e) => {
               e.preventDefault();
               
-              // Evitar que se agreguen infinitamente si le das click varias veces
+              // Si ya está expandido, colapsar
               if (btnVerTodasHistorial.textContent === "Ocultar") {
-                  // Si ya mostramos, recargamos la sección (o eliminamos el extra)
-                  // Para hacerlo simple, recargamos la vista:
                   const extra = document.getElementById('tarjeta-extra-historial');
                   if(extra) extra.remove();
                   btnVerTodasHistorial.textContent = "Ver todas";
                   return;
               }
 
-              // Crear una nueva tarjeta de historial (Simulada)
+              // Crear nueva tarjeta
               const nuevaTarjeta = document.createElement('div');
               nuevaTarjeta.className = 'tarjeta-sesion';
-              nuevaTarjeta.id = 'tarjeta-extra-historial'; // ID para poder borrarla luego
-              nuevaTarjeta.style.animation = "fadeIn 0.5s ease"; // Animación suave
+              nuevaTarjeta.id = 'tarjeta-extra-historial';
+              nuevaTarjeta.style.animation = "fadeIn 0.5s ease";
               
+              // Nota: Ya no ponemos onclick="alert..." en el HTML, lo asignaremos con JS
               nuevaTarjeta.innerHTML = `
                   <div class="tarjeta-sesion-header">
                       <h3>Física I</h3>
@@ -1613,13 +1797,15 @@ if (encontrados.length > 0) {
                       <p><strong>Fecha:</strong> 25/10/2025</p>
                       <p><strong>Hora:</strong> 10:00 am</p>
                   </div>
-                  <button class="boton-ver-detalles" onclick="alert('Detalles de Física I')">Ver detalles</button>
+                  <button class="boton-ver-detalles">Ver detalles</button>
               `;
 
-              // Insertar antes del botón "Ver todas"
               contenedorHistorial.insertBefore(nuevaTarjeta, btnVerTodasHistorial);
               
-              // Cambiar texto del botón
+              // IMPORTANTE: Asignar la funcionalidad al botón de la NUEVA tarjeta
+              const nuevoBoton = nuevaTarjeta.querySelector('.boton-ver-detalles');
+              configurarBotonCalificacion(nuevoBoton);
+              
               btnVerTodasHistorial.textContent = "Ocultar";
           });
       }
@@ -1785,6 +1971,121 @@ if (encontrados.length > 0) {
           // miniPerfilOverlay.classList.remove('activo'); 
       });
   }
+
+  // ==========================================
+  // LÓGICA: GESTIÓN DE NOTIFICACIONES (Aceptar/Rechazar)
+  // ==========================================
+  
+  const listaNotif = document.getElementById('dropdown-notificaciones');
+  const badgeNotif = document.querySelector('.badge-notificaciones');
+
+  if (listaNotif) {
+      listaNotif.addEventListener('click', (e) => {
+          // Detectamos si el clic fue en un botón (o en el ícono dentro del botón)
+          const btnRechazar = e.target.closest('.dash-est-accion-btn.rechazar');
+          const btnAceptar  = e.target.closest('.dash-est-accion-btn.aceptar');
+          const item = e.target.closest('.notificacion-item');
+
+          // --- CASO 1: RECHAZAR (Escenario 2 de la HU) ---
+          if (btnRechazar && item) {
+              e.preventDefault();
+              e.stopPropagation(); // Evitamos que se cierre el menú inmediatamente
+
+              // 1. Confirmación de seguridad
+              const confirmar = confirm("¿Estás seguro de que deseas rechazar esta solicitud?");
+
+              if (confirmar) {
+                  // 2. Simulación de envío de notificación (Feedback)
+                  alert("✅ La solicitud se ha cerrado y se ha enviado una notificación al estudiante.");
+
+                  // 3. Eliminar visualmente el elemento
+                  item.style.transition = "all 0.3s ease";
+                  item.style.opacity = "0";
+                  item.style.transform = "translateX(20px)";
+                  
+                  setTimeout(() => {
+                      item.remove();
+                      actualizarContadorNotificaciones(); // Actualizamos el numerito rojo
+                  }, 300);
+              }
+          }
+
+          // --- CASO 2: ACEPTAR (Opcional, por si lo necesitas) ---
+          if (btnAceptar && item) {
+              e.preventDefault();
+              e.stopPropagation();
+              alert("¡Genial! Has aceptado la solicitud. Se abrirá un chat con el estudiante.");
+              item.remove();
+              actualizarContadorNotificaciones();
+          }
+      });
+  }
+
+  // Función auxiliar para bajar el número de la campanita
+  function actualizarContadorNotificaciones() {
+      if (badgeNotif) {
+          let cantidad = document.querySelectorAll('.notificacion-item').length;
+          badgeNotif.textContent = cantidad;
+          
+          // Si no quedan notificaciones, ocultamos el badge rojo
+          if (cantidad === 0) {
+              badgeNotif.style.display = 'none';
+              // Opcional: Mostrar mensaje de "No hay notificaciones"
+              const lista = document.querySelector('.lista-notificaciones');
+              if(lista) lista.innerHTML = '<li style="padding:15px; text-align:center; color:#666;">No tienes notificaciones nuevas.</li>';
+          }
+      }
+  }
+
+  // ==========================================
+// LÓGICA HU: SOLICITAR TUTORÍA & PERFIL
+// ==========================================
+
+// Referencias al DOM del nuevo modal
+const modalSolicitud = document.getElementById('modal-solicitud-tutoria');
+const formSolicitud = document.getElementById('form-solicitud-tutoria');
+const txtMensajeSolicitud = document.getElementById('mensaje-solicitud');
+const msgErrorSolicitud = document.getElementById('error-mensaje-solicitud');
+const btnCerrarSolicitud = document.getElementById('btn-cerrar-solicitud');
+const btnCancelarSolicitud = document.getElementById('btn-cancelar-solicitud');
+const spanNombreTutor = document.getElementById('nombre-tutor-solicitud');
+
+// Función para cerrar el modal de solicitud
+function cerrarModalSolicitud() {
+    if (modalSolicitud) modalSolicitud.classList.remove('activo');
+    if (formSolicitud) formSolicitud.reset();
+    if (msgErrorSolicitud) msgErrorSolicitud.style.display = 'none'; // Ocultar error al cerrar
+}
+
+// Event listeners para cerrar
+if (btnCerrarSolicitud) btnCerrarSolicitud.addEventListener('click', cerrarModalSolicitud);
+if (btnCancelarSolicitud) btnCancelarSolicitud.addEventListener('click', cerrarModalSolicitud);
+
+// Lógica del Formulario (Escenarios 1 y 2)
+if (formSolicitud) {
+    formSolicitud.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const mensaje = txtMensajeSolicitud.value.trim();
+
+        // --- ESCENARIO 2 (Negativo): Intentar enviar sin mensaje ---
+        if (mensaje === "") {
+            // Mostrar error
+            msgErrorSolicitud.style.display = 'block';
+            txtMensajeSolicitud.style.borderColor = '#dc3545'; // Borde rojo opcional
+            return; // Detener ejecución
+        }
+
+        // --- ESCENARIO 1 (Exitoso): Mensaje enviado ---
+        // Si llega aquí, es porque hay mensaje
+        msgErrorSolicitud.style.display = 'none';
+        txtMensajeSolicitud.style.borderColor = '#ccc';
+
+        // Simulación de éxito
+        alert("✅ Tu solicitud ha sido enviada correctamente.");
+        cerrarModalSolicitud();
+    });
+}
   // --- INICIO POR DEFECTO ---
   // Mostrar Dashboard al cargar
   mostrarSeccionEstudiante('panel-dashboard-estudiante');

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8" /> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../assets/styles/styleSheet.css" />
     <link rel="stylesheet" href="../assets/styles/alianzas.css">
@@ -89,28 +89,29 @@
     </footer>
     <!--script menu hamburguesa-->
 <script>
-      // abrir/cerrar menú principal
-      const btnMenu = document.getElementById('btn-menu');
-      const menu = document.querySelector('.barra-navegacion .menu-horizontal');
-      btnMenu.addEventListener('click', () => {
-      menu.classList.toggle('activo');
-  });
+// 1. MENU HAMBURGUESA PRINCIPAL
+    const btnMenu = document.getElementById('btn-menu');
+    const menu = document.querySelector('.barra-navegacion .menu-horizontal');
+    
+    if(btnMenu) {
+        btnMenu.addEventListener('click', () => {
+            menu.classList.toggle('activo');
+        });
+    }
 
-  // abrir/cerrar submenú ALIANZAS en móvil
-      const btnAlianzas = document.getElementById("btn-alianzas");
-      const submenuAlianzas = document.getElementById("submenu-alianzas");
+    // 2. SUBMENU ALIANZAS (SOLO MÓVIL)
+    const btnAlianzas = document.getElementById("btn-alianzas");
+    const submenuAlianzas = document.getElementById("submenu-alianzas");
 
-      btnAlianzas.addEventListener("click", (event) => {
-      event.preventDefault(); // evita navegar
-      submenuAlianzas.classList.toggle("activo");
-  });
-
-  // 🔥 NUEVO: deja que los enlaces del submenú SI naveguen
-        submenuAlianzas.querySelectorAll("a").forEach(enlace => {
-        enlace.addEventListener("click", (event) => {
-          event.stopPropagation(); // evita cerrar el dropdown al pulsar
-      });
-  });
+    if (btnAlianzas && submenuAlianzas) {
+        btnAlianzas.addEventListener("click", (event) => {
+            // Solo actuar si estamos en modo celular
+            if (window.innerWidth <= 768) {
+                event.preventDefault(); // Evita que recargue la página al tocar "Alianzas"
+                submenuAlianzas.classList.toggle("activo"); // Abre o cierra
+            }
+        });
+    }
 </script>
 
   </body>
