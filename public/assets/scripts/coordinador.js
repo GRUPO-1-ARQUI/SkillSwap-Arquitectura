@@ -1,3 +1,6 @@
+
+
+
 // Función para mostrar la sección correcta y ocultar las demás
 function mostrarSeccion(idSeccionAMostrar) {
   document.querySelectorAll('.panel-seccion').forEach(seccion => {
@@ -437,6 +440,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   });
 
+  
   // Iniciar en dashboard
   mostrarSeccion('panel-dashboard');
 });
