@@ -463,3 +463,86 @@
         display: none !important;
     }
 }
+
+
+/* --- 1. ESTADO NORMAL (Escritorio / PC) --- */
+.texto-solo-movil {
+    display: none; /* Por defecto, el texto está oculto */
+}
+
+/* --- 2. ESTADO MÓVIL (Media Query) --- */
+@media screen and (max-width: 768px) {
+
+    /* --- CAMBIO DE NOTIFICACIONES --- */
+    
+    /* 1. Ocultamos el ícono SVG (la campana) */
+    #nav-notificaciones-coord svg {
+        display: none !important;
+    }
+
+    /* 2. Ocultamos la foto de perfil */
+    #nav-dashboard .foto-perfil-coordinador-nav {
+        display: none !important;
+    }
+
+    /* 3. Mostramos el texto mágico */
+    .texto-solo-movil {
+        display: inline-block !important;
+        font-size: 16px; /* Ajusta el tamaño para que coincida con los otros links */
+        color: #000000;     /* Color del texto (gris oscuro/negro) */
+        font-weight: 600; /* Grosor normal */
+    }
+
+    /* 4. Ajustes de alineación para que se vea ordenado */
+    #nav-notificaciones-coord, 
+    #nav-dashboard {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start; /* Alineado a la izquierda */
+        gap: 10px; /* Espacio entre el texto y el badge (el numerito rojo) */
+        width: 100%; /* Que ocupe todo el ancho para facilitar el click */
+    }
+
+    /* (Opcional) Si quieres que el badge se vea un poco diferente en móvil */
+    .badge-notificaciones {
+        position: static; /* Ya no flota encima, se pone al lado del texto */
+        transform: none;  /* Quitamos desplazamientos raros */
+        margin-left: 5px; /* Un pelín de margen */
+    }
+    /* --- DENTRO DE TU MEDIA QUERY EXISTENTE --- */
+
+/* Contenedor del item de notificaciones */
+.dropdown-notificaciones-container {
+    display: flex;
+    flex-direction: column; /* Para que el menú caiga debajo del icono/texto */
+    width: 100%;
+}
+
+/* El menú desplegable en sí (ID que mencionaste) */
+#dropdown-notificaciones-coord {
+    position: static !important; /* CLAVE: Deja de flotar y ocupa su espacio real */
+    width: 100% !important;      /* Ancho completo del sidebar */
+    box-shadow: none !important; /* Quitamos la sombra para que se vea plano */
+    border: 1px solid #eee;
+    background-color: #fafafa;
+    margin-top: 10px;
+    
+    /* Lo ocultamos por defecto, el JS lo mostrará */
+    display: none; 
+}
+
+/* Clase para mostrarlo cuando el JS lo active */
+#dropdown-notificaciones-coord.activo {
+    display: block !important;
+}
+
+/* Ajuste visual para el botón de investigar */
+#dropdown-notificaciones-coord .dash-est-tarjeta-solicitud {
+    flex-direction: column; /* En celular, mejor que la info baje */
+    align-items: flex-start;
+}
+}
+
+
+
+

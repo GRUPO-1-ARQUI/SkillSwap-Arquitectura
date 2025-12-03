@@ -7021,23 +7021,3 @@ body.dark-mode .creditos-container {
 
 
 
-@media (max-width: 768px) {
-    /* 1. Ocultamos el submenú por defecto */
-    #submenu-alianzas {
-        display: none !important; /* El !important asegura que borre cualquier rastro anterior */
-        position: static;
-        width: 100%;
-        box-shadow: none;
-    }
-
-    /* 2. MUY IMPORTANTE: Desactivamos el hover de escritorio */
-    /* Esto evita que se abra solo con "pasar el dedo" o al cargar */
-    .dropdown:hover .dropdown-content {
-        display: none; 
-    }
-
-    /* 3. Solo se muestra si JavaScript le pone la clase 'activo' */
-    #submenu-alianzas.activo {
-        display: block !important;
-    }
-}
