@@ -11,6 +11,12 @@
 </head>
 <body>
 <nav class="barra-navegacion">
+     <!-- Botón menú hamburguesa -->
+      <div class="menu-hamburguesa" id="btn-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+      </div>
       <div class="logo">
         <a href="../index.html">
           <img src="../assets/images/SkillSwap_logo.png" alt="Logo de la aplicacion SkillSwap" />
@@ -182,6 +188,31 @@
 </section>
 
 <script src="../assets/scripts/sobre-nosotros.js"></script>
+<script>
+      // abrir/cerrar menú principal
+      const btnMenu = document.getElementById('btn-menu');
+      const menu = document.querySelector('.barra-navegacion .menu-horizontal');
+      btnMenu.addEventListener('click', () => {
+      menu.classList.toggle('activo');
+  });
+
+  // abrir/cerrar submenú ALIANZAS en móvil
+      const btnAlianzas = document.getElementById("btn-alianzas");
+      const submenuAlianzas = document.getElementById("submenu-alianzas");
+
+      btnAlianzas.addEventListener("click", (event) => {
+      event.preventDefault(); // evita navegar
+      submenuAlianzas.classList.toggle("activo");
+  });
+
+  // 🔥 NUEVO: deja que los enlaces del submenú SI naveguen
+        submenuAlianzas.querySelectorAll("a").forEach(enlace => {
+        enlace.addEventListener("click", (event) => {
+          event.stopPropagation(); // evita cerrar el dropdown al pulsar
+      });
+  });
+</script>
+
   <footer>
       <div class="seccion-footer">
         <p>2025 SkillSwap. Todos los derechos reservados. <a href="archivos/TerminosCondiciones.pdf" class="terminos-condiciones">Terminos y Condiciones</a> </p>
