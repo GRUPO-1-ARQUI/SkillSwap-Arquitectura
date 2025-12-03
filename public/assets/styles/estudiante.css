@@ -98,3 +98,144 @@
     flex-wrap: wrap;
 
 }
+
+
+/* --- 1. ESTADO NORMAL (Escritorio / PC) --- */
+.texto-solo-movil {
+    display: none; /* Oculto en PC */
+}
+
+/* --- 2. ESTADO MÓVIL (Media Query) --- */
+@media screen and (max-width: 768px) {
+
+    /* --- CAMBIO DE ICONOS A TEXTO --- */
+    
+    /* 1. Ocultamos el SVG de Notificaciones */
+    #nav-notificaciones svg {
+        display: none !important;
+    }
+
+    /* 2. Ocultamos la foto de perfil */
+    #nav-perfil .estudiante-foto-usuario-nav {
+        display: none !important;
+    }
+
+    /* 3. Ocultamos la Lupa (NUEVO) */
+    #nav-buscar .icono-lupa {
+        display: none !important;
+    }
+
+    /* 4. Mostramos el texto mágico */
+    .texto-solo-movil {
+        display: inline-block !important;
+        font-family: "Inter", sans-serif;
+        font-size: 16px;
+        color: #000; 
+        font-weight: 600;
+    }
+
+    /* 5. Ajustes de alineación (Flexbox) para los 3 elementos */
+    #nav-notificaciones, 
+    #nav-perfil,
+    #nav-buscar {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start; /* Alineado a la izquierda */
+        gap: 10px; 
+        width: 100%;
+        padding: 10px 0; /* Un poco de aire arriba y abajo */
+    }
+
+    /* Ajuste del Badge (número rojo) */
+    .badge-notificaciones {
+        position: static;
+        transform: none;
+        margin-left: 5px;
+    }
+
+    
+    /* 1. Contenedor principal: le decimos que se comporte como bloque normal */
+.dropdown-notificaciones-container {
+    display: block;
+    width: 100%;
+}
+
+/* 2. El menú desplegable (RESET TOTAL) */
+#dropdown-notificaciones {
+    /* Quitamos cualquier posición flotante que venga del escritorio */
+    position: static !important;
+    float: none !important;
+    
+    /* Diseño visual "Integrado" */
+    width: 100% !important;
+    box-shadow: none !important; /* Sin sombras para que parezca parte del menú */
+    border: none !important;
+    border-top: 1px solid #f0f0f0 !important; /* Una linea sutil arriba */
+    border-bottom: 1px solid #f0f0f0 !important; /* Una linea sutil abajo */
+    background-color: #f9f9f9 !important; /* Un gris muy clarito para diferenciarlo */
+    
+    /* Espaciado */
+    margin: 0;
+    padding: 0;
+    
+    /* Oculto por defecto */
+    display: none;
+}
+
+/* 3. Cuando el JS lo activa */
+#dropdown-notificaciones.activo {
+    display: block !important;
+    /* Animación opcional de aparición */
+    animation: fadeIn 0.3s ease;
+}
+
+/* 4. Arreglo del HEADER (La parte que decías que podía fallar) */
+#dropdown-notificaciones .dropdown-header {
+    background-color: transparent !important; /* Quitamos colores fuertes */
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+}
+
+#dropdown-notificaciones .dropdown-header h3 {
+    font-size: 14px;
+    color: #555; /* Texto gris suave */
+    margin: 0;
+    font-weight: 600;
+}
+
+/* 5. Arreglo de las TARJETAS (Para que no se vean aplastadas) */
+#dropdown-notificaciones .dash-est-tarjeta-solicitud {
+    display: flex;
+    flex-direction: column !important; /* Elementos uno debajo del otro */
+    align-items: flex-start !important;
+    gap: 10px;
+    
+    /* Quitamos bordes o sombras de las tarjetas para que sea más limpio */
+    box-shadow: none !important; 
+    border: 1px solid #eee;
+    background: #fff;
+    width: 100%;
+    box-sizing: border-box; /* Vital para que no se salga del ancho */
+}
+
+/* 6. Arreglo de las IMAGENES dentro de las tarjetas */
+.dash-est-solicitud-img {
+    width: 40px !important;
+    height: 40px !important;
+}
+
+/* 7. Arreglo de los BOTONES de acción */
+.dash-est-solicitud-acciones {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end; /* Botones a la derecha */
+}
+
+/* Pequeña animación para suavizar */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+}

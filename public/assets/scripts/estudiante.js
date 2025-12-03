@@ -560,31 +560,69 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- NOTIFICACIONES (Dropdown) ---
-  const navNotificaciones = document.getElementById('nav-notificaciones');
-  const dropdownNotificaciones = document.getElementById('dropdown-notificaciones');
+// --- NOTIFICACIONES (Lógica Híbrida: PC vs Móvil) ---
+const navNotificaciones = document.getElementById('nav-notificaciones');
+const dropdownNotificaciones = document.getElementById('dropdown-notificaciones');
 
-  if (navNotificaciones && dropdownNotificaciones) {
-      // 1. Alternar visibilidad al hacer clic en la campana
-      navNotificaciones.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation(); // Evita que el clic se propague al document
-          dropdownNotificaciones.classList.toggle('activo');
-      });
+if (navNotificaciones && dropdownNotificaciones) {
+    
+    // 1. CLIC EN LA CAMPANA / TEXTO
+    navNotificaciones.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
 
-      // 2. Cerrar el dropdown si se hace clic fuera de él
-      document.addEventListener('click', (e) => {
-          // Si el clic NO fue dentro del dropdown Y NO fue en la campana
-          if (!dropdownNotificaciones.contains(e.target) && !navNotificaciones.contains(e.target)) {
-              dropdownNotificaciones.classList.remove('activo');
-          }
-      });
-      
-      // 3. Evitar que clics dentro del dropdown lo cierren
-      dropdownNotificaciones.addEventListener('click', (e) => {
-           e.stopPropagation();
-      });
-  }
+        // DETECTAR SI ES MÓVIL (Ancho menor a 768px)
+        const esMovil = window.innerWidth <= 768;
+
+        if (esMovil) {
+            // --- MODO CELULAR: Flyout al costado ---
+            if (dropdownNotificaciones.classList.contains('activo')) {
+                dropdownNotificaciones.classList.remove('activo');
+            } else {
+                // Calcular posición matemática para ponerlo a la derecha
+                const rect = navNotificaciones.getBoundingClientRect();
+                
+                // Aplicamos estilos inline SOLO para este momento
+                dropdownNotificaciones.style.position = 'fixed'; 
+                dropdownNotificaciones.style.top = rect.top + 'px';
+                dropdownNotificaciones.style.left = (rect.right + 10) + 'px'; // 10px de separación
+                dropdownNotificaciones.style.width = '280px'; // Aseguramos ancho
+                
+                dropdownNotificaciones.classList.add('activo');
+            }
+        } else {
+            // --- MODO PC: Normal ---
+            // IMPORTANTE: Limpiamos los estilos "fixed" que hayamos puesto en modo móvil
+            // para que no rompan el diseño de PC.
+            dropdownNotificaciones.style.position = '';
+            dropdownNotificaciones.style.top = '';
+            dropdownNotificaciones.style.left = '';
+            dropdownNotificaciones.style.width = '';
+            
+            // Simplemente mostramos/ocultamos (el CSS de PC se encarga del resto)
+            dropdownNotificaciones.classList.toggle('activo');
+        }
+    });
+
+    // 2. CERRAR AL HACER CLIC FUERA
+    document.addEventListener('click', (e) => {
+        if (!dropdownNotificaciones.contains(e.target) && !navNotificaciones.contains(e.target)) {
+            dropdownNotificaciones.classList.remove('activo');
+        }
+    });
+    
+    // 3. CERRAR AL HACER SCROLL (Solo útil en móvil para que no quede flotando)
+    window.addEventListener('scroll', () => {
+        if (window.innerWidth <= 768 && dropdownNotificaciones.classList.contains('activo')) {
+            dropdownNotificaciones.classList.remove('activo');
+        }
+    }, { passive: true });
+
+    // 4. CLIC DENTRO NO CIERRA
+    dropdownNotificaciones.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+}
 
   // --- Lógica de Videollamada (Desde el Chat) ---
   
@@ -1256,25 +1294,28 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   });
 
-  // 2. Enlace "Ver todas" (Solicitudes) -> Abre la campanita
-  const btnVerTodasSolicitudes = document.getElementById('btn-ver-todas-solicitudes');
-  
-  if (btnVerTodasSolicitudes) {
-      btnVerTodasSolicitudes.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation(); // Evitar conflictos de cierre
-          
-          // Simular clic en la campana de notificaciones para abrirla
-          const campana = document.getElementById('nav-notificaciones');
-          const dropdown = document.getElementById('dropdown-notificaciones');
-          
-          if (dropdown && campana) {
-              dropdown.classList.add('activo');
-              // Hacemos scroll suave hacia arriba para que se vea
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-          }
-      });
-  }
+// --- BOTÓN "VER TODAS" (Tu código original, se mantiene igual) ---
+const btnVerTodasSolicitudes = document.getElementById('btn-ver-todas-solicitudes');
+
+if (btnVerTodasSolicitudes) {
+    btnVerTodasSolicitudes.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation(); 
+        
+        const campana = document.getElementById('nav-notificaciones');
+        const dropdown = document.getElementById('dropdown-notificaciones');
+        
+        if (dropdown && campana) {
+            // Limpiamos estilos por si acaso venimos de un resize
+            dropdown.style.position = ''; 
+            dropdown.style.top = '';
+            dropdown.style.left = '';
+            
+            dropdown.classList.add('activo');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    });
+}
 
   // 3. Botón "Ver todos mis tutores" -> Ir a Buscar Tutores
   const btnVerTodosTutores = document.getElementById('btn-ver-todos-tutores');

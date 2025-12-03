@@ -344,6 +344,7 @@ body {
         gap: 20px;
         padding: 30px 25px; /* Espacio interno */
         background-color: #ffffff;
+        justify-content: flex-start;
         
         position: fixed; /* Fixed es mejor para menús laterales */
         top: 75px; /* Altura de tu navbar para que no la tape */
