@@ -622,3 +622,49 @@ body
     }
 
 }
+
+/* --- ARREGLO MENU HAMBURGUESA DROPDOWN --- */
+@media (max-width: 768px) { /* Asegúrate que este ancho coincida con tu punto de quiebre móvil */
+    
+    /* 1. Quitamos la posición flotante para que caiga como lista normal */
+    .dropdown-content {
+        position: static; /* Importante: Esto evita que "salga para el costado" */
+        display: none;    /* Oculto por defecto */
+        width: 100%;      /* Que ocupe todo el ancho disponible */
+        box-shadow: none; /* Quitamos sombras para que se vea limpio */
+        padding-left: 20px; /* Un poco de sangría para que se note que es sub-menú */
+        background-color: rgba(0,0,0,0.05); /* Un fondo sutil opcional */
+    }
+
+    /* 2. Clase que usaremos con JavaScript para abrirlo */
+    .dropdown-content.activo {
+        display: block;
+    }
+    
+    /* Opcional: Ajustar el enlace principal para que parezca botón */
+    .dropbtn {
+        width: 100%;
+        display: block;
+    }
+}
+
+@media (max-width: 768px) {
+    /* 1. Ocultamos el submenú por defecto */
+    #submenu-alianzas {
+        display: none !important; /* El !important asegura que borre cualquier rastro anterior */
+        position: static;
+        width: 100%;
+        box-shadow: none;
+    }
+
+    /* 2. MUY IMPORTANTE: Desactivamos el hover de escritorio */
+    /* Esto evita que se abra solo con "pasar el dedo" o al cargar */
+    .dropdown:hover .dropdown-content {
+        display: none; 
+    }
+
+    /* 3. Solo se muestra si JavaScript le pone la clase 'activo' */
+    #submenu-alianzas.activo {
+        display: block !important;
+    }
+}
