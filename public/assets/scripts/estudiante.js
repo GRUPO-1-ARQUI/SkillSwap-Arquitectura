@@ -1677,6 +1677,85 @@ if (encontrados.length > 0) {
       });
   }
 
+  // ==========================================
+  // LÓGICA: CAMBIO DE ESTADO (US - No Disponible)
+  // ==========================================
+
+  const indicadorEstado = document.getElementById('indicador-estado-usuario');
+  const btnGroupEstado = document.getElementById('btn-group-estado');
+
+  if (btnGroupEstado && indicadorEstado) {
+      const botonesEstado = btnGroupEstado.querySelectorAll('.boton-toggle');
+
+      botonesEstado.forEach(boton => {
+          boton.addEventListener('click', (e) => {
+              const estadoSeleccionado = e.target.textContent.trim();
+
+              if (estadoSeleccionado === 'Activo') {
+                  // Escenario 2: Volver a estar disponible
+                  indicadorEstado.classList.remove('ocupado'); // Vuelve a verde
+                  indicadorEstado.title = "Estado: Disponible";
+                  alert("✅ Ahora estás visible en las búsquedas.");
+              } 
+              else if (estadoSeleccionado === 'Ocupado') {
+                  // Escenario 1: Activar modo "No disponible"
+                  indicadorEstado.classList.add('ocupado'); // Cambia a rojo
+                  indicadorEstado.title = "Estado: No disponible (Exámenes/Carga alta)";
+                  alert("⛔ Modo 'No disponible' activado.\nTu perfil se ocultará temporalmente de las búsquedas.");
+              }
+          });
+      });
+  }
+
+  // ==========================================
+  // LÓGICA: MINI TARJETA DE PERFIL (US - Revisión Rápida)
+  // ==========================================
+
+  const miniPerfilOverlay = document.getElementById('mini-perfil-overlay');
+  const btnCerrarMini = document.getElementById('btn-cerrar-mini-perfil');
+  const triggersMiniPerfil = document.querySelectorAll('.trigger-mini-perfil');
+
+  // Elementos dentro de la tarjeta para rellenar
+  const miniImg = document.getElementById('mini-img');
+  const miniNombre = document.getElementById('mini-nombre');
+  const miniUni = document.getElementById('mini-uni');
+  const miniCurso = document.getElementById('mini-curso');
+
+  // 1. Función abrir tarjeta con datos dinámicos
+  triggersMiniPerfil.forEach(img => {
+      img.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation(); // Evitar que cierre el dropdown de notificaciones
+          
+          // Obtener datos del atributo data-
+          const data = e.target.dataset;
+          
+          // Llenar la tarjeta
+          if(miniImg) miniImg.src = data.foto;
+          if(miniNombre) miniNombre.textContent = data.nombre;
+          if(miniUni) miniUni.textContent = data.uni;
+          if(miniCurso) miniCurso.textContent = data.curso;
+
+          // Mostrar overlay
+          if(miniPerfilOverlay) miniPerfilOverlay.classList.add('activo');
+      });
+  });
+
+  // 2. Cerrar tarjeta
+  if (btnCerrarMini) {
+      btnCerrarMini.addEventListener('click', () => {
+          miniPerfilOverlay.classList.remove('activo');
+      });
+  }
+
+  // Cerrar al hacer clic fuera de la tarjeta
+  if (miniPerfilOverlay) {
+      miniPerfilOverlay.addEventListener('click', (e) => {
+          if (e.target === miniPerfilOverlay) {
+              miniPerfilOverlay.classList.remove('activo');
+          }
+      });
+  }
   // --- INICIO POR DEFECTO ---
   // Mostrar Dashboard al cargar
   mostrarSeccionEstudiante('panel-dashboard-estudiante');

@@ -640,6 +640,7 @@
       });
   }
   
+  
 
     // Opcional: Nos aseguramos de que el dashboard sea lo primero que se vea al cargar la página.
     // (Esto es una doble seguridad, ya que también pusimos la clase 'activa' en el HTML)
