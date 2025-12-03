@@ -1785,6 +1785,71 @@ if (encontrados.length > 0) {
           // miniPerfilOverlay.classList.remove('activo'); 
       });
   }
+
+  // ==========================================
+  // LÓGICA: GESTIÓN DE NOTIFICACIONES (Aceptar/Rechazar)
+  // ==========================================
+  
+  const listaNotif = document.getElementById('dropdown-notificaciones');
+  const badgeNotif = document.querySelector('.badge-notificaciones');
+
+  if (listaNotif) {
+      listaNotif.addEventListener('click', (e) => {
+          // Detectamos si el clic fue en un botón (o en el ícono dentro del botón)
+          const btnRechazar = e.target.closest('.dash-est-accion-btn.rechazar');
+          const btnAceptar  = e.target.closest('.dash-est-accion-btn.aceptar');
+          const item = e.target.closest('.notificacion-item');
+
+          // --- CASO 1: RECHAZAR (Escenario 2 de la HU) ---
+          if (btnRechazar && item) {
+              e.preventDefault();
+              e.stopPropagation(); // Evitamos que se cierre el menú inmediatamente
+
+              // 1. Confirmación de seguridad
+              const confirmar = confirm("¿Estás seguro de que deseas rechazar esta solicitud?");
+
+              if (confirmar) {
+                  // 2. Simulación de envío de notificación (Feedback)
+                  alert("✅ La solicitud se ha cerrado y se ha enviado una notificación al estudiante.");
+
+                  // 3. Eliminar visualmente el elemento
+                  item.style.transition = "all 0.3s ease";
+                  item.style.opacity = "0";
+                  item.style.transform = "translateX(20px)";
+                  
+                  setTimeout(() => {
+                      item.remove();
+                      actualizarContadorNotificaciones(); // Actualizamos el numerito rojo
+                  }, 300);
+              }
+          }
+
+          // --- CASO 2: ACEPTAR (Opcional, por si lo necesitas) ---
+          if (btnAceptar && item) {
+              e.preventDefault();
+              e.stopPropagation();
+              alert("¡Genial! Has aceptado la solicitud. Se abrirá un chat con el estudiante.");
+              item.remove();
+              actualizarContadorNotificaciones();
+          }
+      });
+  }
+
+  // Función auxiliar para bajar el número de la campanita
+  function actualizarContadorNotificaciones() {
+      if (badgeNotif) {
+          let cantidad = document.querySelectorAll('.notificacion-item').length;
+          badgeNotif.textContent = cantidad;
+          
+          // Si no quedan notificaciones, ocultamos el badge rojo
+          if (cantidad === 0) {
+              badgeNotif.style.display = 'none';
+              // Opcional: Mostrar mensaje de "No hay notificaciones"
+              const lista = document.querySelector('.lista-notificaciones');
+              if(lista) lista.innerHTML = '<li style="padding:15px; text-align:center; color:#666;">No tienes notificaciones nuevas.</li>';
+          }
+      }
+  }
   // --- INICIO POR DEFECTO ---
   // Mostrar Dashboard al cargar
   mostrarSeccionEstudiante('panel-dashboard-estudiante');
