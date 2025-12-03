@@ -6,10 +6,17 @@
     <title>SkillSwap</title>
     <link rel="stylesheet" href="../assets/styles/styleSheet.css">
     <link rel="stylesheet" href="../assets/styles/estudiante.css">
+    <link rel="stylesheet" href="../assets/styles/alianzas.css">
          <link rel="icon" href="../favicon.ico" type="image/x-icon" />
 </head>
 <body>
     <nav class="barra-navegacion">
+    <div class="menu-hamburguesa" id="btn-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+      </div>
+        
       <div class="logo">
         <a href="index-user-estudiante.html">
             <img
@@ -31,6 +38,7 @@
           <li>
             <a href="#" id="nav-buscar" title="Buscar">
               <img width="40px" height="40px" src="../assets/images/imagen-lupa.png" alt="Icono de lupa" class="icono-lupa"/>
+              <span class="texto-solo-movil">Buscar</span>
             </a>
           </li>
            <!--aca vamos a agregar un icono de notificaciones-->
@@ -40,7 +48,10 @@
                     <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                          <path d="M11.5451 0C9.14713 0 6.84734 0.952601 5.1517 2.64824C3.45606 4.34388 2.50346 6.64367 2.50346 9.04167V13.5987C2.50365 13.799 2.45722 13.9967 2.36784 14.176L0.150044 18.6103C0.0417069 18.827 -0.00944872 19.0677 0.00143541 19.3097C0.0123195 19.5516 0.084882 19.7868 0.212231 19.9929C0.33958 20.1989 0.517487 20.369 0.729055 20.4869C0.940623 20.6048 1.17883 20.6667 1.42104 20.6667H21.6692C21.9114 20.6667 22.1496 20.6048 22.3612 20.4869C22.5728 20.369 22.7507 20.1989 22.878 19.9929C23.0054 19.7868 23.0779 19.5516 23.0888 19.3097C23.0997 19.0677 23.0485 18.827 22.9402 18.6103L20.7237 14.176C20.6339 13.9968 20.587 13.7991 20.5868 13.5987V9.04167C20.5868 6.64367 19.6342 4.34388 17.9385 2.64824C16.2429 0.952601 13.9431 0 11.5451 0ZM11.5451 24.5417C10.7435 24.5421 9.96138 24.2939 9.30669 23.8312C8.65201 23.3685 8.15694 22.7142 7.88971 21.9583H15.2005C14.9333 22.7142 14.4382 23.3685 13.7836 23.8312C13.1289 24.2939 12.3468 24.5421 11.5451 24.5417Z" fill="black"/>
                     </svg>
-      <span class="badge-notificaciones">2</span>
+
+                    <span class="texto-solo-movil">Notificaciones</span>
+
+                    <span class="badge-notificaciones">2</span>
   </a>
 
   <div class="dropdown-menu-notificaciones" id="dropdown-notificaciones">
@@ -112,6 +123,7 @@
                   <div class="estudiante-foto-usuario-nav">
                       <img src="../assets/images/ima-chica1.png" alt="Foto de perfil del estudiante" class="foto-usuario-nav"/>
                   </div>
+                  <span class="texto-solo-movil">Mi perfil</span>
                 </a>
             </li>
 
@@ -1849,13 +1861,39 @@
         </form>
     </div>
 </div>
-
+    <script src="../assets/scripts/estudiante.js"></script>
         <footer>
       <div class="seccion-footer">
         <p>2025 SkillSwap. Todos los derechos reservados. <a href="../../archivos/TerminosCondiciones.pdf" class="terminos-condiciones">Terminos y Condiciones</a> </p>
       </div>
     </footer>
 
-    <script src="../assets/scripts/estudiante.js"></script>
+
+            <script>
+// 1. MENU HAMBURGUESA PRINCIPAL
+    const btnMenu = document.getElementById('btn-menu');
+    const menu = document.querySelector('.barra-navegacion .menu-horizontal');
+    
+    if(btnMenu) {
+        btnMenu.addEventListener('click', () => {
+            menu.classList.toggle('activo');
+        });
+    }
+
+    // 2. SUBMENU ALIANZAS (SOLO MÓVIL)
+    const btnAlianzas = document.getElementById("btn-alianzas");
+    const submenuAlianzas = document.getElementById("submenu-alianzas");
+
+    if (btnAlianzas && submenuAlianzas) {
+        btnAlianzas.addEventListener("click", (event) => {
+            // Solo actuar si estamos en modo celular
+            if (window.innerWidth <= 768) {
+                event.preventDefault(); // Evita que recargue la página al tocar "Alianzas"
+                submenuAlianzas.classList.toggle("activo"); // Abre o cierra
+            }
+        });
+    }
+
+</script>
 </body>
 </html>
