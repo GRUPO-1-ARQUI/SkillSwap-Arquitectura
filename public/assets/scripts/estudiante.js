@@ -1756,6 +1756,35 @@ if (encontrados.length > 0) {
           }
       });
   }
+
+  const btnEnviarRapido = document.getElementById('btn-enviar-rapido-mini');
+  const inputMensajeRapido = document.getElementById('input-mensaje-rapido-mini');
+
+  if (btnEnviarRapido && inputMensajeRapido) {
+      btnEnviarRapido.addEventListener('click', (e) => {
+          e.preventDefault();
+          
+          const mensaje = inputMensajeRapido.value.trim();
+          const nombreDestino = document.getElementById('mini-nombre').textContent;
+
+          if (mensaje === "") {
+              alert("Por favor escribe un mensaje.");
+              return;
+          }
+
+          // Simulación de envío
+          console.log(`Mensaje rápido enviado a ${nombreDestino}: ${mensaje}`);
+          
+          // Feedback visual
+          alert(`✅ Mensaje enviado a ${nombreDestino}:\n"${mensaje}"`);
+          
+          // Limpiar el input
+          inputMensajeRapido.value = "";
+          
+          // Opcional: Cerrar la tarjeta si se desea, o dejarla abierta para Aceptar/Rechazar
+          // miniPerfilOverlay.classList.remove('activo'); 
+      });
+  }
   // --- INICIO POR DEFECTO ---
   // Mostrar Dashboard al cargar
   mostrarSeccionEstudiante('panel-dashboard-estudiante');
