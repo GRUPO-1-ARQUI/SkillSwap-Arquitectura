@@ -545,101 +545,80 @@ body
 }
 
 /* Móviles (smartphones) */
-@media screen and (max-width: 768px) 
-{
-    .menu-horizontal-opciones 
-    {
+@media screen and (max-width: 768px) {
+    
+    /* 1. EL CONTENEDOR DEL MENÚ (EL CUADRO BLANCO) */
+    .menu-horizontal-opciones {
         display: flex;
         flex-direction: column; 
-        align-items: center;            
-        gap: 20px;                
-        padding: 30px 0;               
+        
+        /* CAMBIO CLAVE 1: Alinear a la izquierda */
+        align-items: flex-start; 
+        
+        gap: 20px;
+        padding: 30px 25px; /* Espacio interno */
         background-color: #ffffff;
-        position: absolute;   
-        top: 0;     
-        left: -100%;         
-        width: 100%;
-        height: auto;       
-        transition: left 0.3s ease; 
+        
+        position: fixed; /* Fixed es mejor para menús laterales */
+        top: 75px; /* Altura de tu navbar para que no la tape */
+        
+        /* CAMBIO CLAVE 2: Ancho reducido (ya no 100%) */
+        width: 260px; 
+        height: calc(100vh - 75px); /* Que ocupe todo el alto disponible */
+        
+        /* Estado inicial: Oculto a la izquierda */
+        left: -100%; 
+        
+        transition: left 0.3s ease;
         z-index: 1000;
-        box-shadow: 0px 5px 10px rgba(0,0,0,0.1);
+        
+        /* Sombra suave solo al lado derecho para dar profundidad */
+        box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+        border-right: 1px solid #eee;
     }
 
-    .llamado-accion-texto {
-        font-size: 28px;
-    }
-
-    .division-nosotros-ima img {
-        width: 90%;
-        max-width: 400px;
-    }
-
-    .seccion-nosotros {
-        margin: 20px;
-    }
-
-    .elementos-nosotros-txt
-    {
-        width: 90%;
-    }
-
-    .llamado-accion-boton,
-    .llamado-accion-boton2 {
-        width: 80%;
-        font-size: 16px;
-        padding: 12px 20px;
-    }
-
-     /* mostrar hamburguesa */
-  .menu-hamburguesa {
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
-    gap: 5px;
-    padding: 10px;
-    z-index: 1100;
-  }
-
-  .menu-hamburguesa span {
-    width: 30px;
-    height: 3px;
-    background-color: #000;
-    transition: 0.3s;
-  }
-
-  /* Ocultar menú horizontal */
-  .menu-horizontal {
-    display: none;
-    position: absolute;
-    top: 75px;
-    left: 0;
-    width: 100%;
-    background: white;
-    border-bottom: 1px solid #ccc;
-    z-index: 999;
-  }
-
-  /* Mostrar menú cuando esté abierto */
-  .menu-horizontal.activo {
-    display: block;
-  }
-
-  /* UL se hace vertical */
-  /*.menu-horizontal-opciones {
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    padding: 20px 0;
-  }*/
-
-  /* Botones más grandes */
-  .btn-iniciarsesion,
-  .btn-registrase {
-    width: 100%;
-    text-align: center;
-  }
-.menu-horizontal.activo .menu-horizontal-opciones {
+    /* ESTADO ACTIVO: Esto hace que aparezca */
+    .menu-horizontal.activo .menu-horizontal-opciones {
         left: 0;
     }
-}
 
+    /* 2. AJUSTES DE LOS ENLACES (TEXTO) */
+    .menu-horizontal-opciones li {
+        width: 100%; /* Para que el área de click sea ancha */
+    }
+    
+    .menu-horizontal-opciones li a {
+        display: block;
+        width: 100%;
+        text-align: left; /* Asegurar texto a la izquierda */
+        padding: 10px 0;
+        border-bottom: 1px solid #f0f0f0; /* Línea separadora sutil opcional */
+    }
+
+    /* 3. BOTONES (Iniciar sesión / Registrarse) */
+    .btn-iniciarsesion,
+    .btn-registrase {
+        width: 100%;
+        text-align: center;
+        margin-top: 5px;
+        /* Quitamos margin-left/right auto para que respeten el flex-start */
+    }
+
+    /* 4. HAMBURGUESA (Se mantiene igual) */
+    .menu-hamburguesa {
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 5px;
+        padding: 10px;
+        z-index: 1100;
+    }
+
+    .menu-hamburguesa span {
+        width: 30px;
+        height: 3px;
+        background-color: #000;
+        transition: 0.3s;
+    }
+
+}
