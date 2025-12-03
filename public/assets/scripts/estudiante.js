@@ -235,49 +235,123 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
-  // Botón Guardar del panel de dominio
-    const btnGuardarTema = document.querySelector('#btn-guardar-tema');
+  // ==============================================================
+  // GESTIÓN DE TEMAS DE DOMINIO (SCENARIO 1 & 2)
+  // ==============================================================
 
-    if (btnGuardarTema) {
-        btnGuardarTema.addEventListener('click', () => {
-            const select = document.querySelector('#temas-select');
-            const listaPerfil = document.querySelector('.temas-dominio ul');
-            const liAgregar = document.querySelector('#btn-add-dominio'); // el ➕
+  // 1. Estado inicial
+  let misTemas = JSON.parse(localStorage.getItem('userTemas')) || ["Figma", "Algoritmos", "SQL"];
 
-            // Verificamos si hay selección
-            const opcion = select.value;
-            const texto = select.options[select.selectedIndex]?.text;
+  // Referencias al DOM
+  const listaPerfilDominio = document.getElementById('lista-dominio-perfil');
+  const contenedorEdicionDominio = document.getElementById('contenedor-dominio-edicion');
+  const selectTemas = document.getElementById('temas-select');
+  const btnGuardarTema = document.getElementById('btn-guardar-tema');
+  // Nota: El botón de ir a la sección "btn-add-dominio" ya tiene su listener en la navegación general o arriba.
 
-            if (!opcion || !texto) return;
+  // 2. Función de renderizado (Dibuja en ambos lados)
+  function renderizarTemas() {
+      // A. Renderizar en el PERFIL (Solo texto)
+      if (listaPerfilDominio) {
+          const btnAgregar = listaPerfilDominio.querySelector('.agregar');
+          listaPerfilDominio.innerHTML = ''; // Limpiar
 
-            // Evitar duplicados
-            const existe = [...listaPerfil.querySelectorAll('li')]
-                .some(li => li.textContent.trim().toLowerCase() === texto.toLowerCase());
+          misTemas.forEach((tema) => {
+              const li = document.createElement('li');
+              li.textContent = tema;
+              listaPerfilDominio.appendChild(li);
+          });
 
-            if (existe) {
-                alert("Este tema ya está en la lista.");
-                return;
-            }
+          // Volver a poner el botón "+" al final
+          if (btnAgregar) listaPerfilDominio.appendChild(btnAgregar);
+          
+          // Reactivar el clic del botón "+"
+          const nuevoBtnAdd = listaPerfilDominio.querySelector('.agregar');
+          if(nuevoBtnAdd) {
+              nuevoBtnAdd.addEventListener('click', () => mostrarSeccionEstudiante('panel-add-dominio'));
+          }
+      }
 
-            // Crear nuevo elemento <li>
-            const nuevoLi = document.createElement('li');
-            nuevoLi.textContent = texto;
+      // B. Renderizar en el PANEL DE EDICIÓN (Con la X para eliminar)
+      if (contenedorEdicionDominio) {
+          contenedorEdicionDominio.innerHTML = ''; // Limpiar
+          
+          misTemas.forEach((tema, index) => {
+              const span = document.createElement('span');
+              span.className = 'dominio-tag'; // Usamos tu estilo CSS existente
+              span.style.marginRight = '10px';
+              span.style.marginBottom = '10px';
+              span.style.display = 'inline-flex';
+              span.style.alignItems = 'center';
 
-            // Insertarlo antes del botón ➕
-            listaPerfil.insertBefore(nuevoLi, liAgregar);
+              // HTML con el nombre y la X roja
+              span.innerHTML = `${tema} <b class="btn-eliminar-tema" data-index="${index}" style="cursor:pointer; margin-left:8px; color: #ffcccc; font-weight:bold;">✕</b>`;
+              
+              contenedorEdicionDominio.appendChild(span);
+          });
 
-            // Opcional: cerrar panel
-            mostrarSeccionEstudiante('panel-perfil');
-        });
-    }
+          // Asignar evento eliminar a cada X
+          document.querySelectorAll('.btn-eliminar-tema').forEach(btn => {
+              btn.addEventListener('click', (e) => {
+                  const index = e.target.dataset.index;
+                  eliminarTema(index);
+              });
+          });
+      }
+  }
 
-  const btnPlusDominio = document.querySelector('.dominio-tag-agregar');
+  // 3. Agregar temas desde el Select
+  function agregarTemasSeleccionados() {
+      if (!selectTemas) return;
+      
+      // Obtenemos el TEXTO de la opción (ej: "Matemática básica"), no el value ("matematica")
+      const opciones = Array.from(selectTemas.selectedOptions).map(o => o.text.trim());
 
-  if (btnPlusDominio) {
-      btnPlusDominio.addEventListener('click', () => {
-          mostrarSeccionEstudiante('panel-add-dominio');
+      if (opciones.length === 0) {
+          alert("Selecciona al menos un tema.");
+          return;
+      }
+
+      let count = 0;
+      opciones.forEach(tema => {
+          if (!misTemas.includes(tema)) { // Evitar duplicados
+              misTemas.push(tema);
+              count++;
+          }
+      });
+
+      if (count > 0) {
+          guardarYActualizarTemas();
+          selectTemas.value = ""; // Limpiar selección
+          alert(`Se agregaron ${count} temas correctamente.`);
+      } else {
+          alert("Ya tienes esos temas en tu lista.");
+      }
+  }
+
+  // 4. Eliminar tema
+  function eliminarTema(index) {
+      misTemas.splice(index, 1);
+      guardarYActualizarTemas();
+  }
+
+  // 5. Guardar y actualizar vista
+  function guardarYActualizarTemas() {
+      localStorage.setItem('userTemas', JSON.stringify(misTemas));
+      renderizarTemas();
+  }
+
+  // 6. Evento del botón Guardar
+  if (btnGuardarTema) {
+      // Asegúrate de borrar cualquier listener anterior clonando el nodo o simplemente asegurando que este código corra una vez
+      btnGuardarTema.addEventListener('click', (e) => {
+          e.preventDefault();
+          agregarTemasSeleccionados();
       });
   }
+
+  // Inicializar al cargar
+  renderizarTemas();
 
   // --- E. TEMAS DE COLOR (Ajustes de Apariencia) ---
   const colorButtons = document.querySelectorAll('.btn-color');
@@ -605,87 +679,86 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
-  // --- Lógica de la Calificación ---
-  const btnEnviarCalifA = document.getElementById('btn-enviar-calificacion-a');
-  const btnOmitirCalifA = document.getElementById('btn-omitir-calificacion-a');
-
-  function cerrarCalificacionA() {
-      alert("¡Gracias por tu feedback!"); // Mensaje opcional
-      mostrarSeccionEstudiante('panel-dashboard-estudiante');
-  }
-
-  if (btnEnviarCalifA) btnEnviarCalifA.addEventListener('click', cerrarCalificacionA);
-  if (btnOmitirCalifA) btnOmitirCalifA.addEventListener('click', (e) => {
-      e.preventDefault();
-      mostrarSeccionEstudiante('panel-dashboard-estudiante');
-  });
-
-  const btnEnviarCalifT = document.getElementById('btn-enviar-calificacion-t');
-  const btnOmitirCalifT = document.getElementById('btn-omitir-calificacion-t');
-
-  function cerrarCalificacionT() {
-      alert("¡Gracias por tu feedback!"); // Mensaje opcional
-      mostrarSeccionEstudiante('panel-dashboard-estudiante');
-  }
-
-  if (btnEnviarCalifT) btnEnviarCalifT.addEventListener('click', cerrarCalificacionT);
-  if (btnOmitirCalifT) btnOmitirCalifT.addEventListener('click', (e) => {
-      e.preventDefault();
-      mostrarSeccionEstudiante('panel-dashboard-estudiante');
-  });
-
-  // ==========================================
-  // LÓGICA: CRÉDITOS Y CALIFICACIÓN
+ // ==========================================
+  // LÓGICA: CRÉDITOS Y CALIFICACIÓN (CORREGIDO)
   // ==========================================
 
-  // 1. Cargar créditos guardados al iniciar
+  // 1. Cargar visualización de créditos
   const displayCreditos = document.getElementById('perfil-creditos-valor');
+  // Leemos del almacenamiento local (o iniciamos en 0)
   let misCreditos = parseInt(localStorage.getItem('userCreditos')) || 0;
   
+  // Pintamos el valor inicial al cargar la página
   if (displayCreditos) {
       displayCreditos.textContent = misCreditos;
   }
 
-  // 2. Lógica del botón Enviar Calificación
-  const btnEnviarCalif = document.getElementById('btn-enviar-calificacion');
-  const btnOmitirCalif = document.getElementById('btn-omitir-calificacion');
-
-  if (btnEnviarCalif) {
-      btnEnviarCalif.addEventListener('click', (e) => {
-          e.preventDefault();
+  /**
+   * Función reutilizable para procesar la calificación
+   * @param {string} nombreInputRadio - El 'name' de los radio buttons ('rating' o 'rating-t')
+   */
+  function procesarCalificacion(nombreInputRadio) {
+      // Buscamos cuál estrella está marcada en el grupo correcto
+      const estrellaSeleccionada = document.querySelector(`input[name="${nombreInputRadio}"]:checked`);
+      
+      let mensaje = "¡Gracias por tu feedback!";
+      
+      // Regla de negocio: Si califica con 5 estrellas, gana 1 crédito
+      if (estrellaSeleccionada && estrellaSeleccionada.value === "5") {
+          misCreditos++; // Aumentar variable
+          localStorage.setItem('userCreditos', misCreditos); // Guardar en navegador
           
-          // Verificar cuántas estrellas se seleccionaron
-          // Buscamos el input radio que esté "checked" dentro de .calificacion-estrellas
-          const estrellaSeleccionada = document.querySelector('input[name="rating"]:checked');
-          
-          let mensaje = "¡Gracias por tu calificación!";
-          
-          // Si seleccionó 5 estrellas, damos crédito (Simulación de recompensa)
-          if (estrellaSeleccionada && estrellaSeleccionada.value === "5") {
-              misCreditos++;
-              localStorage.setItem('userCreditos', misCreditos); // Guardar
-              
-              if (displayCreditos) displayCreditos.textContent = misCreditos; // Actualizar visualmente
-              
-              mensaje = "🌟 ¡Excelente! Has completado una sesión exitosa.\n🪙 ¡Ganaste 1 crédito por tu desempeño!";
+          // Actualizar el numerito en el perfil (barra lateral)
+          if (displayCreditos) {
+              displayCreditos.textContent = misCreditos;
+              // Pequeña animación visual (opcional)
+              displayCreditos.style.color = "#28a745"; // Verde momentáneo
+              setTimeout(() => displayCreditos.style.color = "", 500);
           }
-
-          alert(mensaje);
           
-          // Volver al dashboard
-          mostrarSeccionEstudiante('panel-dashboard-estudiante');
-          
-          // Opcional: Limpiar la selección de estrellas para la próxima
-          if (estrellaSeleccionada) estrellaSeleccionada.checked = false;
-      });
+          mensaje = "🌟 ¡Excelente sesión!\n🪙 ¡Has ganado 1 crédito por tu desempeño!";
+      }
+      
+      alert(mensaje);
+      
+      // Volver al dashboard
+      mostrarSeccionEstudiante('panel-dashboard-estudiante');
+      
+      // Limpiar selección para la próxima vez
+      if (estrellaSeleccionada) estrellaSeleccionada.checked = false;
   }
 
-  if (btnOmitirCalif) {
-      btnOmitirCalif.addEventListener('click', (e) => {
+  // 2. Event Listeners para los botones de enviar
+
+  // Caso A: Estudiante Califica (Panel A)
+  const btnEnviarCalifA = document.getElementById('btn-enviar-calificacion-a');
+  if (btnEnviarCalifA) {
+      btnEnviarCalifA.addEventListener('click', (e) => {
           e.preventDefault();
-          mostrarSeccionEstudiante('panel-dashboard-estudiante');
+          procesarCalificacion('rating'); // El name en el HTML es "rating"
       });
   }
+
+  // Caso B: Tutor Califica (Panel T)
+  const btnEnviarCalifT = document.getElementById('btn-enviar-calificacion-t');
+  if (btnEnviarCalifT) {
+      btnEnviarCalifT.addEventListener('click', (e) => {
+          e.preventDefault();
+          procesarCalificacion('rating-t'); // El name en el HTML es "rating-t"
+      });
+  }
+
+  // 3. Botones de Omitir (Regresan sin sumar puntos)
+  const btnOmitirA = document.getElementById('btn-omitir-calificacion-a');
+  const btnOmitirT = document.getElementById('btn-omitir-calificacion-t');
+
+  const regresarAlDashboard = (e) => {
+      e.preventDefault();
+      mostrarSeccionEstudiante('panel-dashboard-estudiante');
+  };
+
+  if (btnOmitirA) btnOmitirA.addEventListener('click', regresarAlDashboard);
+  if (btnOmitirT) btnOmitirT.addEventListener('click', regresarAlDashboard);
 
   // --- I. CALENDARIO SEMANAL (Dashboard) ---
   const btnAbrirCalendario = document.getElementById('btn-abrir-calendario');
@@ -722,79 +795,151 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // LÓGICA DE CHAT INTERACTIVO (SIMULACIÓN)
+  // LÓGICA DE CHAT REUTILIZABLE (APRENDIZ Y TUTOR)
   // ==========================================
 
-  const chatInputMain = document.getElementById('chat-input-principal');
-  const chatBtnEnviar = document.getElementById('chat-btn-enviar');
-  const chatAreaMensajes = document.querySelector('#panel-chat-aprendiz .area-mensajes');
+  /**
+   * Función para activar un chat específico
+   * @param {string} idPanel - ID de la sección (ej: 'panel-chat-aprendiz')
+   * @param {string} idInput - ID del input de texto
+   * @param {string} idBtnEnviar - ID del botón de enviar
+   * @param {string} idBtnAdjuntar - ID del botón +
+   * @param {string} idInputArchivo - ID del input file oculto
+   */
+  function inicializarChat(idPanel, idInput, idBtnEnviar, idBtnAdjuntar, idInputArchivo) {
+      
+      const panel = document.getElementById(idPanel);
+      if (!panel) return; // Si no existe el panel, no hacemos nada
 
-  // Función para agregar un mensaje al chat
-  function agregarMensaje(texto, tipo) {
-      // Crear el div de la burbuja
-      const nuevaBurbuja = document.createElement('div');
-      nuevaBurbuja.classList.add('burbuja-mensaje', tipo); // tipo puede ser 'enviado' o 'recibido'
-      
-      // Insertar el texto
-      nuevaBurbuja.innerHTML = `<span>${texto}</span>`;
-      
-      // Agregar al área de mensajes
-      chatAreaMensajes.appendChild(nuevaBurbuja);
-      
-      // Hacer scroll automático hacia abajo para ver el último mensaje
-      chatAreaMensajes.scrollTop = chatAreaMensajes.scrollHeight;
-  }
+      const chatAreaMensajes = panel.querySelector('.area-mensajes');
+      const inputTexto = document.getElementById(idInput);
+      const btnEnviar = document.getElementById(idBtnEnviar);
+      const btnAdjuntar = document.getElementById(idBtnAdjuntar);
+      const inputArchivo = document.getElementById(idInputArchivo);
 
-  // Función para simular respuesta del tutor
-  function simularRespuestaTutor() {
-      // Mostramos un mensaje de "escribiendo..." (opcional, simplificado aquí)
-      setTimeout(() => {
-          const respuestasRandom = [
-              "¡Entendido! Me parece buena idea.",
-              "Claro, déjame revisar mis horarios.",
-              "¿Podrías enviarme el avance por correo?",
-              "Perfecto, nos vemos en la sesión.",
-              "¡Gracias por avisar!",
-              "Ok, coordinamos."
-          ];
-          const respuesta = respuestasRandom[Math.floor(Math.random() * respuestasRandom.length)];
-          agregarMensaje(respuesta, 'recibido');
-      }, 1500); // Responde después de 1.5 segundos
-  }
+      // --- FUNCIONES INTERNAS DEL CHAT ---
 
-  // Función principal de envío
-  function enviarMensajeChat() {
-      const texto = chatInputMain.value.trim();
-      
-      if (texto !== "") {
-          // 1. Agregar mensaje del usuario (derecha)
-          agregarMensaje(texto, 'enviado');
-          
-          // 2. Limpiar el input
-          chatInputMain.value = "";
-          
-          // 3. Simular respuesta del tutor (izquierda)
-          simularRespuestaTutor();
+      // 1. Agregar mensaje visualmente
+      const agregarMensaje = (texto, tipo, esHTML = false) => {
+          const nuevaBurbuja = document.createElement('div');
+          nuevaBurbuja.classList.add('burbuja-mensaje', tipo);
+          if (esHTML) {
+              nuevaBurbuja.classList.add('archivo'); // Estilo especial para archivos
+              nuevaBurbuja.innerHTML = texto;
+          } else {
+              nuevaBurbuja.innerHTML = `<span>${texto}</span>`;
+          }
+          chatAreaMensajes.appendChild(nuevaBurbuja);
+          chatAreaMensajes.scrollTop = chatAreaMensajes.scrollHeight;
+      };
+
+      // 2. Simular respuesta automática
+      const simularRespuesta = () => {
+          setTimeout(() => {
+              const respuestas = [
+                  "Entendido, déjame revisarlo.",
+                  "¡Perfecto! Coordinamos la hora.",
+                  "¿Podrías enviarme más detalles?",
+                  "Recibido, gracias.",
+                  "¡Genial! Nos vemos en la sesión."
+              ];
+              const respuestaAzar = respuestas[Math.floor(Math.random() * respuestas.length)];
+              agregarMensaje(respuestaAzar, 'recibido');
+          }, 1500);
+      };
+
+      // 3. Enviar texto
+      const enviarTexto = () => {
+          const texto = inputTexto.value.trim();
+          if (texto !== "") {
+              agregarMensaje(texto, 'enviado');
+              inputTexto.value = "";
+              simularRespuesta();
+          }
+      };
+
+      // 4. Procesar Archivo
+      const procesarArchivo = (archivo) => {
+          const tipo = archivo.type;
+          const nombre = archivo.name;
+          let html = '';
+
+          if (tipo.startsWith('image/')) {
+              const reader = new FileReader();
+              reader.onload = function(e) {
+                  html = `
+                      <div class="archivo-info">
+                          <span class="archivo-nombre" style="display:block; margin-bottom:5px; font-size:12px;">${nombre}</span>
+                          <img src="${e.target.result}" class="preview-imagen-chat" alt="Imagen" style="max-width:100%; border-radius:8px;">
+                      </div>`;
+                  agregarMensaje(html, 'enviado', true);
+              };
+              reader.readAsDataURL(archivo);
+          } else {
+              html = `
+                  <span style="font-size: 24px; margin-right:10px;">📄</span>
+                  <div class="archivo-info">
+                      <span class="archivo-nombre" style="font-weight:bold;">${nombre}</span>
+                      <span class="archivo-tipo" style="display:block; font-size:11px;">${(archivo.size / 1024).toFixed(1)} KB</span>
+                  </div>`;
+              agregarMensaje(html, 'enviado', true);
+          }
+          // Simular respuesta al archivo
+          setTimeout(() => agregarMensaje("Archivo recibido. Lo revisaré pronto.", 'recibido'), 2000);
+      };
+
+      // --- EVENT LISTENERS ---
+
+      // Enviar texto
+      if (btnEnviar) {
+          btnEnviar.addEventListener('click', (e) => {
+              e.preventDefault();
+              enviarTexto();
+          });
+      }
+      if (inputTexto) {
+          inputTexto.addEventListener('keypress', (e) => {
+              if (e.key === 'Enter') {
+                  e.preventDefault();
+                  enviarTexto();
+              }
+          });
+      }
+
+      // Adjuntar archivo
+      if (btnAdjuntar && inputArchivo) {
+          btnAdjuntar.addEventListener('click', (e) => {
+              e.preventDefault();
+              inputArchivo.click();
+          });
+
+          inputArchivo.addEventListener('change', (e) => {
+              const archivo = e.target.files[0];
+              if (archivo) procesarArchivo(archivo);
+              inputArchivo.value = ''; // Limpiar
+          });
       }
   }
 
-  // Eventos
-  if (chatBtnEnviar && chatInputMain) {
-      // Al hacer clic en el botón enviar
-      chatBtnEnviar.addEventListener('click', (e) => {
-          e.preventDefault();
-          enviarMensajeChat();
-      });
+  // --- INICIALIZACIÓN DE LOS DOS CHATS ---
+  
+  // 1. Chat Aprendiz (El original)
+  inicializarChat(
+      'panel-chat-aprendiz',      // ID Sección
+      'chat-input-principal',     // ID Input Texto
+      'chat-btn-enviar',          // ID Botón Enviar
+      'btn-adjuntar-archivo',     // ID Botón +
+      'input-archivo-oculto'      // ID Input File
+  );
 
-      // Al presionar "Enter" en el teclado
-      chatInputMain.addEventListener('keypress', (e) => {
-          if (e.key === 'Enter') {
-              e.preventDefault();
-              enviarMensajeChat();
-          }
-      });
-  }
-
+  // 2. Chat Tutor (El nuevo)
+  inicializarChat(
+      'panel-chat-tutor',           // ID Sección
+      'chat-input-tutor',           // ID Input Texto (NUEVO)
+      'chat-btn-enviar-tutor',      // ID Botón Enviar (NUEVO)
+      'btn-adjuntar-archivo-tutor', // ID Botón + (NUEVO)
+      'input-archivo-oculto-tutor'  // ID Input File (NUEVO)
+  );
   // ==========================================
   // LÓGICA: ADJUNTAR ARCHIVOS (SIMULACIÓN)
   // ==========================================
@@ -966,7 +1111,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
-  // ==============================================================
+// ==============================================================
   // GESTIÓN DE HABILIDADES (TAGS)
   // ==============================================================
 
@@ -974,25 +1119,24 @@ document.addEventListener('DOMContentLoaded', () => {
   let misHabilidades = JSON.parse(localStorage.getItem('userHabilidades')) || ["Paciente", "Amable", "Activo"];
 
   // Referencias al DOM
-  const listaPerfil = document.getElementById('lista-habilidades-perfil');
-  const contenedorEdicion = document.getElementById('contenedor-habilidades-edicion');
+  const listaPerfil = document.getElementById('lista-habilidades-perfil'); // Lista en el perfil principal
+  const contenedorEdicion = document.getElementById('contenedor-habilidades-edicion'); // Contenedor en la pantalla de añadir
   const selectHabilidades = document.getElementById('habilidades-select');
-  const btnConfirmarAdd = document.getElementById('btn-confirmar-agregar-habilidad');
+  const btnConfirmarAdd = document.getElementById('btn-guardar-habilidad'); // Ojo con el ID, asegúrate que coincida con tu HTML
   const btnVolverHabilidades = document.getElementById('btn-volver-de-habilidades');
 
   // 2. Función para renderizar (dibujar) las habilidades en ambas pantallas
   function renderizarHabilidades() {
-      // A. Renderizar en el PERFIL (la vista principal)
+      
+      // --- A. Renderizar en el PERFIL (la vista principal) ---
       if (listaPerfil) {
           // Limpiamos la lista pero guardamos el botón de "+"
           const btnAgregar = listaPerfil.querySelector('.agregar');
           listaPerfil.innerHTML = ''; 
           
-          misHabilidades.forEach((habilidad, index) => {
+          misHabilidades.forEach((habilidad) => {
               const li = document.createElement('li');
               li.textContent = habilidad;
-              // Opcional: Agregar una 'x' pequeña para borrar directo desde el perfil
-              // li.innerHTML += ` <span style="cursor:pointer; color:red; margin-left:5px;" onclick="eliminarHabilidad(${index})">×</span>`;
               listaPerfil.appendChild(li);
           });
 
@@ -1006,23 +1150,25 @@ document.addEventListener('DOMContentLoaded', () => {
           }
       }
 
-      // B. Renderizar en el PANEL DE AGREGAR (para ver y eliminar)
+      // --- B. Renderizar en el PANEL DE AGREGAR (para ver y eliminar) ---
       if (contenedorEdicion) {
-          contenedorEdicion.innerHTML = '';
+          contenedorEdicion.innerHTML = ''; // Limpiamos para volver a pintar
+          
           misHabilidades.forEach((habilidad, index) => {
               const span = document.createElement('span');
-              span.className = 'habilidad-tag'; // Usamos tu estilo existente
+              span.className = 'habilidad-tag'; // Tu clase de estilo
               span.style.marginRight = '10px';
               span.style.marginBottom = '10px';
-              span.style.display = 'inline-block';
+              span.style.display = 'inline-flex'; // Mejor alineación
+              span.style.alignItems = 'center';
               
-              // Agregamos la X para eliminar
-              span.innerHTML = `${habilidad} <b class="btn-eliminar-tag" data-index="${index}" style="cursor:pointer; margin-left:8px; color: #ffcccc;">✕</b>`;
+              // Insertamos el texto y la X roja
+              span.innerHTML = `${habilidad} <b class="btn-eliminar-tag" data-index="${index}" style="cursor:pointer; margin-left:8px; color: #ffcccc; font-weight:bold;">✕</b>`;
               
               contenedorEdicion.appendChild(span);
           });
 
-          // Agregar listeners a las X rojas
+          // Agregar listeners a las X rojas (para eliminar)
           document.querySelectorAll('.btn-eliminar-tag').forEach(btn => {
               btn.addEventListener('click', (e) => {
                   const index = e.target.dataset.index;
@@ -1054,8 +1200,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (agregadasCount > 0) {
           guardarYActualizar();
-          alert(`Se agregaron ${agregadasCount} habilidades.`);
-          selectHabilidades.value = ""; // Limpiar selección
+          // alert(`Se agregaron ${agregadasCount} habilidades.`); // Opcional
+          selectHabilidades.value = ""; // Limpiar selección visual
       } else {
           alert("Esas habilidades ya las tienes agregadas.");
       }
@@ -1063,8 +1209,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 4. Función para eliminar habilidad
   function eliminarHabilidad(index) {
-      misHabilidades.splice(index, 1);
-      guardarYActualizar();
+      misHabilidades.splice(index, 1); // Elimina el elemento del array
+      guardarYActualizar(); // Guarda y vuelve a pintar
   }
 
   // 5. Guardar en LocalStorage y refrescar vista
@@ -1301,28 +1447,68 @@ document.addEventListener('DOMContentLoaded', () => {
 // 3. Renderizar resultados
 if (encontrados.length > 0) {
     encontrados.forEach(tutor => {
-        const card = document.createElement('article');
+const card = document.createElement('article');
+    card.className = 'tarjeta-tutor-dashboard';
+    
+    // Generamos el HTML (Nota que quitamos el onclick inline para usar addEventListener)
+    card.innerHTML = `
+        <div class="tutor-info">
+            <img src="${tutor.img}" alt="${tutor.nombre}" class="tutor-foto">
+            <div class="tutor-datos">
+                <h3 class="tutor-nombre">${tutor.nombre}</h3>
+                <p class="tutor-carrera">${tutor.carrera}</p>
+                <div class="tutor-rating">⭐ ${tutor.rating}</div>
+            </div>
+        </div>
+        <div class="tutor-tags">
+            ${tutor.tags.map(tag => `<span class="tag-tutor">${tag}</span>`).join('')}
+        </div>
+        <div class="tutor-acciones">
+            <button class="btn-ver-perfil">Perfil</button>
+            <button class="btn-solicitar">Solicitar</button>
+        </div>
+    `;
+
+    // --- LÓGICA PARA EL BOTÓN SOLICITAR (Escenario 1 y 2) ---
+    const btnSolicitar = card.querySelector('.btn-solicitar');
+    btnSolicitar.addEventListener('click', () => {
+        // Actualizar nombre en el modal
+        if(spanNombreTutor) spanNombreTutor.textContent = tutor.nombre;
+        // Abrir modal
+        if(modalSolicitud) modalSolicitud.classList.add('activo');
+    });
+
+    // --- LÓGICA PARA EL BOTÓN PERFIL (Escenario 3) ---
+    const btnPerfil = card.querySelector('.btn-ver-perfil');
+    btnPerfil.addEventListener('click', () => {
+        // 1. Navegar a la sección de perfil del tutor
+        mostrarSeccionEstudiante('panel-perfil-tutor');
         
-        // ¡AQUÍ ESTÁ EL CAMBIO! Usamos la nueva clase
-        card.className = 'tarjeta-tutor-dashboard'; 
+        // 2. Buscar el botón "Solicitar Tutoria" en esa sección específica
+        const btnSolicitarEnPerfil = document.getElementById('btn-solicitar-tutoria');
         
-        card.innerHTML = `
-            <div class="tutor-info">
-                <img src="${tutor.img}" alt="${tutor.nombre}" class="tutor-foto">
-                <div class="tutor-datos">
-                    <h3 class="tutor-nombre">${tutor.nombre}</h3>
-                    <p class="tutor-carrera">${tutor.carrera}</p>
-                    <div class="tutor-rating">⭐ ${tutor.rating}</div>
-                </div>
-            </div>
-            <div class="tutor-tags">
-                ${tutor.tags.map(tag => `<span class="tag-tutor">${tag}</span>`).join('')}
-            </div>
-            <div class="tutor-acciones">
-                <button class="btn-ver-perfil" onclick="mostrarSeccionEstudiante('panel-tutores')">Perfil</button>
-                <button class="btn-solicitar">Solicitar</button>
-            </div>
-        `;
+        if (btnSolicitarEnPerfil) {
+            // 3. Deshabilitarlo visual y funcionalmente
+            btnSolicitarEnPerfil.disabled = true;
+            btnSolicitarEnPerfil.textContent = "No disponible (Vista previa)";
+            btnSolicitarEnPerfil.style.backgroundColor = "#ccc";
+            btnSolicitarEnPerfil.style.cursor = "not-allowed";
+            
+            // Opcional: Rehabilitarlo si sales de la sección para no afectar otros flujos
+            // (Esto es un extra simple para limpiar el estado si navegas luego)
+            setTimeout(() => {
+               // Solo para demostración: si quieres que se reactive al recargar o cambiar lógica
+               // normalmente aquí manejarías un estado global, pero para la HU basta con desactivarlo.
+            }, 5000); 
+        }
+        
+        // (Opcional) Actualizar los datos del perfil grande con los del tutor clickeado
+        // Esto hace que se vea real:
+        const nombreGrande = document.querySelector('.perfil-nombre-grande');
+        const fotoGrande = document.querySelector('.perfil-imagen-grande');
+        if(nombreGrande) nombreGrande.textContent = tutor.nombre;
+        if(fotoGrande) fotoGrande.src = tutor.img;
+    });
         listaResultados.appendChild(card);
     });
 }
@@ -1503,8 +1689,81 @@ if (encontrados.length > 0) {
           });
       }
 
-      // --- Interacción 3: Botón "Ver todas" (Historial) ---
-      // Simula cargar 3 sesiones pasadas (Agrega una tarjeta extra para completar 3)
+     // --- Interacción 3 UNIFICADA: Historial + Calificación (HU: Calificar sesión) ---
+      
+      // A. Función reutilizable para activar la lógica de calificación en un botón
+      const configurarBotonCalificacion = (btn) => {
+          btn.addEventListener('click', (e) => {
+              e.preventDefault();
+              
+              const tarjeta = btn.closest('.tarjeta-sesion');
+              let formCalificacion = tarjeta.querySelector('.form-calificacion-inline');
+              
+              if (formCalificacion) {
+                  // Toggle visibilidad
+                  if (formCalificacion.style.display === 'none') {
+                      formCalificacion.style.display = 'block';
+                      btn.textContent = "Ocultar calificación";
+                  } else {
+                      formCalificacion.style.display = 'none';
+                      btn.textContent = "Calificar / Ver detalles";
+                  }
+              } else {
+                  // Inyectar formulario por primera vez
+                  formCalificacion = document.createElement('div');
+                  formCalificacion.className = 'form-calificacion-inline';
+                  formCalificacion.style.marginTop = '15px';
+                  formCalificacion.style.borderTop = '1px solid #eee';
+                  formCalificacion.style.paddingTop = '10px';
+                  formCalificacion.style.animation = 'fadeIn 0.3s ease';
+                  
+                  formCalificacion.innerHTML = `
+                      <p style="font-size: 14px; font-weight: bold; margin-bottom: 8px; color: #005a9c;">
+                          Calificar sesión completada:
+                      </p>
+                      <div class="estrellas-inline" style="display: flex; gap: 5px; margin-bottom: 10px; cursor: pointer; font-size: 24px;">
+                          <span data-value="1">★</span><span data-value="2">★</span><span data-value="3">★</span><span data-value="4">★</span><span data-value="5">★</span>
+                      </div>
+                      <textarea class="comentario-inline" placeholder="Deja un comentario..." style="width: 100%; height: 60px; padding: 8px; border-radius: 6px; border: 1px solid #ccc; font-family: inherit; margin-bottom: 10px; resize: none; box-sizing: border-box;"></textarea>
+                      <button class="btn-enviar-calif-inline" style="background-color: #28a745; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 13px; width: 100%;">Enviar Calificación</button>
+                  `;
+
+                  tarjeta.insertBefore(formCalificacion, btn);
+                  btn.textContent = "Cancelar calificación";
+
+                  // Lógica interna: Estrellas y Enviar
+                  const estrellas = formCalificacion.querySelectorAll('.estrellas-inline span');
+                  let calificacionValor = 0;
+                  
+                  estrellas.forEach(estrella => {
+                      estrella.style.color = "#ccc";
+                      estrella.addEventListener('click', (ev) => {
+                          calificacionValor = parseInt(ev.target.dataset.value);
+                          estrellas.forEach(s => {
+                              s.style.color = (parseInt(s.dataset.value) <= calificacionValor) ? "#ffc107" : "#ccc";
+                          });
+                      });
+                  });
+
+                  formCalificacion.querySelector('.btn-enviar-calif-inline').addEventListener('click', () => {
+                      if (calificacionValor === 0) { alert("Por favor selecciona una calificación."); return; }
+                      const comentario = formCalificacion.querySelector('.comentario-inline').value;
+                      
+                      console.log(`Enviado: ${calificacionValor} estrellas. "${comentario}"`);
+                      alert(`¡Gracias! Has calificado la sesión con ${calificacionValor} estrellas.`);
+                      
+                      formCalificacion.innerHTML = `<p style="color: #28a745; font-weight: bold; text-align: center; margin-top: 10px;">¡Sesión calificada exitosamente! ✅</p>`;
+                      btn.style.display = 'none'; // Ocultar botón para no recalificar
+                  });
+              }
+          });
+      };
+
+      // B. Aplicar lógica a las tarjetas EXISTENTES al cargar
+      const botonesExistentes = panelSesiones.querySelectorAll('.columna-historial-sesiones .tarjeta-sesion .boton-ver-detalles');
+      botonesExistentes.forEach(btn => configurarBotonCalificacion(btn));
+
+      // C. Lógica del botón "Ver todas" (Crea tarjeta NUEVA y le aplica la lógica)
       const btnVerTodasHistorial = panelSesiones.querySelector('.columna-historial-sesiones .boton-ver-todas');
       const contenedorHistorial = panelSesiones.querySelector('.columna-historial-sesiones');
 
@@ -1512,22 +1771,21 @@ if (encontrados.length > 0) {
           btnVerTodasHistorial.addEventListener('click', (e) => {
               e.preventDefault();
               
-              // Evitar que se agreguen infinitamente si le das click varias veces
+              // Si ya está expandido, colapsar
               if (btnVerTodasHistorial.textContent === "Ocultar") {
-                  // Si ya mostramos, recargamos la sección (o eliminamos el extra)
-                  // Para hacerlo simple, recargamos la vista:
                   const extra = document.getElementById('tarjeta-extra-historial');
                   if(extra) extra.remove();
                   btnVerTodasHistorial.textContent = "Ver todas";
                   return;
               }
 
-              // Crear una nueva tarjeta de historial (Simulada)
+              // Crear nueva tarjeta
               const nuevaTarjeta = document.createElement('div');
               nuevaTarjeta.className = 'tarjeta-sesion';
-              nuevaTarjeta.id = 'tarjeta-extra-historial'; // ID para poder borrarla luego
-              nuevaTarjeta.style.animation = "fadeIn 0.5s ease"; // Animación suave
+              nuevaTarjeta.id = 'tarjeta-extra-historial';
+              nuevaTarjeta.style.animation = "fadeIn 0.5s ease";
               
+              // Nota: Ya no ponemos onclick="alert..." en el HTML, lo asignaremos con JS
               nuevaTarjeta.innerHTML = `
                   <div class="tarjeta-sesion-header">
                       <h3>Física I</h3>
@@ -1539,18 +1797,295 @@ if (encontrados.length > 0) {
                       <p><strong>Fecha:</strong> 25/10/2025</p>
                       <p><strong>Hora:</strong> 10:00 am</p>
                   </div>
-                  <button class="boton-ver-detalles" onclick="alert('Detalles de Física I')">Ver detalles</button>
+                  <button class="boton-ver-detalles">Ver detalles</button>
               `;
 
-              // Insertar antes del botón "Ver todas"
               contenedorHistorial.insertBefore(nuevaTarjeta, btnVerTodasHistorial);
               
-              // Cambiar texto del botón
+              // IMPORTANTE: Asignar la funcionalidad al botón de la NUEVA tarjeta
+              const nuevoBoton = nuevaTarjeta.querySelector('.boton-ver-detalles');
+              configurarBotonCalificacion(nuevoBoton);
+              
               btnVerTodasHistorial.textContent = "Ocultar";
           });
       }
   }
 
+  // ==========================================
+  // LÓGICA DE REPORTAR USUARIO 
+  // ==========================================
+
+  const btnAbrirReporteT = document.getElementById('btn-abrir-reporte-t');
+  const modalReporte = document.getElementById('modal-reporte-usuario');
+  const btnCerrarModalReporte = document.getElementById('btn-cerrar-modal-reporte');
+  const btnCancelarReporte = document.getElementById('btn-cancelar-reporte');
+  const formReporte = document.getElementById('form-reporte');
+
+  // 1. Abrir el modal de reporte
+  if (btnAbrirReporteT && modalReporte) {
+      btnAbrirReporteT.addEventListener('click', (e) => {
+          e.preventDefault();
+          modalReporte.classList.add('activo'); // Usa la clase css existente para mostrar modales
+      });
+  }
+
+  // 2. Cerrar el modal (X o Cancelar)
+  const cerrarModalReporte = () => {
+      if (modalReporte) modalReporte.classList.remove('activo');
+      if (formReporte) formReporte.reset(); // Limpiar formulario
+  };
+
+  if (btnCerrarModalReporte) btnCerrarModalReporte.addEventListener('click', cerrarModalReporte);
+  if (btnCancelarReporte) btnCancelarReporte.addEventListener('click', cerrarModalReporte);
+
+  // 3. Enviar el reporte
+  if (formReporte) {
+      formReporte.addEventListener('submit', (e) => {
+          e.preventDefault();
+          
+          const motivo = document.getElementById('motivo-reporte').value;
+          const descripcion = document.getElementById('descripcion-reporte').value;
+
+          if (!motivo) {
+              alert("Por favor selecciona un motivo para el reporte.");
+              return;
+          }
+
+          // Simulación de envío
+          console.log("Enviando reporte:", { motivo, descripcion });
+
+          // Cerrar modal actual
+          cerrarModalReporte();
+
+          // Mostrar confirmación y redirigir
+          alert("✅ Reporte enviado correctamente.\nEl caso será revisado por un administrador.");
+          mostrarSeccionEstudiante('panel-dashboard-estudiante');
+      });
+  }
+
+  // ==========================================
+  // LÓGICA: CAMBIO DE ESTADO (US - No Disponible)
+  // ==========================================
+
+  const indicadorEstado = document.getElementById('indicador-estado-usuario');
+  const btnGroupEstado = document.getElementById('btn-group-estado');
+
+  if (btnGroupEstado && indicadorEstado) {
+      const botonesEstado = btnGroupEstado.querySelectorAll('.boton-toggle');
+
+      botonesEstado.forEach(boton => {
+          boton.addEventListener('click', (e) => {
+              const estadoSeleccionado = e.target.textContent.trim();
+
+              if (estadoSeleccionado === 'Activo') {
+                  // Escenario 2: Volver a estar disponible
+                  indicadorEstado.classList.remove('ocupado'); // Vuelve a verde
+                  indicadorEstado.title = "Estado: Disponible";
+                  alert("✅ Ahora estás visible en las búsquedas.");
+              } 
+              else if (estadoSeleccionado === 'Ocupado') {
+                  // Escenario 1: Activar modo "No disponible"
+                  indicadorEstado.classList.add('ocupado'); // Cambia a rojo
+                  indicadorEstado.title = "Estado: No disponible (Exámenes/Carga alta)";
+                  alert("⛔ Modo 'No disponible' activado.\nTu perfil se ocultará temporalmente de las búsquedas.");
+              }
+          });
+      });
+  }
+
+  // ==========================================
+  // LÓGICA: MINI TARJETA DE PERFIL (US - Revisión Rápida)
+  // ==========================================
+
+  const miniPerfilOverlay = document.getElementById('mini-perfil-overlay');
+  const btnCerrarMini = document.getElementById('btn-cerrar-mini-perfil');
+  const triggersMiniPerfil = document.querySelectorAll('.trigger-mini-perfil');
+
+  // Elementos dentro de la tarjeta para rellenar
+  const miniImg = document.getElementById('mini-img');
+  const miniNombre = document.getElementById('mini-nombre');
+  const miniUni = document.getElementById('mini-uni');
+  const miniCurso = document.getElementById('mini-curso');
+
+  // 1. Función abrir tarjeta con datos dinámicos
+  triggersMiniPerfil.forEach(img => {
+      img.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation(); // Evitar que cierre el dropdown de notificaciones
+          
+          // Obtener datos del atributo data-
+          const data = e.target.dataset;
+          
+          // Llenar la tarjeta
+          if(miniImg) miniImg.src = data.foto;
+          if(miniNombre) miniNombre.textContent = data.nombre;
+          if(miniUni) miniUni.textContent = data.uni;
+          if(miniCurso) miniCurso.textContent = data.curso;
+
+          // Mostrar overlay
+          if(miniPerfilOverlay) miniPerfilOverlay.classList.add('activo');
+      });
+  });
+
+  // 2. Cerrar tarjeta
+  if (btnCerrarMini) {
+      btnCerrarMini.addEventListener('click', () => {
+          miniPerfilOverlay.classList.remove('activo');
+      });
+  }
+
+  // Cerrar al hacer clic fuera de la tarjeta
+  if (miniPerfilOverlay) {
+      miniPerfilOverlay.addEventListener('click', (e) => {
+          if (e.target === miniPerfilOverlay) {
+              miniPerfilOverlay.classList.remove('activo');
+          }
+      });
+  }
+
+  const btnEnviarRapido = document.getElementById('btn-enviar-rapido-mini');
+  const inputMensajeRapido = document.getElementById('input-mensaje-rapido-mini');
+
+  if (btnEnviarRapido && inputMensajeRapido) {
+      btnEnviarRapido.addEventListener('click', (e) => {
+          e.preventDefault();
+          
+          const mensaje = inputMensajeRapido.value.trim();
+          const nombreDestino = document.getElementById('mini-nombre').textContent;
+
+          if (mensaje === "") {
+              alert("Por favor escribe un mensaje.");
+              return;
+          }
+
+          // Simulación de envío
+          console.log(`Mensaje rápido enviado a ${nombreDestino}: ${mensaje}`);
+          
+          // Feedback visual
+          alert(`✅ Mensaje enviado a ${nombreDestino}:\n"${mensaje}"`);
+          
+          // Limpiar el input
+          inputMensajeRapido.value = "";
+          
+          // Opcional: Cerrar la tarjeta si se desea, o dejarla abierta para Aceptar/Rechazar
+          // miniPerfilOverlay.classList.remove('activo'); 
+      });
+  }
+
+  // ==========================================
+  // LÓGICA: GESTIÓN DE NOTIFICACIONES (Aceptar/Rechazar)
+  // ==========================================
+  
+  const listaNotif = document.getElementById('dropdown-notificaciones');
+  const badgeNotif = document.querySelector('.badge-notificaciones');
+
+  if (listaNotif) {
+      listaNotif.addEventListener('click', (e) => {
+          // Detectamos si el clic fue en un botón (o en el ícono dentro del botón)
+          const btnRechazar = e.target.closest('.dash-est-accion-btn.rechazar');
+          const btnAceptar  = e.target.closest('.dash-est-accion-btn.aceptar');
+          const item = e.target.closest('.notificacion-item');
+
+          // --- CASO 1: RECHAZAR (Escenario 2 de la HU) ---
+          if (btnRechazar && item) {
+              e.preventDefault();
+              e.stopPropagation(); // Evitamos que se cierre el menú inmediatamente
+
+              // 1. Confirmación de seguridad
+              const confirmar = confirm("¿Estás seguro de que deseas rechazar esta solicitud?");
+
+              if (confirmar) {
+                  // 2. Simulación de envío de notificación (Feedback)
+                  alert("✅ La solicitud se ha cerrado y se ha enviado una notificación al estudiante.");
+
+                  // 3. Eliminar visualmente el elemento
+                  item.style.transition = "all 0.3s ease";
+                  item.style.opacity = "0";
+                  item.style.transform = "translateX(20px)";
+                  
+                  setTimeout(() => {
+                      item.remove();
+                      actualizarContadorNotificaciones(); // Actualizamos el numerito rojo
+                  }, 300);
+              }
+          }
+
+          // --- CASO 2: ACEPTAR (Opcional, por si lo necesitas) ---
+          if (btnAceptar && item) {
+              e.preventDefault();
+              e.stopPropagation();
+              alert("¡Genial! Has aceptado la solicitud. Se abrirá un chat con el estudiante.");
+              item.remove();
+              actualizarContadorNotificaciones();
+          }
+      });
+  }
+
+  // Función auxiliar para bajar el número de la campanita
+  function actualizarContadorNotificaciones() {
+      if (badgeNotif) {
+          let cantidad = document.querySelectorAll('.notificacion-item').length;
+          badgeNotif.textContent = cantidad;
+          
+          // Si no quedan notificaciones, ocultamos el badge rojo
+          if (cantidad === 0) {
+              badgeNotif.style.display = 'none';
+              // Opcional: Mostrar mensaje de "No hay notificaciones"
+              const lista = document.querySelector('.lista-notificaciones');
+              if(lista) lista.innerHTML = '<li style="padding:15px; text-align:center; color:#666;">No tienes notificaciones nuevas.</li>';
+          }
+      }
+  }
+
+  // ==========================================
+// LÓGICA HU: SOLICITAR TUTORÍA & PERFIL
+// ==========================================
+
+// Referencias al DOM del nuevo modal
+const modalSolicitud = document.getElementById('modal-solicitud-tutoria');
+const formSolicitud = document.getElementById('form-solicitud-tutoria');
+const txtMensajeSolicitud = document.getElementById('mensaje-solicitud');
+const msgErrorSolicitud = document.getElementById('error-mensaje-solicitud');
+const btnCerrarSolicitud = document.getElementById('btn-cerrar-solicitud');
+const btnCancelarSolicitud = document.getElementById('btn-cancelar-solicitud');
+const spanNombreTutor = document.getElementById('nombre-tutor-solicitud');
+
+// Función para cerrar el modal de solicitud
+function cerrarModalSolicitud() {
+    if (modalSolicitud) modalSolicitud.classList.remove('activo');
+    if (formSolicitud) formSolicitud.reset();
+    if (msgErrorSolicitud) msgErrorSolicitud.style.display = 'none'; // Ocultar error al cerrar
+}
+
+// Event listeners para cerrar
+if (btnCerrarSolicitud) btnCerrarSolicitud.addEventListener('click', cerrarModalSolicitud);
+if (btnCancelarSolicitud) btnCancelarSolicitud.addEventListener('click', cerrarModalSolicitud);
+
+// Lógica del Formulario (Escenarios 1 y 2)
+if (formSolicitud) {
+    formSolicitud.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const mensaje = txtMensajeSolicitud.value.trim();
+
+        // --- ESCENARIO 2 (Negativo): Intentar enviar sin mensaje ---
+        if (mensaje === "") {
+            // Mostrar error
+            msgErrorSolicitud.style.display = 'block';
+            txtMensajeSolicitud.style.borderColor = '#dc3545'; // Borde rojo opcional
+            return; // Detener ejecución
+        }
+
+        // --- ESCENARIO 1 (Exitoso): Mensaje enviado ---
+        // Si llega aquí, es porque hay mensaje
+        msgErrorSolicitud.style.display = 'none';
+        txtMensajeSolicitud.style.borderColor = '#ccc';
+
+        // Simulación de éxito
+        alert("✅ Tu solicitud ha sido enviada correctamente.");
+        cerrarModalSolicitud();
+    });
+}
   // --- INICIO POR DEFECTO ---
   // Mostrar Dashboard al cargar
   mostrarSeccionEstudiante('panel-dashboard-estudiante');

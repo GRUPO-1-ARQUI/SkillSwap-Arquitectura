@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../assets/styles/styleSheet-login.css" />
+    <link rel="stylesheet" href="../assets/styles/styleSheet.css" />
+    <link rel="stylesheet" href="../assets/styles/alianzas.css">
          <link rel="icon" href="../favicon.ico" type="image/x-icon" />
     <title>SkillSwap - Login</title>
   </head>
@@ -11,6 +12,12 @@
   <body>
 
     <nav class="barra-navegacion">
+       <!-- Botón menú hamburguesa -->
+      <div class="menu-hamburguesa" id="btn-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+      </div>
       <div class="logo">
         <a href="../index.html">
           <img src="../assets/images/SkillSwap_logo.png" alt="Logo de la aplicacion SkillSwap" />
@@ -19,9 +26,16 @@
 
       <div class="menu-horizontal">
         <ul class="menu-horizontal-opciones">
-          <li><a href="index-user-estudiante.html">Estudiantes</a></li>
-          <li><a href="index-user-coordinador.html">Coordinador</a></li>
-          <li><a href="index-sobre-nosotros.html">Sobre nosotros</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropbtn" id="btn-alianzas">Alianzas</a>
+                <div class="dropdown-content" id="submenu-alianzas">
+                    <a href="alianzas.html#beneficios">Beneficios</a>
+                    <a href="alianzas.html#universidades-afiliadas">Universidades Afiliadas</a>
+                    <a href="alianzas.html#contacto-form">Contacto</a>
+                </div>
+            </li>
+            <li><a href="proyectos.html">Proyectos</a></li>
+            <li><a href="index-sobre-nosotros.html">Sobre nosotros</a></li>
 
           <li>
             <a href="index-login.html">
@@ -36,11 +50,13 @@
           </li>
         </ul>
       </div>
+      
     </nav>
 
   <section id="inicio-sesion" class="pantalla activa">
       <div class="seccion-inicio-sesion">
         <h1>Inicio de Sesión</h1>
+        
         <form class="formulario-inicio-sesion" onsubmit="validarLogin(event)">
           
           <div class="formulario-inicio-sesion-elemento">
@@ -56,13 +72,11 @@
           <div class="formulario-inicio-sesion-elemento">
             <input type="submit" value="Iniciar Sesión">
           </div>
-
-          <div class="formulario-inicio-sesion-elemento">
-            <label>¿No tienes cuenta?
-             <a href="index-registrarse.html">Regístrate</a>
-            </label>
-          </div>
         </form>
+
+        <label>¿No tienes cuenta?
+          <a href="index-registrarse.html">Regístrate</a>
+        </label>
       </div>
     </section>
 
@@ -70,9 +84,34 @@
 
      <footer>
       <div class="seccion-footer">
-        <p>2025 SkillSwap. Todos los derechos reservados. <a href="../archivos/TerminosCondiciones.pdf" class="terminos-condiciones">Terminos y Condiciones</a> </p>
+        <p>2025 SkillSwap... Todos los derechos reservados. <a href="../archivos/TerminosCondiciones.pdf" class="terminos-condiciones">Terminos y Condiciones</a> </p>
       </div>
     </footer>
+    <!--script menu hamburguesa-->
+<script>
+      // abrir/cerrar menú principal
+      const btnMenu = document.getElementById('btn-menu');
+      const menu = document.querySelector('.barra-navegacion .menu-horizontal');
+      btnMenu.addEventListener('click', () => {
+      menu.classList.toggle('activo');
+  });
+
+  // abrir/cerrar submenú ALIANZAS en móvil
+      const btnAlianzas = document.getElementById("btn-alianzas");
+      const submenuAlianzas = document.getElementById("submenu-alianzas");
+
+      btnAlianzas.addEventListener("click", (event) => {
+      event.preventDefault(); // evita navegar
+      submenuAlianzas.classList.toggle("activo");
+  });
+
+  // 🔥 NUEVO: deja que los enlaces del submenú SI naveguen
+        submenuAlianzas.querySelectorAll("a").forEach(enlace => {
+        enlace.addEventListener("click", (event) => {
+          event.stopPropagation(); // evita cerrar el dropdown al pulsar
+      });
+  });
+</script>
 
   </body>
 </html>

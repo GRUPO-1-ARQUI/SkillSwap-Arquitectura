@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SkillSwap</title>
     <link rel="stylesheet" href="../assets/styles/styleSheet.css">
+    <link rel="stylesheet" href="../assets/styles/estudiante.css">
          <link rel="icon" href="../favicon.ico" type="image/x-icon" />
 </head>
 <body>
@@ -49,7 +50,16 @@
       <ul class="lista-notificaciones">
           <li class="notificacion-item">
               <div class="dash-est-tarjeta-solicitud dropdown-style">
-                  <img src="../assets/images/ima-foto-adrian-guevara.png" alt="Foto Jose Alvarado" class="dash-est-solicitud-img">
+                  <img src="../assets/images/ima-foto-adrian-guevara.png" 
+                    alt="Foto Jose Alvarado" 
+                    class="dash-est-solicitud-img trigger-mini-perfil"
+                    style="cursor: pointer; border: 2px solid transparent; transition: border-color 0.2s;"
+                    onmouseover="this.style.borderColor='#005a9c'" 
+                    onmouseout="this.style.borderColor='transparent'"
+                    data-nombre="Jose Alvarado Jimenez"
+                    data-uni="UPC"
+                    data-curso="Cálculo 1"
+                    data-foto="../assets/images/ima-foto-adrian-guevara.png">
                   <div class="dash-est-solicitud-info">
                       <p><strong>Jose Alvarado Jimenez</strong></p>
                       <p>Hola! Podemos programar una sesion para el martes? :)</p>
@@ -62,7 +72,16 @@
           </li>
           <li class="notificacion-item">
               <div class="dash-est-tarjeta-solicitud dropdown-style">
-                  <img src="../assets/images/ima-chico1.png" alt="Foto Miguel Santos" class="dash-est-solicitud-img">
+                  <img src="../assets/images/ima-chico1.png" 
+                    alt="Foto Miguel Santos" 
+                    class="dash-est-solicitud-img trigger-mini-perfil"
+                    style="cursor: pointer; border: 2px solid transparent; transition: border-color 0.2s;"
+                    onmouseover="this.style.borderColor='#005a9c'" 
+                    onmouseout="this.style.borderColor='transparent'"
+                    data-nombre="Miguel Santos"
+                    data-uni="PUCP"
+                    data-curso="Diseño UX"
+                    data-foto="../assets/images/ima-chico1.png">
                   <div class="dash-est-solicitud-info">
                       <p><strong>Miguel Santos</strong></p>
                       <p>Te envié una solicitud para el curso de Diseño UX.</p>
@@ -292,7 +311,7 @@
 
         <div class="chat-sub-header">
                 <div class="chat-header-perfil">
-                    <img src="../assets/images/ima-foto-victor.png" class="chat-perfil-foto" id="chat-foto-usuario-t" alt="Foto perfil chat">
+                    <img src="../assets/images/ima-foto-adrian-guevara.png" class="chat-perfil-foto" id="chat-foto-usuario-t" alt="Foto perfil chat">
                     <span class="chat-perfil-nombre" id="chat-nombre-usuario-t">Chat General</span>
                 </div>
                 <div class="chat-header-iconos">
@@ -311,28 +330,27 @@
     </div>
             </div>
 
-          <div class="chat-container">
+        <div class="chat-container">
+            <main class="area-mensajes">
+                <div class="burbuja-mensaje recibido">
+                    <span>¡Hola! He visto tu solicitud. ¿En qué temas necesitas refuerzo específico?</span>
+                </div>
+            </main>
 
-        <main class="area-mensajes">
+            <footer class="chat-input-area">
+                <input type="file" id="input-archivo-oculto-tutor" style="display: none;" accept="image/*,.pdf">
 
-           <div class="burbuja-mensaje recibido">
-        <span>¡Hola! Quisiera solicitar una tutoría, estás disponible?</span>
-    </div>
+                <button class="chat-boton-adjuntar" id="btn-adjuntar-archivo-tutor" aria-label="Adjuntar archivo">+</button>
 
-        </main>
-
-        <footer class="chat-input-area">
-            <button class="chat-boton-adjuntar" aria-label="Adjuntar archivo">+</button>
-            <input type="text" class="chat-input-texto" id="chat-input-principal" placeholder="Escribe un mensaje">
-            
-            <button class="chat-boton-enviar" id="chat-btn-enviar" aria-label="Enviar mensaje">
-                <svg width="30" height="25" viewBox="0 0 30 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M28.4583 12.4167L0.75 24.0833L5.94604 12.4167L0.75 0.75L28.4583 12.4167ZM28.4583 12.4167H5.85417" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </button>
-        </footer>
-
-    </div>
+                <input type="text" class="chat-input-texto" id="chat-input-tutor" placeholder="Escribe un mensaje al tutor...">
+                
+                <button class="chat-boton-enviar" id="chat-btn-enviar-tutor" aria-label="Enviar mensaje">
+                    <svg width="30" height="25" viewBox="0 0 30 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M28.4583 12.4167L0.75 24.0833L5.94604 12.4167L0.75 0.75L28.4583 12.4167ZM28.4583 12.4167H5.85417" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </footer>
+        </div>
 
     </section>
 
@@ -557,6 +575,38 @@
         </div>
     </div>
     </section>
+
+<div id="modal-reporte-usuario" class="modal-overlay">
+    <div class="modal-contenido" style="text-align: left; max-width: 450px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h3 style="margin: 0; color: #DC3545; font-size: 20px;">Reportar Usuario</h3>
+            <span id="btn-cerrar-modal-reporte" style="cursor: pointer; font-size: 20px; color: #aaa;">✕</span>
+        </div>
+        
+        <p style="font-size: 14px; color: #555; margin-bottom: 15px;">
+            Por favor, describe el motivo del reporte. Esto será revisado por un administrador.
+        </p>
+
+        <form id="form-reporte">
+            <label style="font-weight: 600; font-size: 14px; display: block; margin-bottom: 5px;">Motivo:</label>
+            <select id="motivo-reporte" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #ccc; margin-bottom: 15px;">
+                <option value="">Selecciona un motivo...</option>
+                <option value="ausencia">El usuario no se conectó</option>
+                <option value="conducta">Comportamiento inadecuado/ofensivo</option>
+                <option value="tecnico">Problemas técnicos graves</option>
+                <option value="otro">Otro</option>
+            </select>
+
+            <label style="font-weight: 600; font-size: 14px; display: block; margin-bottom: 5px;">Descripción detallada:</label>
+            <textarea id="descripcion-reporte" style="width: 100%; height: 80px; padding: 10px; border-radius: 6px; border: 1px solid #ccc; resize: none; box-sizing: border-box;" placeholder="Explica brevemente lo sucedido..."></textarea>
+
+            <div class="modal-botones" style="margin-top: 20px;">
+                <button type="button" id="btn-cancelar-reporte" class="btn-modal secundario">Cancelar</button>
+                <button type="submit" class="btn-modal peligro">Enviar Reporte</button>
+            </div>
+        </form>
+    </div>
+</div>
 
     <section class="seccion-calificar-estudiante panel-seccion" id="panel-calificar-t">
     <div class="calificacion-container">
@@ -952,10 +1002,6 @@
                     </span>
                     <span class="rating-numero">3.7</span>
                     <span class="icono-verificado-tutor">
-                        
-<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M10.4449 0.59161C10.3059 0.369463 10.101 0.196189 9.85894 0.0959077C9.61684 -0.00437349 9.3495 -0.0266726 9.09412 0.0321152L7.28168 0.44846C7.09594 0.491154 6.90293 0.491154 6.71718 0.44846L4.90474 0.0321152C4.64937 -0.0266726 4.38203 -0.00437349 4.13992 0.0959077C3.89782 0.196189 3.693 0.369463 3.55398 0.59161L2.56611 2.16827C2.4653 2.32957 2.32922 2.46566 2.16793 2.56748L0.591369 3.55542C0.36962 3.69432 0.196611 3.89882 0.096358 4.14053C-0.00389508 4.38224 -0.0264197 4.64916 0.0319106 4.90425L0.448228 6.71883C0.490766 6.90426 0.490766 7.09692 0.448228 7.28235L0.0319106 9.09592C-0.0266464 9.35116 -0.00423514 9.61831 0.0960288 9.86022C0.196293 10.1021 0.369428 10.3068 0.591369 10.4458L2.16793 11.4337C2.32922 11.5345 2.4653 11.6706 2.56711 11.8319L3.55499 13.4086C3.83925 13.8632 4.38157 14.088 4.90474 13.9681L6.71718 13.5517C6.90293 13.509 7.09594 13.509 7.28168 13.5517L9.09513 13.9681C9.35036 14.0266 9.61748 14.0042 9.85938 13.9039C10.1013 13.8037 10.3059 13.6305 10.4449 13.4086L11.4328 11.8319C11.5336 11.6706 11.6696 11.5345 11.8309 11.4337L13.4085 10.4458C13.6305 10.3066 13.8035 10.1017 13.9036 9.8596C14.0037 9.61749 14.0258 9.3502 13.967 9.09492L13.5516 7.28235C13.509 7.0966 13.509 6.90358 13.5516 6.71782L13.968 4.90425C14.0266 4.64912 14.0044 4.38205 13.9043 4.14015C13.8042 3.89824 13.6313 3.69352 13.4095 3.55441L11.8319 2.56647C11.6709 2.46548 11.5348 2.32935 11.4338 2.16827L10.4449 0.59161ZM9.93785 4.75203C10.0002 4.63737 10.0156 4.503 9.98094 4.37719C9.94624 4.25138 9.86409 4.14393 9.75179 4.07745C9.63948 4.01098 9.50576 3.99066 9.37878 4.02077C9.2518 4.05089 9.14145 4.12908 9.07094 4.23891L6.43493 8.70075L4.84325 7.17651C4.79603 7.12802 4.73953 7.08954 4.67712 7.06336C4.61471 7.03718 4.54766 7.02384 4.47998 7.02414C4.4123 7.02443 4.34538 7.03835 4.28319 7.06508C4.22101 7.0918 4.16485 7.13077 4.11805 7.17967C4.07126 7.22857 4.03479 7.28639 4.01082 7.34969C3.98686 7.41298 3.97588 7.48046 3.97856 7.54809C3.98123 7.61572 3.99749 7.68212 4.02638 7.74333C4.05527 7.80454 4.09619 7.8593 4.1467 7.90435L6.19704 9.86913C6.25191 9.92161 6.31794 9.96101 6.39017 9.98439C6.46241 10.0078 6.53899 10.0145 6.61421 10.0041C6.68942 9.99378 6.76132 9.96655 6.82453 9.92449C6.88775 9.88243 6.94064 9.82664 6.97927 9.76127L9.93785 4.75203Z" fill="#005A9C"/>
-</svg>
 
                     </span>
                 </div>
@@ -1373,15 +1419,17 @@
 
     <div class="contenedor-perfil">
       <div class="foto-perfil">
-        <div><img src="../assets/images/Estudiante-perfil-test.jpg" alt="Foto de perfil"></div>
-        <button class="btn-cambiar-foto">Cambiar Foto</button>
-        <div class="rating">⭐ 3.8</div>
+        <div class="foto-perfil-wrapper" style="position: relative; display: inline-block;">
+            <img src="../assets/images/Estudiante-perfil-test.jpg" alt="Foto de perfil" style="display: block;">
+            
+            <span class="badge-verificado-propio" title="Usuario Verificado">
+                <svg width="24" height="24" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M10.4449 0.59161C10.3059 0.369463 10.101 0.196189 9.85894 0.0959077C9.61684 -0.00437349 9.3495 -0.0266726 9.09412 0.0321152L7.28168 0.44846C7.09594 0.491154 6.90293 0.491154 6.71718 0.44846L4.90474 0.0321152C4.64937 -0.0266726 4.38203 -0.00437349 4.13992 0.0959077C3.89782 0.196189 3.693 0.369463 3.55398 0.59161L2.56611 2.16827C2.4653 2.32957 2.32922 2.46566 2.16793 2.56748L0.591369 3.55542C0.36962 3.69432 0.196611 3.89882 0.096358 4.14053C-0.00389508 4.38224 -0.0264197 4.64916 0.0319106 4.90425L0.448228 6.71883C0.490766 6.90426 0.490766 7.09692 0.448228 7.28235L0.0319106 9.09592C-0.0266464 9.35116 -0.00423514 9.61831 0.0960288 9.86022C0.196293 10.1021 0.369428 10.3068 0.591369 10.4458L2.16793 11.4337C2.32922 11.5345 2.4653 11.6706 2.56711 11.8319L3.55499 13.4086C3.83925 13.8632 4.38157 14.088 4.90474 13.9681L6.71718 13.5517C6.90293 13.509 7.09594 13.509 7.28168 13.5517L9.09513 13.9681C9.35036 14.0266 9.61748 14.0042 9.85938 13.9039C10.1013 13.8037 10.3059 13.6305 10.4449 13.4086L11.4328 11.8319C11.5336 11.6706 11.6696 11.5345 11.8309 11.4337L13.4085 10.4458C13.6305 10.3066 13.8035 10.1017 13.9036 9.8596C14.0037 9.61749 14.0258 9.3502 13.967 9.09492L13.5516 7.28235C13.509 7.0966 13.509 6.90358 13.5516 6.71782L13.968 4.90425C14.0266 4.64912 14.0044 4.38205 13.9043 4.14015C13.8042 3.89824 13.6313 3.69352 13.4095 3.55441L11.8319 2.56647C11.6709 2.46548 11.5348 2.32935 11.4338 2.16827L10.4449 0.59161ZM9.93785 4.75203C10.0002 4.63737 10.0156 4.503 9.98094 4.37719C9.94624 4.25138 9.86409 4.14393 9.75179 4.07745C9.63948 4.01098 9.50576 3.99066 9.37878 4.02077C9.2518 4.05089 9.14145 4.12908 9.07094 4.23891L6.43493 8.70075L4.84325 7.17651C4.79603 7.12802 4.73953 7.08954 4.67712 7.06336C4.61471 7.03718 4.54766 7.02384 4.47998 7.02414C4.4123 7.02443 4.34538 7.03835 4.28319 7.06508C4.22101 7.0918 4.16485 7.13077 4.11805 7.17967C4.07126 7.22857 4.03479 7.28639 4.01082 7.34969C3.98686 7.41298 3.97588 7.48046 3.97856 7.54809C3.98123 7.61572 3.99749 7.68212 4.02638 7.74333C4.05527 7.80454 4.09619 7.8593 4.1467 7.90435L6.19704 9.86913C6.25191 9.92161 6.31794 9.96101 6.39017 9.98439C6.46241 10.0078 6.53899 10.0145 6.61421 10.0041C6.68942 9.99378 6.76132 9.96655 6.82453 9.92449C6.88775 9.88243 6.94064 9.82664 6.97927 9.76127L9.93785 4.75203Z" fill="#005A9C"/>
+                </svg>
+            </span>
 
-        <div class="creditos-container" title="Créditos ganados por buenas tutorías">
-            <span class="icono-credito">🪙</span>
-            <span id="perfil-creditos-valor">0</span> Créditos
+            <span id="indicador-estado-usuario" class="indicador-estado-perfil" title="Estado: Disponible"></span>
         </div>
-    </div>
 
       <div class="contenido-doble">
         <!-- Columna Izquierda -->
@@ -1394,7 +1442,7 @@
             </p>
             <p>
                 <strong>Universidad:</strong> 
-                <span id="perfil-universidad">PUCP</span> 
+                <span id="perfil-universidad">UPC</span> 
                 <button class="btn-edit-field" data-target="perfil-universidad" title="Editar">✏️</button>
             </p>
             <p>
@@ -1453,15 +1501,12 @@
             </div>
           </div>
 
-          <div class="temas-dominio">
+            <div class="temas-dominio">
             <strong>Temas de Dominio:</strong>
-            <ul class="btnes-temas-hab">
-              <li>Figma</li>
-              <li>Algoritmos</li>
-              <li>SQL</li>
-             <li class="agregar" id="btn-add-dominio" style="cursor: pointer;" title="Añadir Tema">➕</li>
+            <ul class="btnes-temas-hab" id="lista-dominio-perfil">
+                <li class="agregar" id="btn-add-dominio" style="cursor: pointer;" title="Añadir Tema">➕</li>
             </ul>
-          </div>
+            </div>
 
           <div class="habilidades">
             <strong>Habilidades:</strong>
@@ -1507,13 +1552,9 @@
 
         <div class="habilidades-actuales-contenedor">
             <h2>Habilidades actuales:</h2>
-            <div class="tags-actuales-wrapper">
-                <span class="habilidad-tag">Paciente</span>
-                <span class="habilidad-tag">Amable</span>
-                <span class="habilidad-tag">Activo</span>
+            <div class="tags-actuales-wrapper" id="contenedor-habilidades-edicion">
             </div>
         </div>
-
         <div class="habilidades-agregar-contenedor">
             <h2>Habilidades a agregar:</h2>
             <select name="habilidades" id="habilidades-select" multiple size="4" class="habilidades-select-box">
@@ -1552,13 +1593,7 @@
 
         <div class="dominio-actuales-contenedor">
             <h2>Temas de dominio</h2>
-            <div class="tags-dominio-wrapper">
-                <span class="dominio-tag">Figma</span>
-                <span class="dominio-tag">Algoritmos</span>
-                <span class="dominio-tag">SQL</span>
-                <!-- <button class="dominio-tag-agregar" aria-label="Añadir nuevo tema">
-                    +
-                </button> -->
+            <div class="tags-dominio-wrapper" id="contenedor-dominio-edicion">
             </div>
         </div>
 
@@ -1748,6 +1783,72 @@
     </div>
   </div>
 </section>
+
+<div id="mini-perfil-overlay" class="modal-overlay" style="z-index: 2000;">
+    <div class="mini-perfil-card" style="background: white; padding: 25px; border-radius: 15px; width: 320px; text-align: center; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.3); animation: popIn 0.3s ease;">
+        
+        <button id="btn-cerrar-mini-perfil" style="position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 18px; cursor: pointer; color: #999;">✕</button>
+        
+        <h4 style="margin: 0 0 15px 0; color: #005a9c; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Perfil del Aprendiz</h4>
+        
+        <img id="mini-img" src="" alt="Foto" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #f0f0f0; margin-bottom: 10px;">
+        
+        <h3 id="mini-nombre" style="margin: 5px 0; font-size: 18px; color: #333;">Nombre Estudiante</h3>
+        
+        <div style="margin-top: 10px; text-align: left; background-color: #f8f9fa; padding: 12px; border-radius: 10px;">
+            <p style="margin: 5px 0; font-size: 13px; color: #555;">
+                🎓 <strong>Universidad:</strong> <span id="mini-uni" style="color: #000;">Uni</span>
+            </p>
+            <p style="margin: 5px 0; font-size: 13px; color: #555;">
+                📚 <strong>Curso:</strong> <span id="mini-curso" style="background-color: #ffc107; color: #333; padding: 2px 6px; border-radius: 8px; font-weight: 700; font-size: 11px;">Curso</span>
+            </p>
+        </div>
+
+        <div style="margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px; text-align: left;">
+            <label style="font-size: 12px; font-weight: 600; color: #666; margin-bottom: 5px; display: block;">💬 Enviar mensaje rápido:</label>
+            <div style="display: flex; gap: 5px;">
+                <input type="text" id="input-mensaje-rapido-mini" placeholder="Ej: Hola, ¿qué horario prefieres?" style="flex: 1; padding: 8px; border: 1px solid #ccc; border-radius: 6px; font-size: 13px; outline: none;">
+                <button id="btn-enviar-rapido-mini" style="background-color: #005a9c; color: white; border: none; border-radius: 6px; width: 36px; cursor: pointer; transition: background 0.2s;">
+                    ➤
+                </button>
+            </div>
+        </div>
+
+        <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: center;">
+            <button class="dash-est-accion-btn aceptar" style="width: 100%; border-radius: 8px;" onclick="alert('Solicitud Aceptada'); document.getElementById('mini-perfil-overlay').classList.remove('activo');">Aceptar</button>
+            <button class="dash-est-accion-btn rechazar" style="width: 100%; border-radius: 8px;" onclick="alert('Solicitud Rechazada'); document.getElementById('mini-perfil-overlay').classList.remove('activo');">Rechazar</button>
+        </div>
+    </div>
+</div>
+
+<div id="modal-solicitud-tutoria" class="modal-overlay">
+    <div class="modal-contenido" style="text-align: left; max-width: 500px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h3 style="margin: 0; color: #005a9c; font-size: 20px;">Solicitar Tutoría</h3>
+            <span id="btn-cerrar-solicitud" style="cursor: pointer; font-size: 20px; color: #aaa;">✕</span>
+        </div>
+        
+        <p style="font-size: 14px; color: #555; margin-bottom: 15px;">
+            Envía un mensaje a <strong id="nombre-tutor-solicitud">el tutor</strong> para coordinar.
+        </p>
+
+        <form id="form-solicitud-tutoria">
+            <label style="font-weight: 600; font-size: 14px; display: block; margin-bottom: 5px;">Tu mensaje:</label>
+            <textarea id="mensaje-solicitud" 
+                      style="width: 100%; height: 100px; padding: 10px; border-radius: 6px; border: 1px solid #ccc; resize: none; box-sizing: border-box; font-family: inherit;" 
+                      placeholder="Hola, me gustaría agendar una sesión para repasar..."></textarea>
+            
+            <p id="error-mensaje-solicitud" style="color: #dc3545; font-size: 13px; display: none; margin-top: 5px;">
+                ⚠ Por favor, escribe un mensaje para el tutor.
+            </p>
+
+            <div class="modal-botones" style="margin-top: 20px; justify-content: flex-end;">
+                <button type="button" id="btn-cancelar-solicitud" class="btn-modal secundario" style="margin-right: 10px;">Cancelar</button>
+                <button type="submit" class="btn-modal" style="background-color: #005a9c; color: white;">Enviar Solicitud</button>
+            </div>
+        </form>
+    </div>
+</div>
 
         <footer>
       <div class="seccion-footer">

@@ -294,14 +294,96 @@ body
 {
     .menu-horizontal-opciones 
     {
-        flex-direction: column-reverse;
-        gap: 30px;
+        display: flex;
+        flex-direction: column; 
+        align-items: center;            
+        gap: 20px;                
+        padding: 30px 0;               
         background-color: #ffffff;
-        position: fixed;
-        top: 75px;
-        left: -100%;
+        position: absolute;   
+        top: 0;     
+        left: -100%;         
         width: 100%;
-        height: calc(100% - 75px);
-        transition: left 0.3s ease;
+        height: auto;       
+        transition: left 0.3s ease; 
+        z-index: 1000;
+        box-shadow: 0px 5px 10px rgba(0,0,0,0.1);
+    }
+
+    .llamado-accion-texto {
+        font-size: 28px;
+    }
+
+    .division-nosotros-ima img {
+        width: 90%;
+        max-width: 400px;
+    }
+
+    .seccion-nosotros {
+        margin: 20px;
+    }
+
+    .elementos-nosotros-txt
+    {
+        width: 90%;
+    }
+
+    .llamado-accion-boton,
+    .llamado-accion-boton2 {
+        width: 80%;
+        font-size: 16px;
+        padding: 12px 20px;
+    }
+
+     /* mostrar hamburguesa */
+    .menu-hamburguesa {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+    padding: 10px;
+    z-index: 1100;
+    }
+
+    .menu-hamburguesa span {
+    width: 30px;
+    height: 3px;
+    background-color: #000;
+    transition: 0.3s;
+    }
+
+     /* Ocultar menú horizontal */
+    .menu-horizontal {
+    display: none;
+    position: absolute;
+    top: 75px;
+    left: 0;
+    width: 100%;
+    background: white;
+    border-bottom: 1px solid #ccc;
+    z-index: 999;
+    }
+
+     /* Mostrar menú cuando esté abierto */
+    .menu-horizontal.activo {
+    display: block;
+    }
+
+    /* UL se hace vertical */
+    /*.menu-horizontal-opciones {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 20px 0;
+    }*/
+
+   /* Botones más grandes */
+    .btn-iniciarsesion,
+   .btn-registrase {
+    width: 100%;
+    text-align: center;
+  }
+  .menu-horizontal.activo .menu-horizontal-opciones {
+        left: 0;
     }
 }
