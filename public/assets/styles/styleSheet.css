@@ -3764,18 +3764,12 @@ body.dark-mode .barra-navegacion {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+@media (max-width: 768px) {
+  .contenido-doble {
+    flex-direction: column;   /* ahora se apilan uno debajo del otro */
+    gap: 20px;                /* opcional: separa los elementos */
+  }
+}
 
 
 .perfil-usuario {
