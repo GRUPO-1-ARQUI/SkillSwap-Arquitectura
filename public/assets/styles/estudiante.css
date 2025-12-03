@@ -239,3 +239,144 @@
 }
 
 }
+
+
+
+
+/* ==========================================
+   RESPONSIVE: VIDEOLLAMADA (Estilo App Móvil)
+   ========================================== */
+
+@media screen and (max-width: 768px) {
+
+    /* 1. CONTENEDOR PRINCIPAL */
+    /* Quitamos el scroll del body para que se sienta como una app */
+    body.en-llamada {
+        overflow: hidden;
+    }
+
+    /* 2. LAYOUT (Video + Sidebar) */
+    /* Cambiamos de fila (lado a lado) a columna apilada */
+    .videollamada-layout {
+        flex-direction: column;
+        position: relative; /* Para poder posicionar cosas encima */
+    }
+
+    /* 3. VIDEO PRINCIPAL (Fondo) */
+    .video-screen-principal {
+        position: absolute; /* Lo sacamos del flujo para que sea el fondo */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%; /* Ocupa todo el espacio disponible */
+        z-index: 1;   /* Nivel más bajo */
+    }
+    
+    /* Ajuste de la imagen del video para que cubra todo (tipo cover) */
+    .img-video-full {
+        object-fit: cover; 
+    }
+    
+    /* La etiqueta del nombre la subimos un poco para que no la tapen los controles */
+    .etiqueta-nombre {
+        top: 20px;
+        left: 20px;
+        bottom: auto; /* Quitamos la posición de abajo */
+        background-color: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(4px); /* Efecto borroso elegante */
+    }
+
+    /* 4. SIDEBAR PARTICIPANTES (Tira Horizontal) */
+    .sidebar-participantes {
+        position: absolute;
+        bottom: 100px; /* Justo encima de la barra de controles */
+        left: 0;
+        
+        width: 100%; /* Ancho total */
+        height: 120px; /* Altura fija para la tira */
+        
+        flex-direction: row; /* Los ponemos en fila horizontal */
+        background-color: transparent; /* Fondo transparente */
+        border: none;
+        
+        overflow-x: auto; /* Permitir scroll horizontal si hay muchos */
+        overflow-y: hidden;
+        
+        gap: 10px;
+        padding: 10px;
+        z-index: 5; /* Encima del video */
+        
+        /* Ocultar scrollbar para que se vea limpio */
+        scrollbar-width: none; 
+    }
+    
+    /* Ocultar scrollbar en Chrome/Safari */
+    .sidebar-participantes::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Tarjetas pequeñas de los participantes */
+    .tarjeta-video-mini {
+        width: 90px;  /* Más pequeños */
+        height: 100%; 
+        min-width: 90px; /* Para que no se aplasten */
+        background-color: #333;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    /* 5. CHAT (Pantalla Completa - Overlay) */
+    .chat-lateral-llamada.activo {
+        position: fixed; /* Fijo respecto a la ventana */
+        top: 0;
+        left: 0;
+        width: 100% !important; /* Forzamos ancho completo */
+        height: 100% !important; /* Forzamos altura completa */
+        z-index: 2000; /* Encima de TODO, incluso del menú de navegación */
+        border: none;
+        animation: slideUp 0.3s ease; /* Animación de entrada */
+    }
+
+    /* Animación para que el chat suba como una hoja */
+    @keyframes slideUp {
+        from { transform: translateY(100%); }
+        to { transform: translateY(0); }
+    }
+
+    /* Ajuste del botón cerrar del chat para que sea más grande/táctil */
+    .header-chat-llamada button {
+        font-size: 24px;
+        padding: 10px;
+    }
+
+    /* 6. BARRA DE CONTROLES (Botones abajo) */
+    .controles-videollamada-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        z-index: 10; /* Encima del video y participantes */
+        
+        background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); /* Degradado elegante */
+        border-top: none;
+        padding-bottom: 20px; /* Espacio para el gesto de iPhone */
+        height: auto;
+        padding-top: 20px;
+    }
+
+    /* Ajustamos los botones para que quepan bien */
+    .btn-control, 
+    .btn-control-llamada {
+        width: 45px;
+        height: 45px;
+        background-color: rgba(255, 255, 255, 0.2); /* Semitransparente */
+        backdrop-filter: blur(10px);
+    }
+    
+    /* Botón colgar destaca más */
+    .btn-control.colgar, 
+    .btn-control-llamada.colgar {
+        width: 55px;
+        height: 55px;
+        background-color: #ea4335; /* Rojo sólido */
+    }
+}
