@@ -399,83 +399,6 @@ align-content: center;
     object-fit: contain; /* Mantiene proporción sin deformarse */
 }
 
-/* Tablets y pantallas medianas */
-@media screen and (max-width: 1024px) 
-{
-    .division-contenido-row 
-    {
-        flex-direction: column-reverse;
-        gap: 30px;
-        align-items: center;
-
-    }
-
-    .elementos-nosotros-txt
-    {
-        width: 65%;
-    }
-
-    .division-nosotros-ima img {
-        width: 80%;
-        max-width: 600px;
-    }
-
-    .llamado-accion-texto {
-        font-size: 36px;
-        width: 90%;
-    }
-
-    .seccion-nosotros {
-        margin: 30px;
-    }
-
-    .barra-navegacion {
-        padding: 0 10px;
-    }
-}
-
-/* Móviles (smartphones) */
-@media screen and (max-width: 768px) 
-{
-    .menu-horizontal-opciones 
-    {
-        flex-direction: column-reverse;
-        gap: 30px;
-        background-color: #ffffff;
-        position: fixed;
-        top: 75px;
-        left: -100%;
-        width: 100%;
-        height: calc(100% - 75px);
-        transition: left 0.3s ease;
-    }
-
-    .llamado-accion-texto {
-        font-size: 28px;
-    }
-
-    .division-nosotros-ima img {
-        width: 90%;
-        max-width: 400px;
-    }
-
-    .seccion-nosotros {
-        margin: 20px;
-    }
-
-    .elementos-nosotros-txt
-    {
-        width: 90%;
-    }
-
-    .llamado-accion-boton,
-    .llamado-accion-boton2 {
-        width: 80%;
-        font-size: 16px;
-        padding: 12px 20px;
-    }
-}
-
 .seccion-registro-cuenta, .seccion-inicio-sesion
 {
     margin: 50px;
@@ -3226,6 +3149,8 @@ body.dark-mode .barra-navegacion {
     margin-bottom: 30px;
 }
 
+
+
 .dashboard-header h1 {
     font-family: "Inter", sans-serif;
     font-size: 32px;
@@ -4845,6 +4770,19 @@ body.dark-mode .barra-navegacion {
     gap: 30px;
 }
 
+@media (max-width: 768px) 
+{
+    .dash-est-titulo {
+        text-align: center;
+    }
+
+  .dash-est-grid 
+  {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
 .dash-est-columna-izquierda,
 .dash-est-columna-derecha {
     display: flex;
@@ -5069,6 +5007,7 @@ body.dark-mode .barra-navegacion {
 
 .dash-est-tutor-info {
     flex-grow: 1;
+    gap: 10px;
 }
 .dash-est-tutor-info p {
     margin: 0;
@@ -5110,6 +5049,8 @@ body.dark-mode .barra-navegacion {
 .dash-est-tutor-fav.activo {
     color: #DC3545; /* Rojo */
 }
+
+
 
 /* ---Estilos para Dark Mode --- */
 
@@ -7015,4 +6956,100 @@ body.dark-mode .creditos-container {
 
 .detalles-extra li {
     margin-bottom: 3px;
+}
+
+
+/* Tabletas (Ipads) */
+@media screen and (max-width: 1024px) 
+{
+    .dash-est-header {
+    flex-direction: column;
+    gap: 30px;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 30px;
+    }
+
+    .dash-est-solicitud-img {
+    width: 100px;
+    height: 100px;
+    }
+
+    .dash-est-tarjeta-tutor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    background-color: var(--white-color);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    position: relative;
+    }
+
+    .dash-est-tutor-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;}
+
+    .dash-est-tutor-info p {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+    }   
+
+    .dash-est-solicitud-acciones {
+    flex-direction: row;
+    gap: 20px;
+    }
+
+    .dash-est-tarjeta-solicitud {
+
+        flex-direction: row;
+    }
+    }
+
+    .dash-est-solicitud-info p {
+    text-align: left;
+    }
+
+    .dashboard-grid-container {
+    display: flex;
+    flex-direction: column;
+    }
+
+}
+
+/* Móviles (smartphones) */
+@media screen and (max-width: 768px) 
+{
+    .dash-est-grid {
+    display: flex;
+    gap: 30px;
+    }
+
+    .dash-est-solicitud-info p {
+    text-align: center;
+    }
+
+    .grid-sesiones {
+    display: flex;
+    flex-direction: column;
+    }
+
+    .dashboard-header {
+    flex-direction: column;
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    }
+
+    .dashboard-header h1 {
+    text-align: center;
+    }
+
+    .dash-est-tarjeta-solicitud {
+    flex-direction: column;
+    }
 }
