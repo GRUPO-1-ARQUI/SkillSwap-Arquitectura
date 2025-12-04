@@ -2145,6 +2145,100 @@ if (formSolicitud) {
         cerrarModalSolicitud();
     });
 }
+
+// =======================================================
+  // LOGICA INDEPENDIENTE PARA EL TUTOR (IDs con -t)
+  // =======================================================
+
+  // 1. Lógica de la Pizarra Tutor
+  const btnPizarraTutor = document.getElementById('btn-toggle-pizarra-t');
+  const pizarraOverlayTutor = document.getElementById('pizarra-overlay-t');
+  const btnCerrarPizarraTutor = document.getElementById('btn-cerrar-pizarra-interno-t');
+
+  if (btnPizarraTutor && pizarraOverlayTutor) {
+      btnPizarraTutor.addEventListener('click', (e) => {
+          e.preventDefault();
+          pizarraOverlayTutor.classList.toggle('activa'); // Muestra/oculta
+          btnPizarraTutor.classList.toggle('activo'); // Pinta el botón
+      });
+  }
+  
+  if (btnCerrarPizarraTutor && pizarraOverlayTutor) {
+      btnCerrarPizarraTutor.addEventListener('click', (e) => {
+          e.preventDefault();
+          pizarraOverlayTutor.classList.remove('activa');
+          if(btnPizarraTutor) btnPizarraTutor.classList.remove('activo');
+      });
+  }
+
+  // 2. Lógica del Chat Tutor
+  const btnChatTutor = document.getElementById('btn-toggle-chat-llamada-t');
+  const panelChatTutor = document.getElementById('panel-chat-llamada-t');
+  const btnCerrarChatTutor = document.getElementById('btn-cerrar-chat-llamada-t');
+
+  if (btnChatTutor && panelChatTutor) {
+      btnChatTutor.addEventListener('click', (e) => {
+          e.preventDefault();
+          panelChatTutor.classList.toggle('activo');
+          btnChatTutor.classList.toggle('activo');
+      });
+  }
+
+  if (btnCerrarChatTutor && panelChatTutor) {
+      btnCerrarChatTutor.addEventListener('click', (e) => {
+          e.preventDefault();
+          panelChatTutor.classList.remove('activo');
+          if(btnChatTutor) btnChatTutor.classList.remove('activo');
+      });
+  }
+
+  // 3. Lógica de Adjuntar Archivo en el Chat Tutor
+  const btnAdjuntarTutor = document.getElementById('btn-adjuntar-video-t');
+  const inputArchivoTutor = document.getElementById('input-archivo-video-t');
+  // Buscamos específicamente el cuerpo del chat del tutor
+  const chatAreaTutor = document.querySelector('#panel-chat-llamada-t .cuerpo-chat-llamada');
+
+  if (btnAdjuntarTutor && inputArchivoTutor) {
+      btnAdjuntarTutor.addEventListener('click', (e) => {
+          e.preventDefault();
+          inputArchivoTutor.click();
+      });
+
+      inputArchivoTutor.addEventListener('change', (e) => {
+          const archivo = e.target.files[0];
+          if (archivo) {
+              // Lógica simplificada para enviar mensaje en este chat específico
+              const lector = new FileReader();
+              lector.onload = function(ev) {
+                  // Crear la burbuja
+                  const nuevaBurbuja = document.createElement('div');
+                  nuevaBurbuja.classList.add('mensaje-chat-llamada', 'propio');
+                  
+                  if (archivo.type.startsWith('image/')) {
+                       nuevaBurbuja.innerHTML = `
+                          <div class="archivo-info">
+                              <strong>Tú (Tutor):</strong> <br>
+                              <img src="${ev.target.result}" class="preview-imagen-chat" style="max-width:100%; border-radius:5px; margin-top:5px;">
+                          </div>`;
+                  } else {
+                       nuevaBurbuja.innerHTML = `
+                          <div class="archivo-info">
+                              <strong>Tú (Tutor):</strong> <br>
+                              📄 ${archivo.name}
+                          </div>`;
+                  }
+                  
+                  if (chatAreaTutor) {
+                      chatAreaTutor.appendChild(nuevaBurbuja);
+                      chatAreaTutor.scrollTop = chatAreaTutor.scrollHeight;
+                  }
+              };
+              lector.readAsDataURL(archivo);
+          }
+          inputArchivoTutor.value = ''; // Limpiar
+      });
+  }
+  
   // --- INICIO POR DEFECTO ---
   // Mostrar Dashboard al cargar
   mostrarSeccionEstudiante('panel-dashboard-estudiante');
