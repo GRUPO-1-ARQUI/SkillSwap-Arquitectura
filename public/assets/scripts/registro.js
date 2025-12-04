@@ -1,3 +1,7 @@
+const passwordInput = document.getElementById('password');
+const confirmPasswordInput = document.getElementById('confirm-password');
+
+
 document.getElementById("form").addEventListener("submit", function (event) {
   event.preventDefault(); // Evita que el form se envíe automáticamente
 
@@ -30,3 +34,16 @@ document.getElementById('password').addEventListener('input', function () {
         this.setCustomValidity("");
     }
 });
+
+confirmPasswordInput.addEventListener('input', validarCoincidencia);
+
+function validarCoincidencia() {
+    const password = passwordInput.value;
+    const confirmPassword = confirmPasswordInput.value;
+
+    if (confirmPassword !== password) {
+        confirmPasswordInput.setCustomValidity("Las contraseñas no coinciden.");
+    } else {
+        confirmPasswordInput.setCustomValidity("");
+    }
+}
