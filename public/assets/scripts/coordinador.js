@@ -440,6 +440,147 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   });
 
+  // ==========================================
+  // 11. LÓGICA DE FILTRO: SECCIÓN ESTUDIANTES (Panel Búsqueda)
+  // ==========================================
+
+  const btnFiltroEst = document.getElementById('btn-toggle-filtro');
+  const menuFiltrosEst = document.getElementById('menu-filtros');
+  const opcionesEst = document.querySelectorAll('#menu-filtros .opcion-filtro');
+  const inputBusquedaEst = document.getElementById('input-busqueda-estudiantes');
+  
+  let filtroEstActual = 'nombre'; // Estado inicial
+
+  if (btnFiltroEst && menuFiltrosEst) {
+      
+      // 1. Abrir/Cerrar menú
+      btnFiltroEst.addEventListener('click', (e) => {
+          e.stopPropagation(); // Evita que el clic se propague y cierre el menú inmediatamente
+          menuFiltrosEst.classList.toggle('activo');
+      });
+
+      // 2. Cerrar al hacer clic fuera
+      document.addEventListener('click', (e) => {
+          if (!menuFiltrosEst.contains(e.target) && !btnFiltroEst.contains(e.target)) {
+              menuFiltrosEst.classList.remove('activo');
+          }
+      });
+
+      // 3. Selección de opciones
+      opcionesEst.forEach(opcion => {
+          opcion.addEventListener('click', (e) => {
+              // Actualizar variable de estado
+              filtroEstActual = e.target.dataset.tipo;
+              
+              // Actualizar visualmente (negrita/azul)
+              opcionesEst.forEach(op => op.classList.remove('seleccionado'));
+              e.target.classList.add('seleccionado');
+
+              // Cambiar el placeholder del input para dar feedback
+              if (inputBusquedaEst) {
+                  if (filtroEstActual === 'nombre') {
+                      inputBusquedaEst.placeholder = "Buscar alumno por nombre...";
+                  } else {
+                      inputBusquedaEst.placeholder = "Buscar alumno por código...";
+                  }
+                  inputBusquedaEst.focus();
+              }
+
+              // Cerrar menú
+              menuFiltrosEst.classList.remove('activo');
+          });
+      });
+  }
+
+  // ==========================================
+  // 12. LÓGICA DE BÚSQUEDA DE ESTUDIANTES (SIMULADA)
+  // ==========================================
+
+  const btnBuscarEstudiante = document.getElementById('btn-toggle-filtro'); // Usamos el mismo wrapper o el input directo
+  const inputBuscarEstudiante = document.getElementById('input-busqueda-estudiantes');
+  const contenedorResultados = document.getElementById('contenedor-resultados-busqueda');
+  const textoResultados = document.getElementById('texto-resultados');
+
+  // Base de datos simulada
+  const estudiantesBD = [
+      { nombre: "Victor Alberca Saavedra", codigo: "u201924127", carrera: "Ingeniería de Software" },
+      { nombre: "Maria Lopez", codigo: "u202011111", carrera: "Diseño Gráfico" },
+      { nombre: "Juan Perez", codigo: "u202122222", carrera: "Ingeniería Civil" }
+  ];
+
+  // Función para ejecutar la búsqueda
+  function buscarEstudiantes() {
+      if (!inputBuscarEstudiante || !contenedorResultados) return;
+
+      const texto = inputBuscarEstudiante.value.toLowerCase().trim();
+      
+      // Limpiar resultados previos
+      contenedorResultados.innerHTML = '';
+
+      if (texto === '') {
+          if(textoResultados) textoResultados.innerText = "Escribe algo para buscar...";
+          return;
+      }
+
+      // Filtrar
+      const resultados = estudiantesBD.filter(est => {
+          if (filtroEstActual === 'nombre') {
+              return est.nombre.toLowerCase().includes(texto);
+          } else {
+              return est.codigo.toLowerCase().includes(texto);
+          }
+      });
+
+      // Mostrar resultados
+      if (resultados.length > 0) {
+          if(textoResultados) textoResultados.innerText = `Se encontraron ${resultados.length} resultados:`;
+          
+          resultados.forEach(est => {
+              const tarjeta = document.createElement('div');
+              tarjeta.className = 'panel-tarjeta-item'; // Reutilizamos estilo de tarjeta
+              tarjeta.style.marginBottom = '10px';
+              
+              // HTML de la tarjeta de resultado
+              tarjeta.innerHTML = `
+                  <div style="width: 50px; height: 50px; background: #ccc; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white;">
+                      ${est.nombre.charAt(0)}
+                  </div>
+                  <div class="item-detalles" style="margin-left: 15px;">
+                      <p class="item-titulo" style="margin: 0; font-weight: bold;">${est.nombre}</p>
+                      <p class="item-subtitulo" style="margin: 0; color: #666;">${est.codigo} - ${est.carrera}</p>
+                  </div>
+                  <button style="margin-left: auto; padding: 5px 10px; border: 1px solid #005a9c; background: white; color: #005a9c; border-radius: 5px; cursor: pointer;">
+                      Ver Perfil
+                  </button>
+              `;
+              contenedorResultados.appendChild(tarjeta);
+          });
+      } else {
+          // Caso no encontrado
+          if(textoResultados) textoResultados.innerText = "Resultados de la búsqueda:";
+          contenedorResultados.innerHTML = `
+              <div style="text-align: center; padding: 20px; color: #666;">
+                  <p style="font-size: 40px; margin-bottom: 10px;">🔍</p>
+                  <p>No se encontraron estudiantes con ese criterio.</p>
+                  <p style="font-size: 12px;">Prueba buscando "Victor" o "Maria".</p>
+              </div>
+          `;
+      }
+  }
+
+  // Event Listeners para activar la búsqueda
+  if (inputBuscarEstudiante) {
+      // Buscar al presionar Enter
+      inputBuscarEstudiante.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+              buscarEstudiantes();
+          }
+      });
+      
+      // Buscar mientras escribe (opcional, para efecto tiempo real)
+      inputBuscarEstudiante.addEventListener('keyup', buscarEstudiantes);
+  }
+
   
   // Iniciar en dashboard
   mostrarSeccion('panel-dashboard');
