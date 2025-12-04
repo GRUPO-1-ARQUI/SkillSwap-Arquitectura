@@ -560,69 +560,31 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-// --- NOTIFICACIONES (Lógica Híbrida: PC vs Móvil) ---
-const navNotificaciones = document.getElementById('nav-notificaciones');
-const dropdownNotificaciones = document.getElementById('dropdown-notificaciones');
+  // --- NOTIFICACIONES (Dropdown) ---
+  const navNotificaciones = document.getElementById('nav-notificaciones');
+  const dropdownNotificaciones = document.getElementById('dropdown-notificaciones');
 
-if (navNotificaciones && dropdownNotificaciones) {
-    
-    // 1. CLIC EN LA CAMPANA / TEXTO
-    navNotificaciones.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+  if (navNotificaciones && dropdownNotificaciones) {
+      // 1. Alternar visibilidad al hacer clic en la campana
+      navNotificaciones.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation(); // Evita que el clic se propague al document
+          dropdownNotificaciones.classList.toggle('activo');
+      });
 
-        // DETECTAR SI ES MÓVIL (Ancho menor a 768px)
-        const esMovil = window.innerWidth <= 768;
-
-        if (esMovil) {
-            // --- MODO CELULAR: Flyout al costado ---
-            if (dropdownNotificaciones.classList.contains('activo')) {
-                dropdownNotificaciones.classList.remove('activo');
-            } else {
-                // Calcular posición matemática para ponerlo a la derecha
-                const rect = navNotificaciones.getBoundingClientRect();
-                
-                // Aplicamos estilos inline SOLO para este momento
-                dropdownNotificaciones.style.position = 'fixed'; 
-                dropdownNotificaciones.style.top = rect.top + 'px';
-                dropdownNotificaciones.style.left = (rect.right + 10) + 'px'; // 10px de separación
-                dropdownNotificaciones.style.width = '280px'; // Aseguramos ancho
-                
-                dropdownNotificaciones.classList.add('activo');
-            }
-        } else {
-            // --- MODO PC: Normal ---
-            // IMPORTANTE: Limpiamos los estilos "fixed" que hayamos puesto en modo móvil
-            // para que no rompan el diseño de PC.
-            dropdownNotificaciones.style.position = '';
-            dropdownNotificaciones.style.top = '';
-            dropdownNotificaciones.style.left = '';
-            dropdownNotificaciones.style.width = '';
-            
-            // Simplemente mostramos/ocultamos (el CSS de PC se encarga del resto)
-            dropdownNotificaciones.classList.toggle('activo');
-        }
-    });
-
-    // 2. CERRAR AL HACER CLIC FUERA
-    document.addEventListener('click', (e) => {
-        if (!dropdownNotificaciones.contains(e.target) && !navNotificaciones.contains(e.target)) {
-            dropdownNotificaciones.classList.remove('activo');
-        }
-    });
-    
-    // 3. CERRAR AL HACER SCROLL (Solo útil en móvil para que no quede flotando)
-    window.addEventListener('scroll', () => {
-        if (window.innerWidth <= 768 && dropdownNotificaciones.classList.contains('activo')) {
-            dropdownNotificaciones.classList.remove('activo');
-        }
-    }, { passive: true });
-
-    // 4. CLIC DENTRO NO CIERRA
-    dropdownNotificaciones.addEventListener('click', (e) => {
-        e.stopPropagation();
-    });
-}
+      // 2. Cerrar el dropdown si se hace clic fuera de él
+      document.addEventListener('click', (e) => {
+          // Si el clic NO fue dentro del dropdown Y NO fue en la campana
+          if (!dropdownNotificaciones.contains(e.target) && !navNotificaciones.contains(e.target)) {
+              dropdownNotificaciones.classList.remove('activo');
+          }
+      });
+      
+      // 3. Evitar que clics dentro del dropdown lo cierren
+      dropdownNotificaciones.addEventListener('click', (e) => {
+           e.stopPropagation();
+      });
+  }
 
   // --- Lógica de Videollamada (Desde el Chat) ---
   
@@ -717,86 +679,127 @@ if (navNotificaciones && dropdownNotificaciones) {
       });
   }
 
- // ==========================================
-  // LÓGICA: CRÉDITOS Y CALIFICACIÓN (CORREGIDO)
-  // ==========================================
+// ==========================================
+// LÓGICA: CRÉDITOS Y CALIFICACIÓN (MEJORADA)
+// ==========================================
 
-  // 1. Cargar visualización de créditos
-  const displayCreditos = document.getElementById('perfil-creditos-valor');
-  // Leemos del almacenamiento local (o iniciamos en 0)
-  let misCreditos = parseInt(localStorage.getItem('userCreditos')) || 0;
-  
-  // Pintamos el valor inicial al cargar la página
-  if (displayCreditos) {
-      displayCreditos.textContent = misCreditos;
-  }
+// 1. Referencias a los elementos del HTML
+const displayCreditos = document.getElementById('perfil-creditos-valor');
+const displayEstrellas = document.getElementById('perfil-estrellas-visual');
+const displayRatingTexto = document.getElementById('perfil-rating-texto');
 
-  /**
-   * Función reutilizable para procesar la calificación
-   * @param {string} nombreInputRadio - El 'name' de los radio buttons ('rating' o 'rating-t')
-   */
-  function procesarCalificacion(nombreInputRadio) {
-      // Buscamos cuál estrella está marcada en el grupo correcto
-      const estrellaSeleccionada = document.querySelector(`input[name="${nombreInputRadio}"]:checked`);
-      
-      let mensaje = "¡Gracias por tu feedback!";
-      
-      // Regla de negocio: Si califica con 5 estrellas, gana 1 crédito
-      if (estrellaSeleccionada && estrellaSeleccionada.value === "5") {
-          misCreditos++; // Aumentar variable
-          localStorage.setItem('userCreditos', misCreditos); // Guardar en navegador
-          
-          // Actualizar el numerito en el perfil (barra lateral)
-          if (displayCreditos) {
-              displayCreditos.textContent = misCreditos;
-              // Pequeña animación visual (opcional)
-              displayCreditos.style.color = "#28a745"; // Verde momentáneo
-              setTimeout(() => displayCreditos.style.color = "", 500);
-          }
-          
-          mensaje = "🌟 ¡Excelente sesión!\n🪙 ¡Has ganado 1 crédito por tu desempeño!";
-      }
-      
-      alert(mensaje);
-      
-      // Volver al dashboard
-      mostrarSeccionEstudiante('panel-dashboard-estudiante');
-      
-      // Limpiar selección para la próxima vez
-      if (estrellaSeleccionada) estrellaSeleccionada.checked = false;
-  }
+// 2. Cargar datos guardados (o iniciar en 0 si es nuevo)
+let misCreditos = parseInt(localStorage.getItem('userCreditos')) || 0;
+let miRating = parseFloat(localStorage.getItem('userRating')) || 0; // Tu promedio actual
+let numEvaluaciones = parseInt(localStorage.getItem('userEvaluaciones')) || 0; // Cuántas veces te han calificado
 
-  // 2. Event Listeners para los botones de enviar
+// 3. Función para pintar la información en el perfil
+function actualizarStatsPerfil() {
+    // A. Actualizar Créditos
+    if (displayCreditos) {
+        displayCreditos.textContent = misCreditos;
+    }
 
-  // Caso A: Estudiante Califica (Panel A)
-  const btnEnviarCalifA = document.getElementById('btn-enviar-calificacion-a');
-  if (btnEnviarCalifA) {
-      btnEnviarCalifA.addEventListener('click', (e) => {
-          e.preventDefault();
-          procesarCalificacion('rating'); // El name en el HTML es "rating"
-      });
-  }
+    // B. Actualizar Estrellas (Reputación)
+    if (displayEstrellas && displayRatingTexto) {
+        if (numEvaluaciones === 0) {
+            // Usuario nuevo: Muestra estrellas vacías
+            displayEstrellas.textContent = "☆☆☆☆☆";
+            displayRatingTexto.textContent = "(Nuevo)";
+        } else {
+            // Usuario con calificaciones: Calcula estrellas llenas
+            const estrellasLlenas = Math.round(miRating); 
+            let estrellasStr = '';
+            
+            // Dibujar: ★ llenas y ☆ vacías
+            for (let i = 0; i < 5; i++) {
+                if (i < estrellasLlenas) estrellasStr += '★';
+                else estrellasStr += '☆';
+            }
+            
+            displayEstrellas.textContent = estrellasStr;
+            displayRatingTexto.textContent = `(${miRating.toFixed(1)} de ${numEvaluaciones} opiniones)`;
+        }
+    }
+}
 
-  // Caso B: Tutor Califica (Panel T)
-  const btnEnviarCalifT = document.getElementById('btn-enviar-calificacion-t');
-  if (btnEnviarCalifT) {
-      btnEnviarCalifT.addEventListener('click', (e) => {
-          e.preventDefault();
-          procesarCalificacion('rating-t'); // El name en el HTML es "rating-t"
-      });
-  }
+// Ejecutar al cargar la página para que se vea el estado actual
+actualizarStatsPerfil();
 
-  // 3. Botones de Omitir (Regresan sin sumar puntos)
-  const btnOmitirA = document.getElementById('btn-omitir-calificacion-a');
-  const btnOmitirT = document.getElementById('btn-omitir-calificacion-t');
 
-  const regresarAlDashboard = (e) => {
-      e.preventDefault();
-      mostrarSeccionEstudiante('panel-dashboard-estudiante');
-  };
+/**
+ * Función principal: Procesa tu calificación al tutor y SIMULA la respuesta.
+ */
+function procesarCalificacion(nombreInputRadio) {
+    // Verificar qué estrella marcó el usuario
+    const estrellaSeleccionada = document.querySelector(`input[name="${nombreInputRadio}"]:checked`);
+    
+    if (!estrellaSeleccionada) {
+        alert("Por favor selecciona una puntuación.");
+        return;
+    }
 
-  if (btnOmitirA) btnOmitirA.addEventListener('click', regresarAlDashboard);
-  if (btnOmitirT) btnOmitirT.addEventListener('click', regresarAlDashboard);
+    const valorCalificacion = parseInt(estrellaSeleccionada.value);
+    let mensaje = "¡Gracias por tu feedback!";
+    
+    // --- PARTE 1: LÓGICA DE CRÉDITOS ---
+    // Si tú das 5 estrellas, ganas 1 crédito
+    if (valorCalificacion === 5) {
+        misCreditos++; 
+        localStorage.setItem('userCreditos', misCreditos);
+        mensaje = "🌟 ¡Excelente sesión!\n🪙 ¡Has ganado 1 crédito por tu buena participación!";
+    }
+    
+    alert(mensaje);
+    
+    // Volver al dashboard principal
+    mostrarSeccionEstudiante('panel-dashboard-estudiante');
+    
+    // Limpiar la selección de estrellas
+    estrellaSeleccionada.checked = false;
+
+    // --- PARTE 2: NUEVA LÓGICA (SIMULACIÓN DE RESPUESTA) ---
+    // Esperamos 2 segundos para simular que el tutor te califica de vuelta
+    setTimeout(() => {
+        // Generamos una nota aleatoria entre 4 y 5 (para que siempre te vaya bien)
+        const notaRecibida = Math.floor(Math.random() * 2) + 4; 
+        
+        // Recalcular tu promedio
+        // Fórmula: (PromedioActual * CantidadAnterior + NuevaNota) / NuevaCantidad
+        let nuevoPromedio = ((miRating * numEvaluaciones) + notaRecibida) / (numEvaluaciones + 1);
+        
+        // Actualizar variables en memoria y guardarlas
+        miRating = nuevoPromedio;
+        numEvaluaciones++;
+
+        localStorage.setItem('userRating', miRating);
+        localStorage.setItem('userEvaluaciones', numEvaluaciones);
+
+        // Actualizar la vista del perfil automáticamente
+        actualizarStatsPerfil();
+
+        // Avisar al usuario con una alerta
+        alert(`🔔 Notificación:\n¡El tutor también te ha calificado!\nHas recibido ${notaRecibida} estrellas.\nTu reputación ha subido.`);
+        
+    }, 2000); // 2000ms = 2 segundos de espera
+}
+
+// 4. Asignar esta función a los botones de enviar
+const btnEnviarCalifA = document.getElementById('btn-enviar-calificacion-a');
+if (btnEnviarCalifA) {
+    btnEnviarCalifA.addEventListener('click', (e) => {
+        e.preventDefault();
+        procesarCalificacion('rating');
+    });
+}
+
+const btnEnviarCalifT = document.getElementById('btn-enviar-calificacion-t');
+if (btnEnviarCalifT) {
+    btnEnviarCalifT.addEventListener('click', (e) => {
+        e.preventDefault();
+        procesarCalificacion('rating-t');
+    });
+}
 
   // --- I. CALENDARIO SEMANAL (Dashboard) ---
   const btnAbrirCalendario = document.getElementById('btn-abrir-calendario');
@@ -1294,28 +1297,25 @@ if (navNotificaciones && dropdownNotificaciones) {
       });
   });
 
-// --- BOTÓN "VER TODAS" (Tu código original, se mantiene igual) ---
-const btnVerTodasSolicitudes = document.getElementById('btn-ver-todas-solicitudes');
-
-if (btnVerTodasSolicitudes) {
-    btnVerTodasSolicitudes.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation(); 
-        
-        const campana = document.getElementById('nav-notificaciones');
-        const dropdown = document.getElementById('dropdown-notificaciones');
-        
-        if (dropdown && campana) {
-            // Limpiamos estilos por si acaso venimos de un resize
-            dropdown.style.position = ''; 
-            dropdown.style.top = '';
-            dropdown.style.left = '';
-            
-            dropdown.classList.add('activo');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    });
-}
+  // 2. Enlace "Ver todas" (Solicitudes) -> Abre la campanita
+  const btnVerTodasSolicitudes = document.getElementById('btn-ver-todas-solicitudes');
+  
+  if (btnVerTodasSolicitudes) {
+      btnVerTodasSolicitudes.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation(); // Evitar conflictos de cierre
+          
+          // Simular clic en la campana de notificaciones para abrirla
+          const campana = document.getElementById('nav-notificaciones');
+          const dropdown = document.getElementById('dropdown-notificaciones');
+          
+          if (dropdown && campana) {
+              dropdown.classList.add('activo');
+              // Hacemos scroll suave hacia arriba para que se vea
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+      });
+  }
 
   // 3. Botón "Ver todos mis tutores" -> Ir a Buscar Tutores
   const btnVerTodosTutores = document.getElementById('btn-ver-todos-tutores');
