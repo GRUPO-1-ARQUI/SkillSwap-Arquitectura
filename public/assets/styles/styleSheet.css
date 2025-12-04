@@ -5039,6 +5039,10 @@ body.dark-mode .equipo-miembro span {
     color: #ffffff;
 }
 
+body.dark-mode .menu-hamburguesa span {
+    background-color: #e0e0e0;
+}
+
 /* Texto secundario */
 body.dark-mode p,
 body.dark-mode span,
