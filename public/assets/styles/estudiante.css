@@ -115,6 +115,10 @@
         display: none !important;
     }
 
+    .dark-mode .menu-horizontal-opciones {
+        background-color: #333;
+    }
+
     /* 2. Ocultamos la foto de perfil */
     #nav-perfil .estudiante-foto-usuario-nav {
         display: none !important;
