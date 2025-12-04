@@ -543,6 +543,7 @@
 }
 }
 
-
-
+.seccion-busqueda-admin{
+    min-height: calc(100vh - 110px);
+}
 

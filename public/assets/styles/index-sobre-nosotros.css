@@ -194,7 +194,6 @@
        (Como NO usaremos hamburguesa aun, apilamos los links para que no se rompa el diseño) */
     .barra-navegacion {
         height: auto; /* Altura automática para que crezca */
-        flex-direction: column; /* Elementos uno debajo del otro */
         padding: 10px;
         position: relative; /* Quitamos fixed temporalmente para evitar problemas de scroll */
     }
