@@ -20,3 +20,13 @@ document.getElementById('email').addEventListener('input', function () {
         this.setCustomValidity("");
     }
 });
+
+document.getElementById('password').addEventListener('input', function () {
+    const password = this.value;
+
+    if (password.length < 8) {
+        this.setCustomValidity("La contraseña debe tener al menos 8 caracteres.");
+    } else {
+        this.setCustomValidity("");
+    }
+});
