@@ -801,6 +801,24 @@ if (btnEnviarCalifT) {
     });
 }
 
+// 5. Lógica para los botones de OMITIR
+  const btnOmitirA = document.getElementById('btn-omitir-calificacion-a');
+  const btnOmitirT = document.getElementById('btn-omitir-calificacion-t');
+
+  // Función para volver al dashboard sin guardar nada
+  const regresarAlDashboard = (e) => {
+      e.preventDefault();
+      mostrarSeccionEstudiante('panel-dashboard-estudiante');
+  };
+
+  if (btnOmitirA) {
+      btnOmitirA.addEventListener('click', regresarAlDashboard);
+  }
+
+  if (btnOmitirT) {
+      btnOmitirT.addEventListener('click', regresarAlDashboard);
+  }
+
   // --- I. CALENDARIO SEMANAL (Dashboard) ---
   const btnAbrirCalendario = document.getElementById('btn-abrir-calendario');
   const calendarioFlotante = document.getElementById('calendario-flotante');

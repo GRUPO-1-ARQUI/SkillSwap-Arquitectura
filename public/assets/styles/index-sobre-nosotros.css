@@ -219,3 +219,41 @@
         grid-template-columns: 1fr; /* Forzamos 2 columnas para que no se vea una lista eterna */
     }
 }
+
+
+.video-att-contenedor {
+    display: flex;
+    flex-direction: column; /* Apila el título y video verticalmente */
+    align-items: center;    /* Centra los elementos horizontalmente */
+    justify-content: center;
+    margin: 40px auto;      /* Espacio arriba/abajo y centrado en la página */
+    padding: 20px;
+    max-width: 900px;       /* Ancho máximo para que no se estire demasiado */
+    width: 90%;             /* Ocupa el 90% en pantallas pequeñas */
+}
+
+.video-att-contenedor h2 {
+    font-family: sans-serif; /* O la fuente que uses en tu sitio (ej: 'Roboto') */
+    font-size: 1.8rem;
+    color: #333;            /* Gris oscuro */
+    margin-bottom: 20px;    /* Espacio entre título y video */
+    text-align: center;
+    font-weight: 700;
+}
+
+.video-att-contenedor iframe {
+    width: 100%;            /* Se adapta al ancho del contenedor */
+    max-width: 800px;       /* Límite de ancho para PC */
+    height: auto;           /* La altura se calcula automática */
+    aspect-ratio: 16 / 9;   /* Mantiene la proporción de YouTube (importante) */
+    
+    /* Estética: Bordes y Sombras */
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Sombra elegante */
+    border: none;           /* Quita bordes predeterminados */
+    transition: transform 0.3s ease; /* Efecto suave al pasar el mouse (opcional) */
+}
+
+.video-att-contenedor iframe:hover {
+    transform: scale(1.02); /* Crece un poquito */
+}
