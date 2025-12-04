@@ -384,3 +384,175 @@
         background-color: #ea4335; /* Rojo sólido */
     }
 }
+
+
+/* ==========================================
+   DISEÑO RESPONSIVE: PERFIL Y ESTADÍSTICAS
+   ========================================== */
+
+/* Estilos base para la nueva sección de estadísticas */
+.perfil-stats {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.perfil-stats p {
+    margin-bottom: 10px; /* Separación entre créditos y estrellas */
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Separa etiqueta y valor */
+}
+
+/* MEDIA QUERY: Solo aplica en pantallas menores a 768px (Tablets y Celulares) */
+@media screen and (max-width: 768px) {
+    
+    /* 1. Hacemos que las dos columnas del perfil se pongan una debajo de otra */
+    .contenido-doble {
+        flex-direction: column; /* Cambio clave: de fila a columna */
+        gap: 20px;
+    }
+
+    /* 2. Que las columnas ocupen todo el ancho */
+    .columna {
+        width: 100%;
+        flex: none; /* Evita comportamientos extraños de flex */
+    }
+
+    /* 3. Ajustes visuales para la nueva sección en móvil */
+    .perfil-stats {
+        background-color: #f8f9fa; /* Un fondo gris suave para destacar */
+        padding: 15px;
+        border-radius: 10px;
+        border-top: none; /* Quitamos la línea superior, usamos el fondo */
+        margin-top: 15px;
+    }
+    
+    /* Ajuste para modo oscuro móvil */
+    body.dark-mode .perfil-stats {
+        background-color: #2c2c2c;
+    }
+
+    /* Centramos la foto de perfil si no lo estaba */
+    .info-personal {
+        text-align: center; 
+    }
+    
+    /* Alinear los textos de info personal a la izquierda para que se lean bien */
+    .info-personal p {
+        justify-content: space-between;
+        text-align: left;
+    }
+}
+
+/* ==========================================
+   DISEÑO RESPONSIVE: PERFIL TUTOR (VENTANA EMERGENTE)
+   ========================================== */
+
+/* Se activa cuando la pantalla es menor a 900px (Tablets y Celulares) */
+@media (max-width: 900px) {
+    
+    /* 1. Cambiamos la tarjeta para que sea vertical */
+    .tarjeta-perfil-tutor {
+        flex-direction: column; /* Elementos uno debajo del otro */
+        align-items: center;    /* Centramos todo */
+        padding: 25px 20px;     /* Reducimos el relleno para ganar espacio */
+        gap: 30px;              /* Espacio entre la foto y la info */
+        height: auto;           /* Dejamos que la altura crezca lo que necesite */
+        max-height: none;       /* Quitamos límites de altura si los hubiera */
+    }
+
+    /* 2. Ajustamos la columna de la foto (Izquierda) */
+    .perfil-columna-izquierda {
+        max-width: 100%;        /* Que ocupe todo el ancho disponible */
+        width: 100%;
+        border-bottom: 1px solid #f0f0f0; /* Una línea para separar */
+        padding-bottom: 30px;
+    }
+
+    /* 3. Ajustamos la columna de información (Derecha) */
+    .perfil-columna-derecha {
+        width: 100%;            /* Que ocupe todo el ancho */
+    }
+
+    /* 4. Ajustes del encabezado (Nombre e Iconos) */
+    .perfil-header-derecha {
+        flex-direction: column; /* Nombre arriba, iconos abajo */
+        align-items: center;    /* Centrado */
+        text-align: center;
+        gap: 10px;
+    }
+
+    /* 5. Centrar los tags (etiquetas amarillas) */
+    .perfil-tags-container {
+        justify-content: center;
+    }
+
+    /* 6. Ajuste para la imagen */
+    .perfil-imagen-container {
+        width: 180px;  /* Un poco más pequeña en móvil para que no ocupe todo */
+        height: 180px;
+    }
+    
+    /* 7. Ajuste para las reseñas */
+    .tarjeta-reseña {
+        flex-direction: column; /* Imagen arriba, texto abajo */
+        align-items: center;
+        text-align: center;
+    }
+}
+
+/* ==========================================
+   DISEÑO RESPONSIVE: AJUSTES (Apariencia y Chat)
+   ========================================== */
+
+@media (max-width: 768px) {
+
+    /* 1. El contenedor principal deja de ser Grid de 2 columnas */
+    .ajustes-layout {
+        display: flex;
+        flex-direction: column; /* Apila los elementos uno sobre otro */
+        height: auto; /* Deja que la altura crezca según el contenido */
+        min-height: auto; /* Quita restricciones de altura mínima */
+    }
+
+    /* 2. La barra lateral (Sidebar) ocupa todo el ancho */
+    .ajustes-sidebar, 
+    .ajustes-sidebar-chat {
+        width: 100%; /* Ancho completo */
+        flex-shrink: 0;
+        border-right: none; /* Quitamos la línea divisoria de la derecha */
+        border-bottom: 1px solid #e0e0e0; /* Ponemos línea abajo para separar */
+        padding: 20px;
+    }
+
+    /* 3. El contenido principal también ocupa todo */
+    .ajustes-contenido,
+    .ajustes-contenido-chat {
+        padding: 20px 15px; /* Reducimos un poco el padding lateral */
+        overflow-y: visible; /* Quitamos scroll interno, usamos el de la página */
+    }
+
+    /* 4. Ajuste de los botones del menú para que sean fáciles de tocar */
+    .ajustes-link, 
+    .ajustes-link-chat {
+        text-align: center; /* Texto centrado */
+        justify-content: center; /* Icono y texto centrados */
+        padding: 12px;
+        margin-bottom: 5px;
+        font-size: 16px; /* Tamaño legible */
+    }
+
+    /* 5. Ajustes específicos para los selectores de color (Apariencia) */
+    .selector-color-wrapper {
+        justify-content: center; /* Centrar las bolitas de colores */
+        flex-wrap: wrap; /* Si hay muchas, que bajen */
+    }
+
+    /* 6. Ajuste para el título del sidebar */
+    .ajustes-titulo-sidebar,
+    .ajustes-titulo-sidebar-chat {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+}
